@@ -1,6 +1,11 @@
 import { useState, useEffect, useRef, useCallback, createContext, useContext } from "react";
 
 /* ═══════════════════════════════════════════════════════════════
+   IMPORTANT: Add this meta tag to your HTML <head> for mobile responsiveness:
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════════════
    LANGUAGE CONTEXT & TRANSLATIONS
    ═══════════════════════════════════════════════════════════════ */
 const LanguageContext = createContext();
@@ -133,6 +138,23 @@ const GlobalStyle = () => (
     .role-card.selected{border-color:var(--azure);background:var(--azure-pale);box-shadow:0 0 0 3px rgba(74,144,164,.15)}
     .location-search{position:absolute;top:16px;left:50%;transform:translateX(-50%);z-index:1000;width:90%;max-width:400px}
     [dir="rtl"] .location-search{left:auto;right:50%;transform:translateX(50%)}
+    
+    /* Mobile & Tablet Responsive Styles */
+    @media (max-width: 768px) {
+      .toast{top:12px;right:12px;left:12px;max-width:none;font-size:13px;padding:12px 16px}
+      [dir="rtl"] .toast{left:12px;right:12px}
+      .modal-backdrop{padding:12px}
+      .modal-card{max-width:100%;border-radius:16px;max-height:95vh}
+      .location-search{width:calc(100% - 24px);top:12px}
+      .btn-primary{padding:12px;font-size:14px}
+      .input-base{padding:11px 14px;font-size:13px}
+    }
+    
+    @media (max-width: 480px) {
+      .toast{font-size:12px;padding:10px 14px}
+      .modal-card{border-radius:12px}
+      .btn-primary{font-size:13px}
+    }
   `}</style>
 );
 
@@ -178,7 +200,7 @@ const EditIcon = () => (
 function LangSwitch() {
   const { lang, setLang } = useLang();
   return (
-    <button onClick={() => setLang(lang === 'en' ? 'ar' : 'en')} style={{ position: "fixed", top: 20, right: 20, zIndex: 900, background: "var(--card-bg)", backdropFilter: "blur(20px)", border: "1.5px solid rgba(255,255,255,.6)", borderRadius: 10, padding: "8px 16px", fontSize: 13, fontWeight: 600, cursor: "pointer", color: "var(--azure)", transition: "all .2s", boxShadow: "var(--shadow)" }}>
+    <button onClick={() => setLang(lang === 'en' ? 'ar' : 'en')} style={{ position: "fixed", top: window.innerWidth <= 480 ? 12 : 20, right: window.innerWidth <= 480 ? 12 : 20, zIndex: 900, background: "var(--card-bg)", backdropFilter: "blur(20px)", border: "1.5px solid rgba(255,255,255,.6)", borderRadius: window.innerWidth <= 480 ? 8 : 10, padding: window.innerWidth <= 480 ? "6px 12px" : "8px 16px", fontSize: window.innerWidth <= 480 ? 12 : 13, fontWeight: 600, cursor: "pointer", color: "var(--azure)", transition: "all .2s", boxShadow: "var(--shadow)" }}>
       {lang === 'en' ? 'عربي' : 'English'}
     </button>
   );
@@ -574,7 +596,7 @@ function SignUpPage({ onGuardianSignUp, onSwitchToLogin, onBack }) {
   };
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", padding: 24, paddingTop: 80, paddingBottom: 80 }}>
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", padding: window.innerWidth <= 480 ? 16 : 24, paddingTop: window.innerWidth <= 480 ? 60 : 80, paddingBottom: window.innerWidth <= 480 ? 60 : 80 }}>
       <div className="mesh-bg" /><div className="texture-overlay" />
       <LangSwitch />
 
@@ -591,17 +613,17 @@ function SignUpPage({ onGuardianSignUp, onSwitchToLogin, onBack }) {
       )}
 
       <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 480 }}>
-        <button onClick={() => setShowRoleSelection(true)} style={{ background: "transparent", border: "none", color: "var(--azure)", fontSize: 14, fontWeight: 600, cursor: "pointer", marginBottom: 20, display: "flex", alignItems: "center", gap: 6 }}>
+        <button onClick={() => setShowRoleSelection(true)} style={{ background: "transparent", border: "none", color: "var(--azure)", fontSize: window.innerWidth <= 480 ? 13 : 14, fontWeight: 600, cursor: "pointer", marginBottom: 20, display: "flex", alignItems: "center", gap: 6 }}>
           ← {t('back')}
         </button>
 
-        <div className="fade-up" style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: 20, padding: 32, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)" }}>
-          <h2 style={{ fontFamily: "'Fraunces',serif", fontSize: 24, fontWeight: 600, marginBottom: 8 }}>
+        <div className="fade-up" style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: window.innerWidth <= 480 ? 16 : 20, padding: window.innerWidth <= 480 ? 24 : 32, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)" }}>
+          <h2 style={{ fontFamily: "'Fraunces',serif", fontSize: window.innerWidth <= 480 ? 20 : 24, fontWeight: 600, marginBottom: 8 }}>
             {role === "guardian" ? `${t('create')} - ${t('guard')}` : `${t('create')} - ${t('pat')}`}
           </h2>
-          <p style={{ fontSize: 14, color: "var(--ink-muted)", marginBottom: 24 }}>{t('join')}</p>
+          <p style={{ fontSize: window.innerWidth <= 480 ? 13 : 14, color: "var(--ink-muted)", marginBottom: 24 }}>{t('join')}</p>
 
-          {err && <div style={{ background: "rgba(212,117,106,.1)", color: "var(--coral)", padding: 12, borderRadius: 10, fontSize: 13, marginBottom: 16 }}>{err}</div>}
+          {err && <div style={{ background: "rgba(212,117,106,.1)", color: "var(--coral)", padding: 12, borderRadius: 10, fontSize: window.innerWidth <= 480 ? 12 : 13, marginBottom: 16 }}>{err}</div>}
 
           <form onSubmit={handleSubmit}>
             {role === "guardian" && (
@@ -618,13 +640,13 @@ function SignUpPage({ onGuardianSignUp, onSwitchToLogin, onBack }) {
                     type="button"
                     className="btn-primary btn-secondary" 
                     onClick={() => setShowLocationPicker(true)}
-                    style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
+                    style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontSize: window.innerWidth <= 480 ? 13 : 14 }}
                   >
                     <MapPinIcon />
                     {selectedLocation ? t('editSafeZone') : t('chooseLocation')}
                   </button>
                   {selectedLocation && (
-                    <div style={{ marginTop: 8, fontSize: 12, color: "var(--ink-muted)", background: "var(--azure-pale)", padding: 8, borderRadius: 6 }}>
+                    <div style={{ marginTop: 8, fontSize: window.innerWidth <= 480 ? 11 : 12, color: "var(--ink-muted)", background: "var(--azure-pale)", padding: 8, borderRadius: 6, wordBreak: "break-all" }}>
                       📍 {locationAddress || `${selectedLocation.lat.toFixed(4)}, ${selectedLocation.lng.toFixed(4)}`}
                     </div>
                   )}
@@ -647,7 +669,7 @@ function SignUpPage({ onGuardianSignUp, onSwitchToLogin, onBack }) {
             <button type="submit" className="btn-primary" style={{ marginTop: 24 }}>{t('create')}</button>
           </form>
 
-          <p style={{ textAlign: "center", fontSize: 13, color: "var(--ink-muted)", marginTop: 20 }}>
+          <p style={{ textAlign: "center", fontSize: window.innerWidth <= 480 ? 12 : 13, color: "var(--ink-muted)", marginTop: 20 }}>
             {t('already')} <span onClick={onSwitchToLogin} style={{ color: "var(--azure)", cursor: "pointer", fontWeight: 600 }}>{t('logIn')}</span>
           </p>
         </div>
@@ -699,20 +721,20 @@ function LoginPage({ onGuardianLogin, onSwitchToSignUp, onBack }) {
   };
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", padding: 24 }}>
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", padding: window.innerWidth <= 480 ? 16 : 24 }}>
       <div className="mesh-bg" /><div className="texture-overlay" />
       <LangSwitch />
       <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 400 }}>
-        <button onClick={onBack} style={{ background: "transparent", border: "none", color: "var(--azure)", fontSize: 14, fontWeight: 600, cursor: "pointer", marginBottom: 20, display: "flex", alignItems: "center", gap: 6 }}>
+        <button onClick={onBack} style={{ background: "transparent", border: "none", color: "var(--azure)", fontSize: window.innerWidth <= 480 ? 13 : 14, fontWeight: 600, cursor: "pointer", marginBottom: 20, display: "flex", alignItems: "center", gap: 6 }}>
           ← {t('back')}
         </button>
-        <div className="fade-up" style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: 20, padding: 32, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)" }}>
-          <h2 style={{ fontFamily: "'Fraunces',serif", fontSize: 24, fontWeight: 600, marginBottom: 8 }}>{t('welcomeBack')}</h2>
-          <p style={{ fontSize: 14, color: "var(--ink-muted)", marginBottom: 24 }}>{t('loginMsg')}</p>
+        <div className="fade-up" style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: window.innerWidth <= 480 ? 16 : 20, padding: window.innerWidth <= 480 ? 24 : 32, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)" }}>
+          <h2 style={{ fontFamily: "'Fraunces',serif", fontSize: window.innerWidth <= 480 ? 20 : 24, fontWeight: 600, marginBottom: 8 }}>{t('welcomeBack')}</h2>
+          <p style={{ fontSize: window.innerWidth <= 480 ? 13 : 14, color: "var(--ink-muted)", marginBottom: 24 }}>{t('loginMsg')}</p>
           
-          {err && <div style={{ background: "rgba(212,117,106,.1)", color: "var(--coral)", padding: 12, borderRadius: 10, fontSize: 13, marginBottom: 16 }}>{err}</div>}
+          {err && <div style={{ background: "rgba(212,117,106,.1)", color: "var(--coral)", padding: 12, borderRadius: 10, fontSize: window.innerWidth <= 480 ? 12 : 13, marginBottom: 16 }}>{err}</div>}
           
-          <div style={{ background: "var(--azure-pale)", padding: 12, borderRadius: 10, fontSize: 12, marginBottom: 16 }}>
+          <div style={{ background: "var(--azure-pale)", padding: 12, borderRadius: 10, fontSize: window.innerWidth <= 480 ? 11 : 12, marginBottom: 16 }}>
             <div style={{ fontWeight: 600, marginBottom: 6 }}>{t('demoMsg')}</div>
             <div>📧 guardian@demo.com / patient@demo.com</div>
             <div>🔑 demo1234</div>
@@ -724,7 +746,7 @@ function LoginPage({ onGuardianLogin, onSwitchToSignUp, onBack }) {
             <button type="submit" className="btn-primary" style={{ marginTop: 20 }}>{t('logIn')}</button>
           </form>
 
-          <p style={{ textAlign: "center", fontSize: 13, color: "var(--ink-muted)", marginTop: 20 }}>
+          <p style={{ textAlign: "center", fontSize: window.innerWidth <= 480 ? 12 : 13, color: "var(--ink-muted)", marginTop: 20 }}>
             {t('dontHave')} <span onClick={onSwitchToSignUp} style={{ color: "var(--azure)", cursor: "pointer", fontWeight: 600 }}>{t('signUp')}</span>
           </p>
         </div>
@@ -1088,17 +1110,17 @@ function DashboardView({ guardianData, patientLocation, safeZoneCenter, onLogout
       <div className="mesh-bg" /><div className="texture-overlay" />
       <LangSwitch />
 
-      <div style={{ position: "relative", zIndex: 1, maxWidth: 900, margin: "0 auto", padding: "24px 24px 0" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 32 }}>
+      <div style={{ position: "relative", zIndex: 1, maxWidth: 900, margin: "0 auto", padding: "16px 16px 0" }}>
+        <div style={{ display: "flex", flexDirection: window.innerWidth <= 640 ? "column" : "row", justifyContent: "space-between", alignItems: window.innerWidth <= 640 ? "flex-start" : "center", marginBottom: window.innerWidth <= 640 ? 24 : 32, gap: window.innerWidth <= 640 ? 16 : 0 }}>
           <div>
-            <h1 style={{ fontFamily: "'Fraunces',serif", fontSize: 28, fontWeight: 600, marginBottom: 4 }}>{t('welcome')}, {guardianData.fullName.split(' ')[0]}</h1>
-            <p style={{ fontSize: 14, color: "var(--ink-muted)" }}>{t('dash')}</p>
+            <h1 style={{ fontFamily: "'Fraunces',serif", fontSize: window.innerWidth <= 480 ? 22 : 28, fontWeight: 600, marginBottom: 4 }}>{t('welcome')}, {guardianData.fullName.split(' ')[0]}</h1>
+            <p style={{ fontSize: window.innerWidth <= 480 ? 13 : 14, color: "var(--ink-muted)" }}>{t('dash')}</p>
           </div>
-          <div style={{ display: "flex", gap: 12 }}>
-            <button onClick={onViewProfile} className="btn-primary btn-secondary" style={{ width: "auto", padding: "10px 20px", fontSize: 14 }}>
-              👤 {t('viewProfile')}
+          <div style={{ display: "flex", gap: window.innerWidth <= 480 ? 8 : 12, flexWrap: "wrap", width: window.innerWidth <= 640 ? "100%" : "auto" }}>
+            <button onClick={onViewProfile} className="btn-primary btn-secondary" style={{ width: window.innerWidth <= 640 ? "auto" : "auto", padding: window.innerWidth <= 480 ? "8px 16px" : "10px 20px", fontSize: window.innerWidth <= 480 ? 13 : 14, flex: window.innerWidth <= 640 ? "1" : "none" }}>
+              👤 {window.innerWidth <= 480 ? "" : t('viewProfile')}
             </button>
-            <button onClick={onLogout} className="btn-primary btn-coral" style={{ width: "auto", padding: "10px 20px", fontSize: 14 }}>
+            <button onClick={onLogout} className="btn-primary btn-coral" style={{ width: window.innerWidth <= 640 ? "auto" : "auto", padding: window.innerWidth <= 480 ? "8px 16px" : "10px 20px", fontSize: window.innerWidth <= 480 ? 13 : 14, flex: window.innerWidth <= 640 ? "1" : "none" }}>
               {t('logout')}
             </button>
           </div>
@@ -1111,8 +1133,8 @@ function DashboardView({ guardianData, patientLocation, safeZoneCenter, onLogout
             style={{ 
               background: "linear-gradient(135deg, #dc2626, #b91c1c)", 
               color: "#fff", 
-              padding: 24, 
-              borderRadius: 16, 
+              padding: window.innerWidth <= 480 ? 16 : 24, 
+              borderRadius: window.innerWidth <= 480 ? 12 : 16, 
               marginBottom: 24,
               boxShadow: "0 8px 32px rgba(220, 38, 38, 0.4)",
               border: "2px solid #fca5a5",
@@ -1120,16 +1142,16 @@ function DashboardView({ guardianData, patientLocation, safeZoneCenter, onLogout
             }}
             onClick={onViewMap}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-              <div style={{ fontSize: 48 }}>🚨</div>
+            <div style={{ display: "flex", alignItems: "center", gap: window.innerWidth <= 480 ? 12 : 16 }}>
+              <div style={{ fontSize: window.innerWidth <= 480 ? 36 : 48 }}>🚨</div>
               <div style={{ flex: 1 }}>
-                <h3 style={{ fontSize: 20, fontWeight: 700, marginBottom: 6 }}>{t('alertTitle')}</h3>
-                <p style={{ fontSize: 14, opacity: 0.95 }}>{t('alertSub')}</p>
-                <p style={{ fontSize: 13, marginTop: 8, opacity: 0.9 }}>
+                <h3 style={{ fontSize: window.innerWidth <= 480 ? 16 : 20, fontWeight: 700, marginBottom: 6 }}>{t('alertTitle')}</h3>
+                <p style={{ fontSize: window.innerWidth <= 480 ? 12 : 14, opacity: 0.95 }}>{t('alertSub')}</p>
+                <p style={{ fontSize: window.innerWidth <= 480 ? 11 : 13, marginTop: 8, opacity: 0.9 }}>
                   {t('dist')}: {distance.toFixed(2)} km ({(distance * 1000).toFixed(0)}m)
                 </p>
               </div>
-              <div style={{ fontSize: 28 }}>→</div>
+              <div style={{ fontSize: window.innerWidth <= 480 ? 20 : 28 }}>→</div>
             </div>
           </div>
         )}
@@ -1358,77 +1380,77 @@ function MapView({ guardianData, patientLocation, safeZoneCenter, onBack, onEdit
       <div className="mesh-bg" /><div className="texture-overlay" />
       <LangSwitch />
 
-      <div style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto", padding: 24 }}>
-        <button onClick={onBack} style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", border: "1.5px solid rgba(255,255,255,.6)", borderRadius: 10, padding: "10px 20px", fontSize: 14, fontWeight: 600, color: "var(--azure)", cursor: "pointer", marginBottom: 20, boxShadow: "var(--shadow)" }}>
+      <div style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto", padding: window.innerWidth <= 768 ? 16 : 24 }}>
+        <button onClick={onBack} style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", border: "1.5px solid rgba(255,255,255,.6)", borderRadius: 10, padding: window.innerWidth <= 480 ? "8px 16px" : "10px 20px", fontSize: window.innerWidth <= 480 ? 13 : 14, fontWeight: 600, color: "var(--azure)", cursor: "pointer", marginBottom: 20, boxShadow: "var(--shadow)" }}>
           ← {t('backDash')}
         </button>
 
         {isOutside && guardianData.patient && (
-          <div className="fade-up alert-pulse" style={{ background: "linear-gradient(135deg, #dc2626, #b91c1c)", color: "#fff", padding: 20, borderRadius: 16, marginBottom: 20, boxShadow: "0 8px 32px rgba(220, 38, 38, 0.4)", border: "2px solid #fca5a5" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-              <div style={{ fontSize: 40 }}>🚨</div>
+          <div className="fade-up alert-pulse" style={{ background: "linear-gradient(135deg, #dc2626, #b91c1c)", color: "#fff", padding: window.innerWidth <= 480 ? 16 : 20, borderRadius: window.innerWidth <= 480 ? 12 : 16, marginBottom: 20, boxShadow: "0 8px 32px rgba(220, 38, 38, 0.4)", border: "2px solid #fca5a5" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: window.innerWidth <= 480 ? 12 : 16 }}>
+              <div style={{ fontSize: window.innerWidth <= 480 ? 32 : 40 }}>🚨</div>
               <div>
-                <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 4 }}>{t('alertTitle')}</h3>
-                <p style={{ fontSize: 13, opacity: 0.95 }}>{guardianData.patient.fullName} {t('alertSub').toLowerCase()}</p>
+                <h3 style={{ fontSize: window.innerWidth <= 480 ? 15 : 18, fontWeight: 700, marginBottom: 4 }}>{t('alertTitle')}</h3>
+                <p style={{ fontSize: window.innerWidth <= 480 ? 12 : 13, opacity: 0.95 }}>{guardianData.patient.fullName} {t('alertSub').toLowerCase()}</p>
               </div>
             </div>
           </div>
         )}
 
         {isUsingTestLocation && (
-          <div style={{ background: "var(--azure-pale)", color: "var(--azure-dark)", padding: 16, borderRadius: 12, marginBottom: 20, fontSize: 14, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{ background: "var(--azure-pale)", color: "var(--azure-dark)", padding: window.innerWidth <= 480 ? 12 : 16, borderRadius: 12, marginBottom: 20, fontSize: window.innerWidth <= 480 ? 12 : 14, display: "flex", flexDirection: window.innerWidth <= 480 ? "column" : "row", alignItems: window.innerWidth <= 480 ? "stretch" : "center", justifyContent: "space-between", gap: window.innerWidth <= 480 ? 12 : 0 }}>
             <span>⚠️ {t('usingTestLoc')}</span>
-            <button className="btn-primary btn-coral" onClick={onResetTestLocation} style={{ width: "auto", padding: "8px 16px", fontSize: 13 }}>
+            <button className="btn-primary btn-coral" onClick={onResetTestLocation} style={{ width: window.innerWidth <= 480 ? "100%" : "auto", padding: "8px 16px", fontSize: 13 }}>
               {t('resetToActual')}
             </button>
           </div>
         )}
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 320px", gap: 20 }}>
+        <div style={{ display: "grid", gridTemplateColumns: window.innerWidth <= 1024 ? "1fr" : "1fr 320px", gap: 20 }}>
           <div className="fade-up" style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: 16, overflow: "hidden", boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)" }}>
-            <div style={{ padding: 20, borderBottom: "1px solid rgba(74,144,164,.15)" }}>
-              <h2 style={{ fontFamily: "'Fraunces',serif", fontSize: 22, fontWeight: 600 }}>{t('liveTrack')}</h2>
-              <p style={{ fontSize: 13, color: "var(--ink-muted)", marginTop: 4 }}>{t('monPat')}</p>
+            <div style={{ padding: window.innerWidth <= 480 ? 16 : 20, borderBottom: "1px solid rgba(74,144,164,.15)" }}>
+              <h2 style={{ fontFamily: "'Fraunces',serif", fontSize: window.innerWidth <= 480 ? 18 : 22, fontWeight: 600 }}>{t('liveTrack')}</h2>
+              <p style={{ fontSize: window.innerWidth <= 480 ? 12 : 13, color: "var(--ink-muted)", marginTop: 4 }}>{t('monPat')}</p>
             </div>
-            <div id="live-map" style={{ height: 500 }}></div>
+            <div id="live-map" style={{ height: window.innerWidth <= 768 ? 350 : 500 }}></div>
           </div>
 
           <div className="fade-up fade-up-d1">
-            <div style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: 16, padding: 24, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)", marginBottom: 16 }}>
-              <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 16 }}>{t('radius')}</h3>
+            <div style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: 16, padding: window.innerWidth <= 480 ? 16 : 24, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)", marginBottom: 16 }}>
+              <h3 style={{ fontSize: window.innerWidth <= 480 ? 14 : 16, fontWeight: 600, marginBottom: 16 }}>{t('radius')}</h3>
               <input type="range" min="100" max="2000" step="50" value={radius} onChange={(e) => setRadius(parseInt(e.target.value))} style={{ width: "100%", marginBottom: 12 }} />
-              <div style={{ fontSize: 24, fontWeight: 700, color: "var(--azure)", textAlign: "center", marginBottom: 16 }}>
+              <div style={{ fontSize: window.innerWidth <= 480 ? 20 : 24, fontWeight: 700, color: "var(--azure)", textAlign: "center", marginBottom: 16 }}>
                 {radius >= 1000 ? `${(radius / 1000).toFixed(1)} km` : `${radius} m`}
               </div>
 
-              <div style={{ padding: 16, background: isOutside ? "rgba(212,117,106,.1)" : "rgba(74,222,128,.1)", borderRadius: 12, border: `2px solid ${isOutside ? "var(--coral)" : "#4ade80"}`, textAlign: "center" }}>
-                <div style={{ fontSize: 14, fontWeight: 600, color: isOutside ? "var(--coral)" : "#16a34a", marginBottom: 4 }}>
+              <div style={{ padding: window.innerWidth <= 480 ? 12 : 16, background: isOutside ? "rgba(212,117,106,.1)" : "rgba(74,222,128,.1)", borderRadius: 12, border: `2px solid ${isOutside ? "var(--coral)" : "#4ade80"}`, textAlign: "center" }}>
+                <div style={{ fontSize: window.innerWidth <= 480 ? 13 : 14, fontWeight: 600, color: isOutside ? "var(--coral)" : "#16a34a", marginBottom: 4 }}>
                   {isOutside ? t('outZone') : t('inZone')}
                 </div>
-                <div style={{ fontSize: 12, color: "var(--ink-muted)" }}>
+                <div style={{ fontSize: window.innerWidth <= 480 ? 11 : 12, color: "var(--ink-muted)" }}>
                   {t('dist')}: {(distance * 1000).toFixed(0)}m
                 </div>
               </div>
             </div>
 
-            <div style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: 16, padding: 24, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)", marginBottom: 16 }}>
-              <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 12 }}>{t('quickAct')}</h3>
-              <button className="btn-primary" onClick={onEditSafeZone} style={{ marginBottom: 12, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+            <div style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: 16, padding: window.innerWidth <= 480 ? 16 : 24, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)", marginBottom: 16 }}>
+              <h3 style={{ fontSize: window.innerWidth <= 480 ? 14 : 16, fontWeight: 600, marginBottom: 12 }}>{t('quickAct')}</h3>
+              <button className="btn-primary" onClick={onEditSafeZone} style={{ marginBottom: 12, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontSize: window.innerWidth <= 480 ? 13 : 14 }}>
                 <EditIcon /> {t('editSafeZone')}
               </button>
-              <button className="btn-primary btn-secondary" onClick={onSetTestLocation} style={{ marginBottom: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+              <button className="btn-primary btn-secondary" onClick={onSetTestLocation} style={{ marginBottom: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontSize: window.innerWidth <= 480 ? 13 : 14 }}>
                 📍 {t('setTestLoc')}
               </button>
               {isUsingTestLocation && (
-                <button className="btn-primary btn-coral" onClick={onResetTestLocation} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+                <button className="btn-primary btn-coral" onClick={onResetTestLocation} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontSize: window.innerWidth <= 480 ? 13 : 14 }}>
                   ↩️ {t('resetToActual')}
                 </button>
               )}
             </div>
 
-            <div style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: 16, padding: 20, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)" }}>
-              <h3 style={{ fontSize: 14, fontWeight: 600, marginBottom: 12, color: "var(--azure)" }}>{t('how')}</h3>
-              <ul style={{ fontSize: 12, lineHeight: 1.8, color: "var(--ink-light)", paddingLeft: 20 }}>
+            <div style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: 16, padding: window.innerWidth <= 480 ? 16 : 20, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)" }}>
+              <h3 style={{ fontSize: window.innerWidth <= 480 ? 13 : 14, fontWeight: 600, marginBottom: 12, color: "var(--azure)" }}>{t('how')}</h3>
+              <ul style={{ fontSize: window.innerWidth <= 480 ? 11 : 12, lineHeight: 1.8, color: "var(--ink-light)", paddingLeft: 20 }}>
                 <li>{t('tip1')}</li>
                 <li>{t('tip2')}</li>
                 <li>{t('tip3')}</li>
@@ -1488,18 +1510,18 @@ export default function App() {
   const Landing = () => {
     const { t } = useLang();
     return (
-      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", padding: 24 }}>
+      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", padding: window.innerWidth <= 480 ? 16 : 24 }}>
         <div className="mesh-bg" /><div className="texture-overlay" />
         <LangSwitch />
         <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 380, textAlign: "center" }}>
-          <div className="fade-up" style={{ marginBottom: 44 }}>
-            <div style={{ width: 72, height: 72, borderRadius: 20, background: "linear-gradient(135deg,var(--azure),var(--azure-dark))", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px", boxShadow: "0 6px 28px rgba(74,144,164,.3)", color: "#fff" }}>
+          <div className="fade-up" style={{ marginBottom: window.innerWidth <= 480 ? 32 : 44 }}>
+            <div style={{ width: window.innerWidth <= 480 ? 60 : 72, height: window.innerWidth <= 480 ? 60 : 72, borderRadius: window.innerWidth <= 480 ? 16 : 20, background: "linear-gradient(135deg,var(--azure),var(--azure-dark))", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px", boxShadow: "0 6px 28px rgba(74,144,164,.3)", color: "#fff" }}>
               <ShieldIcon />
             </div>
-            <h1 style={{ fontFamily: "'Fraunces',serif", fontSize: 30, fontWeight: 300, letterSpacing: "-.02em" }}>{t('app')}</h1>
-            <p style={{ fontSize: 15, color: "var(--ink-muted)", marginTop: 6 }}>{t('tag')}</p>
+            <h1 style={{ fontFamily: "'Fraunces',serif", fontSize: window.innerWidth <= 480 ? 24 : 30, fontWeight: 300, letterSpacing: "-.02em" }}>{t('app')}</h1>
+            <p style={{ fontSize: window.innerWidth <= 480 ? 14 : 15, color: "var(--ink-muted)", marginTop: 6 }}>{t('tag')}</p>
           </div>
-          <div className="fade-up fade-up-d1" style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: 20, padding: "32px 24px", boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)" }}>
+          <div className="fade-up fade-up-d1" style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: window.innerWidth <= 480 ? 16 : 20, padding: window.innerWidth <= 480 ? "24px 20px" : "32px 24px", boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)" }}>
             <button className="btn-primary" onClick={() => setPage("signup")} style={{ marginBottom: 12 }}>
               👤 &nbsp;{t('signUp')}
             </button>
@@ -1507,7 +1529,7 @@ export default function App() {
               <LogInIcon /> &nbsp;{t('logIn')}
             </button>
           </div>
-          <p className="fade-up fade-up-d2" style={{ fontSize: 12, color: "var(--ink-muted)", marginTop: 24 }}>
+          <p className="fade-up fade-up-d2" style={{ fontSize: window.innerWidth <= 480 ? 11 : 12, color: "var(--ink-muted)", marginTop: 24 }}>
             {t('byContinuing')} <span style={{ color: "var(--azure)", cursor: "pointer" }}>{t('terms')}</span> &amp; <span style={{ color: "var(--azure)", cursor: "pointer" }}>{t('privacy')}</span>
           </p>
         </div>
