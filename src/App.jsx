@@ -83,7 +83,7 @@ function initializeSessionId() {
    FAKE AUTH STORE
    ═══════════════════════════════════════════════════════════════ */
 const DEMO_ACCOUNTS = [
-  { email: "guardian@demo.com", password: "demo1234", role: "guardian", fullName: "Ahmed Hassan", nationalId: "30101011234", phone: "+20 123 456 7890", address: "15 Tahrir St, Cairo", patient: null, location: { lat: 30.0444, lng: 31.2357 }, safeZoneCenter: { lat: 30.0444, lng: 31.2357 }, token: "DEMO-TKNA-ABCD" },
+  { email: "guardian@demo.com", password: "demo1234", role: "guardian", fullName: "Ahmed Hassan", nationalId: "30101011234", phone: "+20 123 456 7890", address: "15 Tahrir St, Cairo", patient: { fullName: "Sara Hassan", nationalId: "85050512345", email: "patient@demo.com", phone: "+20 987 654 3210", address: "15 Tahrir St, Cairo" }, location: { lat: 30.0444, lng: 31.2357 }, safeZoneCenter: { lat: 30.0444, lng: 31.2357 }, safeZoneRadius: 500, token: "DEMO-TKNA-ABCD" },
   { email: "patient@demo.com", password: "demo1234", role: "patient", fullName: "Sara Hassan", nationalId: "85050512345", phone: "+20 987 654 3210", linkedToken: "DEMO-TKNA-ABCD" }
 ];
 const accountsDB = JSON.parse(localStorage.getItem("sanad-accounts")) || [...DEMO_ACCOUNTS];
@@ -521,6 +521,7 @@ function SignUpPage({ onGuardianSignUp, onSwitchToLogin, onBack }) {
         patient: null, // No patient initially
         location: selectedLocation,
         safeZoneCenter: selectedLocation,
+        safeZoneRadius: 500, // Default radius in meters
         token
       };
 
@@ -658,6 +659,18 @@ function SignUpPage({ onGuardianSignUp, onSwitchToLogin, onBack }) {
 /* ═══════════════════════════════════════════════════════════════
    LOGIN PAGE
    ═══════════════════════════════════════════════════════════════ */
+function ensureAccountDefaults(account) {
+  // Ensure account has all required fields with defaults
+  if (!account) return account;
+  
+  return {
+    ...account,
+    safeZoneRadius: account.safeZoneRadius || 500, // Default 500m if not set
+    safeZoneCenter: account.safeZoneCenter || account.location || { lat: 30.0444, lng: 31.2357 },
+    location: account.location || { lat: 30.0444, lng: 31.2357 }
+  };
+}
+
 function LoginPage({ onGuardianLogin, onSwitchToSignUp, onBack }) {
   const { t } = useLang();
   const [email, setEmail] = useState("");
@@ -671,11 +684,15 @@ function LoginPage({ onGuardianLogin, onSwitchToSignUp, onBack }) {
       setErr(t('err5'));
       return;
     }
-    const account = accountsDB.find(acc => acc.email === email && acc.password === password);
+    let account = accountsDB.find(acc => acc.email === email && acc.password === password);
     if (!account) {
       setErr(t('err6'));
       return;
     }
+    
+    // Ensure account has all defaults
+    account = ensureAccountDefaults(account);
+    
     // Save session for persistent login
     saveSession(account);
     onGuardianLogin(account);
@@ -843,7 +860,7 @@ function ProfileModal({ guardianData, onClose }) {
 /* ═══════════════════════════════════════════════════════════════
    HOME PAGE / DASHBOARD
    ═══════════════════════════════════════════════════════════════ */
-function HomePage({ guardianData, onLogout }) {
+function HomePage({ guardianData: initialGuardianData, onLogout }) {
   const { t } = useLang();
   const [view, setView] = useState("dashboard");
   const [showToast, setShowToast] = useState(false);
@@ -851,9 +868,29 @@ function HomePage({ guardianData, onLogout }) {
   const [isEditingSafeZone, setIsEditingSafeZone] = useState(false);
   const [showLocationPicker, setShowLocationPicker] = useState(false);
   const [showTestLocationPicker, setShowTestLocationPicker] = useState(false);
-  const [testLocation, setTestLocation] = useState(null);
-  const [useTestLocation, setUseTestLocation] = useState(false);
+  const [testLocation, setTestLocation] = useState(() => {
+    const saved = localStorage.getItem('sanad-test-location');
+    return saved ? JSON.parse(saved) : null;
+  });
+  const [useTestLocation, setUseTestLocation] = useState(() => {
+    const saved = localStorage.getItem('sanad-use-test-location');
+    return saved === 'true';
+  });
   const [showProfile, setShowProfile] = useState(false);
+  
+  // Reload guardian data from localStorage to get latest updates (like radius changes)
+  const getLatestGuardianData = () => {
+    const accounts = JSON.parse(localStorage.getItem("sanad-accounts")) || [];
+    return accounts.find(acc => acc.email === initialGuardianData.email) || initialGuardianData;
+  };
+  
+  const [guardianData, setGuardianData] = useState(initialGuardianData);
+  
+  // Refresh guardian data when view changes to pick up any updates
+  useEffect(() => {
+    const latestData = getLatestGuardianData();
+    setGuardianData(latestData);
+  }, [view]);
 
   // Get patient's current location (either test or actual from geolocation)
   const [patientLiveLocation, setPatientLiveLocation] = useState(guardianData.location || { lat: 30.0444, lng: 31.2357 });
@@ -913,6 +950,13 @@ function HomePage({ guardianData, onLogout }) {
     });
     localStorage.setItem("sanad-accounts", JSON.stringify(updatedAccounts));
     
+    // Update local guardian data
+    const updatedGuardian = { ...guardianData, safeZoneCenter: newLocation };
+    setGuardianData(updatedGuardian);
+    
+    // Update session to keep it in sync
+    saveSession(updatedGuardian);
+    
     setToastMsg(t('safeZoneUpdated'));
     setShowToast(true);
   };
@@ -920,6 +964,8 @@ function HomePage({ guardianData, onLogout }) {
   const handleTestLocationSet = (newLocation, address) => {
     setTestLocation(newLocation);
     setUseTestLocation(true);
+    localStorage.setItem('sanad-test-location', JSON.stringify(newLocation));
+    localStorage.setItem('sanad-use-test-location', 'true');
     setShowTestLocationPicker(false);
     setToastMsg(t('testLocSet'));
     setShowToast(true);
@@ -928,6 +974,8 @@ function HomePage({ guardianData, onLogout }) {
   const resetToActualLocation = () => {
     setUseTestLocation(false);
     setTestLocation(null);
+    localStorage.removeItem('sanad-test-location');
+    localStorage.setItem('sanad-use-test-location', 'false');
     setToastMsg(t('returnToActual'));
     setShowToast(true);
   };
@@ -939,7 +987,7 @@ function HomePage({ guardianData, onLogout }) {
     safeZoneCenter.lat,
     safeZoneCenter.lng
   );
-  const safeZoneRadius = 0.5; // km
+  const safeZoneRadius = (guardianData.safeZoneRadius || 500) / 1000; // Convert meters to km
   const isOutsideSafeZone = distance > safeZoneRadius;
 
   // Auto-navigate to map if patient is outside
@@ -1034,7 +1082,6 @@ function HomePage({ guardianData, onLogout }) {
 function DashboardView({ guardianData, patientLocation, safeZoneCenter, onLogout, onViewMap, onCopyToken, onEditSafeZone, onViewProfile, isOutsideSafeZone, isUsingTestLocation }) {
   const { t } = useLang();
   const distance = calculateDistance(patientLocation.lat, patientLocation.lng, safeZoneCenter.lat, safeZoneCenter.lng);
-  const safeZoneRadius = 0.5;
 
   return (
     <div style={{ minHeight: "100vh", background: "var(--ice-blue)", position: "relative", paddingBottom: 40 }}>
@@ -1192,11 +1239,31 @@ function MapView({ guardianData, patientLocation, safeZoneCenter, onBack, onEdit
   const circleRef = useRef(null);
   const centerMarkerRef = useRef(null);
   const patientMarkerRef = useRef(null);
-  const [radius, setRadius] = useState(500);
+  const [radius, setRadius] = useState(guardianData.safeZoneRadius || 500);
   const [prevOutsideState, setPrevOutsideState] = useState(false);
 
   const distance = calculateDistance(patientLocation.lat, patientLocation.lng, safeZoneCenter.lat, safeZoneCenter.lng);
   const isOutside = distance > (radius / 1000);
+
+  // Persist radius changes to database
+  useEffect(() => {
+    if (radius !== guardianData.safeZoneRadius) {
+      const accounts = JSON.parse(localStorage.getItem("sanad-accounts")) || [];
+      const updatedAccounts = accounts.map(acc => {
+        if (acc.email === guardianData.email) {
+          return { ...acc, safeZoneRadius: radius };
+        }
+        return acc;
+      });
+      localStorage.setItem("sanad-accounts", JSON.stringify(updatedAccounts));
+      
+      // Update session to keep it in sync
+      const updatedGuardian = updatedAccounts.find(acc => acc.email === guardianData.email);
+      if (updatedGuardian) {
+        saveSession(updatedGuardian);
+      }
+    }
+  }, [radius, guardianData.email, guardianData.safeZoneRadius]);
 
   useEffect(() => {
     if (isOutside && !prevOutsideState) {
@@ -1397,13 +1464,16 @@ export default function App() {
     const session = getSession();
     if (session) {
       // User is logged in, restore their session
+      // Fetch latest data from accountsDB instead of using stale session data
       if (session.role === "patient") {
         const guardian = accountsDB.find(
           g => g.role === "guardian" && g.token === session.linkedToken
         );
-        setGuardianData(guardian || null);
+        setGuardianData(ensureAccountDefaults(guardian));
       } else {
-        setGuardianData(session);
+        // Fetch latest guardian data from accountsDB using the email from session
+        const latestGuardian = accountsDB.find(acc => acc.email === session.email && acc.role === "guardian");
+        setGuardianData(ensureAccountDefaults(latestGuardian || session));
       }
       setPage("home");
     }
@@ -1487,9 +1557,9 @@ export default function App() {
               const guardian = accountsDB.find(
                 g => g.role === "guardian" && g.token === acc.linkedToken
               );
-              setGuardianData(guardian || null);
+              setGuardianData(ensureAccountDefaults(guardian));
             } else {
-              setGuardianData(acc);
+              setGuardianData(ensureAccountDefaults(acc));
             }
             setPage("home");
           }}
