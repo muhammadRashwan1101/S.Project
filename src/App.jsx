@@ -906,7 +906,8 @@ function HomePage({ guardianData: initialGuardianData, onLogout }) {
     return accounts.find(acc => acc.email === initialGuardianData.email) || initialGuardianData;
   };
   
-  const [guardianData, setGuardianData] = useState(initialGuardianData);
+  // Initialize with latest data from localStorage (ensures safe zone and other updates persist)
+  const [guardianData, setGuardianData] = useState(() => getLatestGuardianData());
   
   // Refresh guardian data when view changes to pick up any updates
   useEffect(() => {
@@ -917,6 +918,13 @@ function HomePage({ guardianData: initialGuardianData, onLogout }) {
   // Get patient's current location (either test or actual from geolocation)
   const [patientLiveLocation, setPatientLiveLocation] = useState(guardianData.location || { lat: 30.0444, lng: 31.2357 });
   const [safeZoneCenter, setSafeZoneCenter] = useState(guardianData.safeZoneCenter || guardianData.location || { lat: 30.0444, lng: 31.2357 });
+
+  // Update safeZoneCenter when guardianData changes (including on mount)
+  useEffect(() => {
+    if (guardianData.safeZoneCenter) {
+      setSafeZoneCenter(guardianData.safeZoneCenter);
+    }
+  }, [guardianData.safeZoneCenter]);
 
   // Track patient's actual location via geolocation
   useEffect(() => {
