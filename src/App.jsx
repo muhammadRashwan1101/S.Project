@@ -12,12 +12,134 @@ const LanguageContext = createContext();
 
 const TR = {
   en: {
-    app: "Sanad", tag: "Safe, connected, always together.", signUp: "Sign Up", logIn: "Log In", logout: "Logout", back: "Back", backDash: "Back to Dashboard", terms: "Terms", privacy: "Privacy", byContinuing: "By continuing you agree to our", create: "Create Account", join: "Join Sanad and start caring", guard: "Guardian", pat: "Patient", email: "Email", pass: "Password", confirmPass: "Confirm Password", name: "Full Name", natId: "National ID", phone: "Phone", addr: "Address", patInfo: "Patient Information", patName: "Patient Full Name", patId: "Patient National ID", patEmail: "Patient Email", patPhone: "Patient Phone", patAddr: "Patient Address", guardEmail: "Guardian Email", guardToken: "Guardian Token (e.g. XXXX-XXXX-XXXX)", already: "Already have an account?", dontHave: "Don't have an account?", welcomeBack: "Welcome Back", loginMsg: "Log in to continue caring", demoMsg: "Demo Credentials:", created: "Account Created!", shareMsg: "Share this token with your patient so they can link their account", yourToken: "YOUR LINKING TOKEN", copyToken: "Copy Token", contDash: "Continue to Dashboard", keepSafe: "Keep this token safe. You can find it again in your dashboard settings.", copied: "Token copied to clipboard!", welcome: "Welcome", dash: "Dashboard", patStatus: "Patient Status", inside: "Inside Safe Zone", outside: "Outside Safe Zone", patInside: "Patient is within designated area", patOutside: "Alert: Patient has left safe zone", patInfoTitle: "Patient Info", nameLabel: "Name", quickAct: "Quick Actions", viewMap: "View Live Map & Geofence", copyLink: "Copy Linking Token", recent: "Recent Activity", insideMsg: "Patient inside safe zone", outsideMsg: "Patient left safe zone", locUpdate: "Location updated", sysCheck: "System check completed", now: "Just now", min: "min ago", liveTrack: "Live Location Tracking", monPat: "Monitor patient location in real-time and configure the safe zone radius", radius: "Safe Zone Radius", inZone: "Inside Zone", outZone: "Outside Zone", curLoc: "Current Location", dist: "Distance from center", how: "How It Works:", tip1: "The blue zone shows the safe area around the center point", tip2: "The coral marker shows the patient's current location", tip3: "Adjust the radius slider to customize the safe zone size", tip4: "You'll receive alerts when the patient leaves the safe zone", tip5: "Status is automatically sent to the backend (console.log)", alertTitle: "Patient Left Safe Zone!", alertSub: "Check location immediately", err1: "Please fill in all guardian and patient fields", err2: "Please fill in all patient fields", err3: "Passwords do not match", err4: "Invalid token. Please check with your guardian.", err5: "Please enter both email and password", err6: "Invalid credentials",
-    selectRole: "Select Your Role", selectRoleMsg: "Choose how you'll be using Sanad", guardianRole: "I'm a Guardian", guardianDesc: "Monitor and care for a patient", patientRole: "I'm a Patient", patientDesc: "Connect with my guardian", continue: "Continue", chooseLocation: "Choose Location", locationMsg: "Set your safe zone center location", searchLocation: "Search for a location...", useCurrentLoc: "Use Current Location", dragPin: "Drag the pin to your desired location", clickMap: "Or click anywhere on the map", confirmLoc: "Confirm Location", locPermDenied: "Location permission denied", editSafeZone: "Edit Safe Zone", saveChanges: "Save Changes", testLocation: "Test Patient Location", setTestLoc: "Set Test Location", currentTestLoc: "Current Test Location", resetToActual: "Reset to Actual Location", viewOnMap: "View on Map", locationSaved: "Location saved successfully!", safeZoneUpdated: "Safe zone updated!", usingTestLoc: "Using test location", testLocSet: "Test location set", returnToActual: "Returned to actual location", locating: "Getting your location...", mapInstructions: "Search, click on map, or drag the marker to set location", myProfile: "My Profile", guardianInfo: "Guardian Information", noPatientLinked: "No patient linked yet", waitingForPatient: "Waiting for patient to sign up with your token", patientLinked: "Patient Linked", viewProfile: "View Profile", closeProfile: "Close"
+    app: "Sanad", tag: "Safe, connected, always together.", signUp: "Sign Up", logIn: "Log In", logout: "Logout", back: "Back", backDash: "Back to Dashboard", terms: "Terms", privacy: "Privacy", byContinuing: "By continuing you agree to our", create: "Create Account", join: "Join Sanad and start caring", guard: "Guardian", pat: "Dependent", email: "Email", pass: "Password", confirmPass: "Confirm Password", name: "Full Name", natId: "National ID", phone: "Phone", addr: "Address", patInfo: "Dependent Information", patName: "Dependent Full Name", patId: "Dependent National ID", patEmail: "Dependent Email", patPhone: "Dependent Phone", patAddr: "Dependent Address", guardEmail: "Guardian Email", guardToken: "Guardian Token (e.g. XXXX-XXXX-XXXX)", already: "Already have an account?", dontHave: "Don't have an account?", welcomeBack: "Welcome Back", loginMsg: "Log in to continue caring", demoMsg: "Demo Credentials:", created: "Account Created!", shareMsg: "Share this token with your dependent so they can link their account", yourToken: "YOUR LINKING TOKEN", copyToken: "Copy Token", contDash: "Continue to Dashboard", keepSafe: "Keep this token safe. You can find it again in your dashboard settings.", copied: "Token copied to clipboard!", welcome: "Welcome", dash: "Dashboard", patStatus: "Dependent Status", inside: "Inside Safe Zone", outside: "Outside Safe Zone", patInside: "Dependent is within designated area", patOutside: "Alert: Dependent has left safe zone", patInfoTitle: "Dependent Info", nameLabel: "Name", quickAct: "Quick Actions", viewMap: "View Live Map & Geofence", copyLink: "Copy Linking Token", recent: "Recent Activity", insideMsg: "Dependent inside safe zone", outsideMsg: "Dependent left safe zone", locUpdate: "Location updated", sysCheck: "System check completed", now: "Just now", min: "min ago", liveTrack: "Live Location Tracking", monPat: "Monitor dependent location in real-time and configure the safe zone radius", radius: "Safe Zone Radius", inZone: "Inside Zone", outZone: "Outside Zone", curLoc: "Current Location", dist: "Distance from center", how: "How It Works:", tip1: "The blue zone shows the safe area around the center point", tip2: "The coral marker shows the dependent's current location", tip3: "Adjust the radius slider to customize the safe zone size", tip4: "You'll receive alerts when the dependent leaves the safe zone", tip5: "Status is automatically sent to the backend (console.log)", alertTitle: "Dependent Left Safe Zone!", alertSub: "Check location immediately", err1: "Please fill in all guardian and dependent fields", err2: "Please fill in all dependent fields", err3: "Passwords do not match", err4: "Invalid token. Please check with your guardian.", err5: "Please enter both email and password", err6: "Invalid credentials",
+    selectRole: "Select Your Role", selectRoleMsg: "Choose how you'll be using Sanad", guardianRole: "Guardian", guardianDesc: "Monitor and care for a dependent", dependentRole: "Care Recipient", dependentDesc: "Connect with my guardian", continue: "Continue", chooseLocation: "Choose Location", locationMsg: "Set your safe zone center location", searchLocation: "Search for a location...", useCurrentLoc: "Use Current Location", dragPin: "Drag the pin to your desired location", clickMap: "Or click anywhere on the map", confirmLoc: "Confirm Location", locPermDenied: "Location permission denied", editSafeZone: "Edit Safe Zone", saveChanges: "Save Changes", testLocation: "Test Dependent Location", setTestLoc: "Set Test Location", currentTestLoc: "Current Test Location", resetToActual: "Reset to Actual Location", viewOnMap: "View on Map", locationSaved: "Location saved successfully!", safeZoneUpdated: "Safe zone updated!", usingTestLoc: "Using test location", testLocSet: "Test location set", returnToActual: "Returned to actual location", locating: "Getting your location...", mapInstructions: "Search, click on map, or drag the marker to set location", myProfile: "My Profile", guardianInfo: "Guardian Information", noDependentLinked: "No dependent linked yet", waitingForDependent: "Waiting for dependent to sign up with your token", dependentLinked: "Dependent Linked", viewProfile: "View Profile", closeProfile: "Close",
+    // NEW: Dependent Photo & Reporting
+    patPhoto: "Dependent Photo",
+    uploadPhoto: "Upload Photo",
+    reportLost: "Report Lost Dependent",
+    reportLostDesc: "Help us find a lost dependent",
+    takePhoto: "Take Photo",
+    uploadImage: "Upload Image",
+    submitReport: "Submit Report",
+    reportSubmitted: "Report Submitted Successfully!",
+    matchFound: "Match Found!",
+    noMatch: "No Match Found",
+    imageMatches: "The uploaded image matches our records",
+    imageNoMatch: "The uploaded image does not match any dependent in our records",
+    sharingLocation: "Sharing your location...",
+    locationShared: "Location shared successfully",
+    retrieved: "Retrieved",
+    markRetrieved: "Mark as Retrieved",
+    dependentRetrieved: "Dependent Retrieved Successfully!",
+    lostReports: "Lost Dependent Reports",
+    reportDetails: "Report Details",
+    reportedAt: "Reported At",
+    reportedBy: "Reported By",
+    lastSeenLocation: "Last Seen Location",
+    duration: "Duration",
+    deviceInfo: "Device Information",
+    retrievedAt: "Retrieved At",
+    active: "Active",
+    noReports: "No reports available",
+    viewReports: "View Reports",
+    reportHistory: "Report History",
+    browser: "Browser",
+    os: "Operating System",
+    platform: "Platform",
+    pending: "Pending",
+    // Testing Mode
+    demoMode: "Demo Mode",
+    pauseTracking: "Pause Location Tracking",
+    resumeTracking: "Resume Location Tracking",
+    trackingPaused: "Location tracking paused",
+    trackingResumed: "Location tracking resumed",
+    trackingPausedNote: "Real-time location updates are paused for demo purposes",
+    clearDependentLocation: "Hide Dependent Marker",
+    showDependentLocation: "Show Dependent Marker",
+    dependentLocationCleared: "Dependent marker hidden",
+    dependentLocationShown: "Dependent marker visible",
+    dependentUntrackable: "Dependent Cannot Be Tracked!",
+    dependentMissingAlert: "is currently untrackable - location unknown",
+    // NEW: Patient Management & Photo Upload
+    manageDependents: "Manage Dependents",
+    addDependent: "Add Dependent",
+    deleteDependent: "Delete Dependent",
+    confirmDelete: "Are you sure you want to remove this dependent?",
+    dependentAdded: "Dependent added successfully!",
+    dependentDeleted: "Dependent removed successfully!",
+    addPhoto: "Add Photo",
+    changePhoto: "Change Photo",
+    photoUpdated: "Photo updated successfully!",
+    noDependents: "No dependents found",
+    dependentsList: "Your Dependents",
+    dependentToken: "Dependent Token",
+    shareToken: "Share this token with the dependent to link their account"
   },
   ar: {
-    app: "سند", tag: "آمن، متصل، معاً دائماً", signUp: "إنشاء حساب", logIn: "تسجيل الدخول", logout: "تسجيل الخروج", back: "رجوع", backDash: "العودة إلى لوحة التحكم", terms: "الشروط", privacy: "الخصوصية", byContinuing: "بالمتابعة، أنت توافق على", create: "إنشاء حساب", join: "انضم إلى سند وابدأ الرعاية", guard: "الوصي", pat: "المريض", email: "البريد الإلكتروني", pass: "كلمة المرور", confirmPass: "تأكيد كلمة المرور", name: "الاسم الكامل", natId: "الرقم القومي", phone: "رقم الهاتف", addr: "العنوان", patInfo: "معلومات المريض", patName: "الاسم الكامل للمريض", patId: "الرقم القومي للمريض", patEmail: "البريد الإلكتروني للمريض", patPhone: "رقم هاتف المريض", patAddr: "عنوان المريض", guardEmail: "البريد الإلكتروني للوصي", guardToken: "رمز الوصي (مثال: XXXX-XXXX-XXXX)", already: "لديك حساب بالفعل؟", dontHave: "ليس لديك حساب؟", welcomeBack: "مرحباً بعودتك", loginMsg: "سجل الدخول للمتابعة", demoMsg: "بيانات تجريبية:", created: "تم إنشاء الحساب!", shareMsg: "شارك هذا الرمز مع مريضك حتى يتمكن من ربط حسابه", yourToken: "رمز الربط الخاص بك", copyToken: "نسخ الرمز", contDash: "المتابعة إلى لوحة التحكم", keepSafe: "احتفظ بهذا الرمز بأمان. يمكنك العثور عليه مرة أخرى في إعدادات لوحة التحكم.", copied: "تم نسخ الرمز!", welcome: "مرحباً", dash: "لوحة التحكم", patStatus: "حالة المريض", inside: "داخل المنطقة الآمنة", outside: "خارج المنطقة الآمنة", patInside: "المريض داخل المنطقة المحددة", patOutside: "تنبيه: المريض غادر المنطقة الآمنة", patInfoTitle: "معلومات المريض", nameLabel: "الاسم", quickAct: "إجراءات سريعة", viewMap: "عرض الخريطة المباشرة", copyLink: "نسخ رمز الربط", recent: "النشاط الأخير", insideMsg: "المريض داخل المنطقة الآمنة", outsideMsg: "⚠️ المريض غادر المنطقة الآمنة", locUpdate: "تم تحديث الموقع", sysCheck: "تم فحص النظام", now: "الآن", min: "دقيقة مضت", liveTrack: "تتبع الموقع المباشر", monPat: "راقب موقع المريض في الوقت الفعلي وقم بتكوين نصف قطر المنطقة الآمنة", radius: "نصف قطر المنطقة الآمنة", inZone: "✓ داخل المنطقة", outZone: "⚠️ خارج المنطقة", curLoc: "الموقع الحالي", dist: "المسافة من المركز", how: "كيف يعمل:", tip1: "المنطقة الزرقاء توضح المنطقة الآمنة حول نقطة المركز", tip2: "العلامة المرجانية توضح موقع المريض الحالي", tip3: "اضبط شريط التمرير لتخصيص حجم المنطقة الآمنة", tip4: "ستتلقى تنبيهات عندما يغادر المريض المنطقة الآمنة", tip5: "يتم إرسال الحالة تلقائياً إلى الخادم", alertTitle: "المريض غادر المنطقة الآمنة!", alertSub: "تحقق من الموقع فوراً", err1: "يرجى ملء جميع حقول الوصي والمريض", err2: "يرجى ملء جميع حقول المريض", err3: "كلمات المرور غير متطابقة", err4: "رمز غير صالح. يرجى التحقق مع الوصي الخاص بك.", err5: "يرجى إدخال البريد الإلكتروني وكلمة المرور", err6: "بيانات اعتماد غير صالحة",
-    selectRole: "اختر دورك", selectRoleMsg: "اختر كيف ستستخدم سند", guardianRole: "أنا وصي", guardianDesc: "مراقبة والعناية بمريض", patientRole: "أنا مريض", patientDesc: "الاتصال مع الوصي الخاص بي", continue: "متابعة", chooseLocation: "اختر الموقع", locationMsg: "حدد موقع مركز المنطقة الآمنة", searchLocation: "ابحث عن موقع...", useCurrentLoc: "استخدم الموقع الحالي", dragPin: "اسحب الدبوس إلى الموقع المطلوب", clickMap: "أو انقر في أي مكان على الخريطة", confirmLoc: "تأكيد الموقع", locPermDenied: "تم رفض إذن الموقع", editSafeZone: "تعديل المنطقة الآمنة", saveChanges: "حفظ التغييرات", testLocation: "اختبار موقع المريض", setTestLoc: "تعيين موقع اختباري", currentTestLoc: "الموقع الاختباري الحالي", resetToActual: "العودة للموقع الفعلي", viewOnMap: "عرض على الخريطة", locationSaved: "تم حفظ الموقع بنجاح!", safeZoneUpdated: "تم تحديث المنطقة الآمنة!", usingTestLoc: "استخدام موقع اختباري", testLocSet: "تم تعيين موقع اختباري", returnToActual: "تم العودة للموقع الفعلي", locating: "جاري تحديد موقعك...", mapInstructions: "ابحث، انقر على الخريطة، أو اسحب العلامة لتحديد الموقع", myProfile: "ملفي الشخصي", guardianInfo: "معلومات الوصي", noPatientLinked: "لا يوجد مريض مرتبط بعد", waitingForPatient: "في انتظار المريض للتسجيل باستخدام الرمز الخاص بك", patientLinked: "المريض مرتبط", viewProfile: "عرض الملف الشخصي", closeProfile: "إغلاق"
+    app: "سند", tag: "آمن، متصل، معاً دائماً", signUp: "إنشاء حساب", logIn: "تسجيل الدخول", logout: "تسجيل الخروج", back: "رجوع", backDash: "العودة إلى لوحة التحكم", terms: "الشروط", privacy: "الخصوصية", byContinuing: "بالمتابعة، أنت توافق على", create: "إنشاء حساب", join: "انضم إلى سند وابدأ الرعاية", guard: "الوصي", pat: "متلقّي الرعاية", email: "البريد الإلكتروني", pass: "كلمة المرور", confirmPass: "تأكيد كلمة المرور", name: "الاسم الكامل", natId: "الرقم القومي", phone: "رقم الهاتف", addr: "العنوان", patInfo: "معلومات متلقّي الرعاية", patName: "الاسم الكامل لمتلقّي الرعاية", patId: "الرقم القومي لمتلقّي الرعاية", patEmail: "البريد الإلكتروني لمتلقّي الرعاية", patPhone: "رقم هاتف متلقّي الرعاية", patAddr: "عنوان متلقّي الرعاية", guardEmail: "البريد الإلكتروني للوصي", guardToken: "رمز الوصي (مثال: XXXX-XXXX-XXXX)", already: "لديك حساب بالفعل؟", dontHave: "ليس لديك حساب؟", welcomeBack: "مرحباً بعودتك", loginMsg: "سجل الدخول للمتابعة", demoMsg: "بيانات تجريبية:", created: "تم إنشاء الحساب!", shareMsg: "شارك هذا الرمز مع متلقّي الرعايةك حتى يتمكن من ربط حسابه", yourToken: "رمز الربط الخاص بك", copyToken: "نسخ الرمز", contDash: "المتابعة إلى لوحة التحكم", keepSafe: "احتفظ بهذا الرمز بأمان. يمكنك العثور عليه مرة أخرى في إعدادات لوحة التحكم.", copied: "تم نسخ الرمز!", welcome: "مرحباً", dash: "لوحة التحكم", patStatus: "حالة متلقّي الرعاية", inside: "داخل المنطقة الآمنة", outside: "خارج المنطقة الآمنة", patInside: "متلقّي الرعاية داخل المنطقة المحددة", patOutside: "تنبيه: متلقّي الرعاية غادر المنطقة الآمنة", patInfoTitle: "معلومات متلقّي الرعاية", nameLabel: "الاسم", quickAct: "إجراءات سريعة", viewMap: "عرض الخريطة المباشرة", copyLink: "نسخ رمز الربط", recent: "النشاط الأخير", insideMsg: "متلقّي الرعاية داخل المنطقة الآمنة", outsideMsg: "⚠️ متلقّي الرعاية غادر المنطقة الآمنة", locUpdate: "تم تحديث الموقع", sysCheck: "تم فحص النظام", now: "الآن", min: "دقيقة مضت", liveTrack: "تتبع الموقع المباشر", monPat: "راقب موقع متلقّي الرعاية في الوقت الفعلي وقم بتكوين نصف قطر المنطقة الآمنة", radius: "نصف قطر المنطقة الآمنة", inZone: "✓ داخل المنطقة", outZone: "⚠️ خارج المنطقة", curLoc: "الموقع الحالي", dist: "المسافة من المركز", how: "كيف يعمل:", tip1: "المنطقة الزرقاء توضح المنطقة الآمنة حول نقطة المركز", tip2: "العلامة المرجانية توضح موقع متلقّي الرعاية الحالي", tip3: "اضبط شريط التمرير لتخصيص حجم المنطقة الآمنة", tip4: "ستتلقى تنبيهات عندما يغادر متلقّي الرعاية المنطقة الآمنة", tip5: "يتم إرسال الحالة تلقائياً إلى الخادم", alertTitle: "متلقّي الرعاية غادر المنطقة الآمنة!", alertSub: "تحقق من الموقع فوراً", err1: "يرجى ملء جميع حقول الوصي ومتلقّي الرعاية", err2: "يرجى ملء جميع حقول متلقّي الرعاية", err3: "كلمات المرور غير متطابقة", err4: "رمز غير صالح. يرجى التحقق مع الوصي الخاص بك.", err5: "يرجى إدخال البريد الإلكتروني وكلمة المرور", err6: "بيانات اعتماد غير صالحة",
+    selectRole: "اختر دورك", selectRoleMsg: "اختر كيف ستستخدم سند", guardianRole: "وصي", guardianDesc: "مراقبة والعناية بمتلقّي الرعاية", dependentRole: "متلقّي الرعاية", dependentDesc: "الاتصال مع الوصي الخاص بي", continue: "متابعة", chooseLocation: "اختر الموقع", locationMsg: "حدد موقع مركز المنطقة الآمنة", searchLocation: "ابحث عن موقع...", useCurrentLoc: "استخدم الموقع الحالي", dragPin: "اسحب الدبوس إلى الموقع المطلوب", clickMap: "أو انقر في أي مكان على الخريطة", confirmLoc: "تأكيد الموقع", locPermDenied: "تم رفض إذن الموقع", editSafeZone: "تعديل المنطقة الآمنة", saveChanges: "حفظ التغييرات", testLocation: "اختبار موقع متلقّي الرعاية", setTestLoc: "تعيين موقع اختباري", currentTestLoc: "الموقع الاختباري الحالي", resetToActual: "العودة للموقع الفعلي", viewOnMap: "عرض على الخريطة", locationSaved: "تم حفظ الموقع بنجاح!", safeZoneUpdated: "تم تحديث المنطقة الآمنة!", usingTestLoc: "استخدام موقع اختباري", testLocSet: "تم تعيين موقع اختباري", returnToActual: "تم العودة للموقع الفعلي", locating: "جاري تحديد موقعك...", mapInstructions: "ابحث، انقر على الخريطة، أو اسحب العلامة لتحديد الموقع", myProfile: "ملفي الشخصي", guardianInfo: "معلومات الوصي", noDependentLinked: "لا يوجد متلقّي رعاية مرتبط بعد", waitingForDependent: "في انتظار متلقّي الرعاية للتسجيل باستخدام الرمز الخاص بك", dependentLinked: "متلقّي الرعاية مرتبط", viewProfile: "عرض الملف الشخصي", closeProfile: "إغلاق",
+    // NEW: Arabic translations
+    patPhoto: "صورة متلقّي الرعاية",
+    uploadPhoto: "رفع صورة",
+    reportLost: "الإبلاغ عن متلقّي رعاية مفقود",
+    reportLostDesc: "ساعدنا في العثور على متلقّي الرعاية المفقود",
+    takePhoto: "التقاط صورة",
+    uploadImage: "رفع صورة",
+    submitReport: "إرسال البلاغ",
+    reportSubmitted: "تم إرسال البلاغ بنجاح!",
+    matchFound: "تم العثور على تطابق!",
+    noMatch: "لم يتم العثور على تطابق",
+    imageMatches: "الصورة المرفوعة تطابق سجلاتنا",
+    imageNoMatch: "الصورة المرفوعة لا تطابق أي متلقّي رعاية في سجلاتنا",
+    sharingLocation: "مشاركة موقعك...",
+    locationShared: "تمت مشاركة الموقع بنجاح",
+    retrieved: "تم الاستعادة",
+    markRetrieved: "تحديد كمستعاد",
+    dependentRetrieved: "تم استعادة متلقّي الرعاية بنجاح!",
+    lostReports: "بلاغات المرضى المفقودين",
+    reportDetails: "تفاصيل البلاغ",
+    reportedAt: "تم البلاغ في",
+    reportedBy: "المبلغ",
+    lastSeenLocation: "آخر موقع شوهد فيه",
+    duration: "المدة",
+    deviceInfo: "معلومات الجهاز",
+    retrievedAt: "تم الاستعادة في",
+    active: "نشط",
+    noReports: "لا توجد بلاغات",
+    viewReports: "عرض البلاغات",
+    reportHistory: "سجل البلاغات",
+    browser: "المتصفح",
+    os: "نظام التشغيل",
+    platform: "المنصة",
+    pending: "قيد الانتظار",
+    // Testing Mode
+    demoMode: "وضع العرض التوضيحي",
+    pauseTracking: "إيقاف التتبع مؤقتاً",
+    resumeTracking: "استئناف التتبع",
+    trackingPaused: "تم إيقاف التتبع مؤقتاً",
+    trackingResumed: "تم استئناف التتبع",
+    trackingPausedNote: "تم إيقاف تحديثات الموقع المباشرة لأغراض العرض التوضيحي",
+    clearDependentLocation: "إخفاء علامة متلقّي الرعاية",
+    showDependentLocation: "إظهار علامة متلقّي الرعاية",
+    dependentLocationCleared: "تم إخفاء علامة متلقّي الرعاية",
+    dependentLocationShown: "علامة متلقّي الرعاية مرئية",
+    dependentUntrackable: "لا يمكن تتبع متلقّي الرعاية!",
+    dependentMissingAlert: "غير قابل للتتبع حالياً - الموقع غير معروف",
+    // NEW: Patient Management & Photo Upload
+    manageDependents: "إدارة متلقّي الرعاية",
+    addDependent: "إضافة متلقّي رعاية",
+    deleteDependent: "حذف متلقّي الرعاية",
+    confirmDelete: "هل أنت متأكد من إزالة متلقّي الرعاية هذا؟",
+    dependentAdded: "تمت إضافة متلقّي الرعاية بنجاح!",
+    dependentDeleted: "تمت إزالة متلقّي الرعاية بنجاح!",
+    addPhoto: "إضافة صورة",
+    changePhoto: "تغيير الصورة",
+    photoUpdated: "تم تحديث الصورة بنجاح!",
+    noDependents: "لا يوجد متلقّي رعاية",
+    dependentsList: "متلقّي الرعاية الخاصة بك",
+    dependentToken: "رمز متلقّي الرعاية",
+    shareToken: "شارك هذا الرمز مع متلقّي الرعاية لربط حسابه"
   }
 };
 
@@ -87,11 +209,79 @@ function initializeSessionId() {
 /* ═══════════════════════════════════════════════════════════════
    FAKE AUTH STORE
    ═══════════════════════════════════════════════════════════════ */
+const DEMO_PATIENT_PHOTO = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect fill='%234a90a4' width='200' height='200'/%3E%3Ctext x='50%25' y='50%25' font-size='60' text-anchor='middle' dy='.3em' fill='white' font-family='Arial'%3ESH%3C/text%3E%3C/svg%3E";
+
 const DEMO_ACCOUNTS = [
-  { email: "guardian@demo.com", password: "demo1234", role: "guardian", fullName: "Ahmed Hassan", nationalId: "30101011234", phone: "+20 123 456 7890", address: "15 Tahrir St, Cairo", patient: { fullName: "Sara Hassan", nationalId: "85050512345", email: "patient@demo.com", phone: "+20 987 654 3210", address: "15 Tahrir St, Cairo" }, location: { lat: 30.0444, lng: 31.2357 }, safeZoneCenter: { lat: 30.0444, lng: 31.2357 }, safeZoneRadius: 500, token: "DEMO-TKNA-ABCD" },
-  { email: "patient@demo.com", password: "demo1234", role: "patient", fullName: "Sara Hassan", nationalId: "85050512345", phone: "+20 987 654 3210", linkedToken: "DEMO-TKNA-ABCD" }
+  { email: "guardian@demo.com", password: "demo1234", role: "guardian", fullName: "Ahmed Hassan", nationalId: "30101011234", phone: "+20 123 456 7890", address: "15 Tahrir St, Cairo", dependent: { fullName: "Sara Hassan", nationalId: "85050512345", email: "dependent@demo.com", phone: "+20 987 654 3210", address: "15 Tahrir St, Cairo" }, location: { lat: 30.0444, lng: 31.2357 }, safeZoneCenter: { lat: 30.0444, lng: 31.2357 }, safeZoneRadius: 500, token: "DEMO-TKNA-ABCD" },
+  { email: "dependent@demo.com", password: "demo1234", role: "dependent", fullName: "Sara Hassan", nationalId: "85050512345", phone: "+20 987 654 3210", linkedToken: "DEMO-TKNA-ABCD" }
 ];
 const accountsDB = JSON.parse(localStorage.getItem("sanad-accounts")) || [...DEMO_ACCOUNTS];
+
+// Add lost reports database
+let lostReportsDB = JSON.parse(localStorage.getItem('sanad-lost-reports') || '[]');
+
+function saveLostReportsDB() {
+  localStorage.setItem('sanad-lost-reports', JSON.stringify(lostReportsDB));
+}
+
+function saveAccountsDB() {
+  localStorage.setItem('sanad-accounts', JSON.stringify(accountsDB));
+}
+
+// Image matching function - for prototype, checks exact base64 match
+function matchImage(uploadedImage, dependentPhoto) {
+  // In a real app, this would use ML image recognition
+  // For prototype: exact match with normalization
+  
+  if (!uploadedImage || !dependentPhoto) {
+    return false;
+  }
+  
+  // Helper to extract and normalize base64 data
+  const extractBase64Data = (dataUrl) => {
+    if (!dataUrl) return '';
+    
+    // Remove data URL prefix (e.g., "data:image/jpeg;base64,")
+    let base64Data = dataUrl;
+    if (dataUrl.includes(',')) {
+      base64Data = dataUrl.split(',')[1];
+    } else if (dataUrl.includes(';base64')) {
+      base64Data = dataUrl.split(';base64')[1];
+    }
+    
+    // Remove all whitespace, newlines, and special characters
+    base64Data = base64Data.replace(/\s+/g, '').replace(/[\r\n]+/g, '').trim();
+    
+    return base64Data;
+  };
+  
+  const uploadedData = extractBase64Data(uploadedImage);
+  const dependentData = extractBase64Data(dependentPhoto);
+  
+  // Log for debugging
+  console.log('Uploaded image data length:', uploadedData.length);
+  console.log('Dependent photo data length:', dependentData.length);
+  console.log('First 50 chars of uploaded:', uploadedData.substring(0, 50));
+  console.log('First 50 chars of dependent:', dependentData.substring(0, 50));
+  
+  // Direct comparison of base64 data
+  const isMatch = uploadedData === dependentData;
+  
+  console.log('Match result:', isMatch);
+  
+  return isMatch;
+}
+
+// Get device information
+function getDeviceInfo() {
+  return {
+    browser: navigator.userAgent,
+    platform: navigator.platform,
+    language: navigator.language,
+    screenResolution: `${window.screen.width}x${window.screen.height}`,
+    timestamp: new Date().toISOString()
+  };
+}
 
 /* ═══════════════════════════════════════════════════════════════
    GLOBAL STYLES
@@ -138,6 +328,45 @@ const GlobalStyle = () => (
     .role-card.selected{border-color:var(--azure);background:var(--azure-pale);box-shadow:0 0 0 3px rgba(74,144,164,.15)}
     .location-search{position:absolute;top:16px;left:50%;transform:translateX(-50%);z-index:1000;width:90%;max-width:400px}
     [dir="rtl"] .location-search{left:auto;right:50%;transform:translateX(50%)}
+    .toggle-switch {
+  position: relative; display: inline-block; width: 52px; height: 28px;
+}
+.toggle-switch input {
+  opacity: 0; width: 0; height: 0;
+}
+.toggle-slider {
+  position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #ccc; transition: .4s; border-radius: 28px;
+}
+.toggle-slider:before {
+  position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px;
+  background-color: white; transition: .4s; border-radius: 50%;
+}
+input:checked + .toggle-slider {
+  background-color: var(--sage);
+}
+input:checked + .toggle-slider:before {
+  transform: translateX(24px);
+}
+input:disabled + .toggle-slider {
+  background-color: #999; cursor: not-allowed; opacity: 0.6;
+}
+.photo-preview {
+  width: 120px; height: 120px; border-radius: 12px; object-fit: cover;
+  border: 2px solid rgba(74,144,164,.2); box-shadow: 0 2px 12px rgba(0,0,0,.08);
+}
+.report-card {
+  background: var(--card-bg); border-radius: 12px; padding: 16px; margin-bottom: 12px;
+  border-left: 4px solid var(--azure); box-shadow: var(--shadow);
+}
+.report-card.retrieved {
+  border-left-color: var(--sage); opacity: 0.7;
+}
+.btn-danger {
+  background: linear-gradient(135deg, var(--coral), #d45d5d); color: #fff;
+  box-shadow: 0 2px 12px rgba(235,111,111,.25);
+}
+.btn-danger:hover { box-shadow: 0 4px 20px rgba(235,111,111,.35); }
     
     /* Mobile & Tablet Responsive Styles */
     @media (max-width: 768px) {
@@ -161,7 +390,26 @@ const GlobalStyle = () => (
 /* ═══════════════════════════════════════════════════════════════
    COMPONENTS
    ═══════════════════════════════════════════════════════════════ */
-const ShieldIcon = () => (
+// const CameraIcon = () => (
+//   <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+//     <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/>
+//     <circle cx="12" cy="13" r="4"/>
+//   </svg>
+// );
+
+const UploadIcon = () => (
+  <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+  </svg>
+);
+
+const XIcon = () => (
+  <svg width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18"/>
+    <line x1="6" y1="6" x2="18" y2="18"/>
+  </svg>
+);
+   const ShieldIcon = () => (
   <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
   </svg>
@@ -194,6 +442,44 @@ const NavigationIcon = () => (
 const EditIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+  </svg>
+);
+
+const AlertIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+    <line x1="12" y1="9" x2="12" y2="13"/>
+    <line x1="12" y1="17" x2="12.01" y2="17"/>
+  </svg>
+);
+
+const PlusIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="12" y1="5" x2="12" y2="19"/>
+    <line x1="5" y1="12" x2="19" y2="12"/>
+  </svg>
+);
+
+const TrashIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="3 6 5 6 21 6"/>
+    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+  </svg>
+);
+
+const UsersIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+    <circle cx="9" cy="7" r="4"/>
+    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+  </svg>
+);
+
+const CameraIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+    <circle cx="12" cy="13" r="4"/>
   </svg>
 );
 
@@ -246,12 +532,12 @@ function RoleSelectionPage({ onRoleSelected, onBack }) {
             </div>
 
             <div 
-              className={`role-card ${selectedRole === 'patient' ? 'selected' : ''}`}
-              onClick={() => setSelectedRole('patient')}
+              className={`role-card ${selectedRole === 'dependent' ? 'selected' : ''}`}
+              onClick={() => setSelectedRole('dependent')}
             >
               <div style={{ fontSize: 40, marginBottom: 12 }}>🧑‍🦳</div>
-              <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 6 }}>{t('patientRole')}</h3>
-              <p style={{ fontSize: 13, color: "var(--ink-muted)" }}>{t('patientDesc')}</p>
+              <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 6 }}>{t('dependentRole')}</h3>
+              <p style={{ fontSize: 13, color: "var(--ink-muted)" }}>{t('dependentDesc')}</p>
             </div>
           </div>
 
@@ -487,6 +773,366 @@ function LocationPicker({ initialLocation, onLocationSelected, onCancel, showSaf
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   Report PAGE
+   ═══════════════════════════════════════════════════════════════ */
+function ReportLostDependentPage({ onBack }) {
+  const { t } = useLang();
+  const [uploadedImage, setUploadedImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [location, setLocation] = useState(null);
+  const [matchResult, setMatchResult] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const fileInputRef = useRef(null);
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64 = reader.result;
+        setUploadedImage(base64);
+        setImagePreview(base64);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!uploadedImage) {
+      alert('Please upload an image first');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    // Get location
+    try {
+      const pos = await new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+      });
+      const currentLocation = {
+        lat: pos.coords.latitude,
+        lng: pos.coords.longitude
+      };
+      setLocation(currentLocation);
+
+      // Check for matching dependent photo in database
+      let matchedAccount = null;
+      console.log('Checking for image match. Uploaded image length:', uploadedImage?.length);
+      console.log('Number of guardian accounts with photos:', accountsDB.filter(acc => acc.role === 'guardian' && acc.dependent?.photo).length);
+      
+      for (const acc of accountsDB) {
+        if (acc.role === 'guardian' && acc.dependent?.photo) {
+          console.log(`Checking guardian ${acc.email}, dependent photo length:`, acc.dependent.photo?.length);
+          if (matchImage(uploadedImage, acc.dependent.photo)) {
+            console.log('Match found with dependent:', acc.dependent.fullName);
+            matchedAccount = acc;
+            break;
+          }
+        }
+      }
+      
+      if (!matchedAccount) {
+        console.log('No match found in database');
+      }
+
+      if (matchedAccount) {
+        // Match found - create report
+        const report = {
+          id: `report-${Date.now()}`,
+          dependentName: matchedAccount.dependent.fullName,
+          dependentId: matchedAccount.dependent.nationalId,
+          guardianEmail: matchedAccount.email,
+          reportedAt: new Date().toISOString(),
+          location: currentLocation,
+          image: uploadedImage,
+          deviceInfo: getDeviceInfo(),
+          status: 'active',
+          retrievedAt: null
+        };
+
+        // Add report to lost reports database
+        lostReportsDB.push(report);
+        saveLostReportsDB();
+
+        // Add report to guardian's account
+        const guardianIndex = accountsDB.findIndex(acc => acc.email === matchedAccount.email);
+        if (guardianIndex !== -1) {
+          accountsDB[guardianIndex].lostReports = accountsDB[guardianIndex].lostReports || [];
+          accountsDB[guardianIndex].lostReports.push(report);
+          saveAccountsDB();
+        }
+
+        setMatchResult('match');
+        setSubmitted(true);
+      } else {
+        // No match found
+        setMatchResult('no-match');
+      }
+    } catch (error) {
+      console.error('Location error:', error);
+      alert('Unable to get location. Please enable location services.');
+    }
+
+    setIsSubmitting(false);
+  };
+
+  if (submitted && matchResult === 'match') {
+    return (
+      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", padding: 24 }}>
+        <div className="mesh-bg" /><div className="texture-overlay" />
+        <LangSwitch />
+        <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 480, textAlign: "center" }}>
+          <div className="fade-up" style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: 20, padding: 32, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)" }}>
+            <div style={{ width: 72, height: 72, borderRadius: 20, background: "linear-gradient(135deg,var(--sage),#6a9a5a)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px", boxShadow: "0 6px 28px rgba(127,176,105,.3)", color: "#fff" }}>
+              <CheckIcon />
+            </div>
+            <h2 style={{ fontSize: 24, marginBottom: 12, color: "var(--sage)" }}>{t('reportSubmitted')}</h2>
+            <p style={{ color: "var(--ink-muted)", marginBottom: 24 }}>{t('imageMatches')}</p>
+            {location && (
+              <div style={{ background: "rgba(74,144,164,.1)", borderRadius: 12, padding: 16, marginBottom: 24 }}>
+                <p style={{ fontSize: 14, color: "var(--ink)" }}>
+                  <strong>{t('lastSeenLocation')}:</strong><br />
+                  {location.lat.toFixed(6)}, {location.lng.toFixed(6)}
+                </p>
+              </div>
+            )}
+            <button className="btn-primary" onClick={onBack}>
+              {t('back')}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (matchResult === 'no-match') {
+    return (
+      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", padding: 24 }}>
+        <div className="mesh-bg" /><div className="texture-overlay" />
+        <LangSwitch />
+        <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 480, textAlign: "center" }}>
+          <div className="fade-up" style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: 20, padding: 32, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)" }}>
+            <div style={{ width: 72, height: 72, borderRadius: 20, background: "linear-gradient(135deg,var(--coral),#d45d5d)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px", boxShadow: "0 6px 28px rgba(235,111,111,.3)", color: "#fff" }}>
+              <XIcon />
+            </div>
+            <h2 style={{ fontSize: 24, marginBottom: 12, color: "var(--coral)" }}>{t('noMatch')}</h2>
+            <p style={{ color: "var(--ink-muted)", marginBottom: 24 }}>{t('imageNoMatch')}</p>
+            <button className="btn-primary" onClick={() => { setMatchResult(null); setUploadedImage(null); setImagePreview(null); }}>
+              {t('back')}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", padding: 24 }}>
+      <div className="mesh-bg" /><div className="texture-overlay" />
+      <LangSwitch />
+      <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 480 }}>
+        <button onClick={onBack} style={{ background: "rgba(255,255,255,.9)", border: "1px solid rgba(0,0,0,.1)", borderRadius: 12, padding: "10px 20px", marginBottom: 20, cursor: "pointer", fontSize: 14, fontWeight: 600, display: "flex", alignItems: "center", gap: 8 }}>
+          ← {t('back')}
+        </button>
+        
+        <div className="fade-up" style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: 20, padding: 32, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)" }}>
+          <h2 style={{ fontSize: 24, marginBottom: 8 }}>{t('reportLost')}</h2>
+          <p style={{ fontSize: 14, color: "var(--ink-muted)", marginBottom: 24 }}>{t('reportLostDesc')}</p>
+
+          <div style={{ marginBottom: 24 }}>
+            <label style={{ display: "block", fontSize: 14, fontWeight: 600, marginBottom: 8, color: "var(--ink)" }}>
+              {t('uploadImage')}
+            </label>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              style={{ display: 'none' }}
+            />
+            <button
+              className="btn-secondary"
+              onClick={() => fileInputRef.current?.click()}
+              style={{ marginBottom: 12 }}
+            >
+              <UploadIcon /> {t('uploadPhoto')}
+            </button>
+
+            {imagePreview && (
+              <div style={{ textAlign: 'center', marginTop: 16 }}>
+                <img src={imagePreview} alt="Preview" className="photo-preview" />
+              </div>
+            )}
+          </div>
+
+          <button
+            className="btn-primary"
+            onClick={handleSubmit}
+            disabled={!uploadedImage || isSubmitting}
+            style={{ opacity: (!uploadedImage || isSubmitting) ? 0.5 : 1 }}
+          >
+            {isSubmitting ? t('sharingLocation') : t('submitReport')}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Lost Reports
+   ═══════════════════════════════════════════════════════════════ */
+  function LostReportsViewer({ guardianData, onBack, onUpdateGuardian }) {
+  const { t } = useLang();
+  const reports = guardianData.lostReports || [];
+
+  const handleToggleRetrieved = (reportId) => {
+    const reportIndex = guardianData.lostReports.findIndex(r => r.id === reportId);
+    if (reportIndex === -1) return;
+
+    const report = guardianData.lostReports[reportIndex];
+    if (report.status === 'retrieved') return; // Already retrieved, locked
+
+    // Update report status
+    const updatedReports = [...guardianData.lostReports];
+    updatedReports[reportIndex] = {
+      ...report,
+      status: 'retrieved',
+      retrievedAt: new Date().toISOString()
+    };
+
+    // Update guardian data
+    const updatedGuardian = {
+      ...guardianData,
+      lostReports: updatedReports
+    };
+
+    // Update in database
+    const guardianIndex = accountsDB.findIndex(acc => acc.email === guardianData.email);
+    if (guardianIndex !== -1) {
+      accountsDB[guardianIndex] = updatedGuardian;
+      saveAccountsDB();
+    }
+
+    // Update in lost reports database
+    const globalReportIndex = lostReportsDB.findIndex(r => r.id === reportId);
+    if (globalReportIndex !== -1) {
+      lostReportsDB[globalReportIndex] = updatedReports[reportIndex];
+      saveLostReportsDB();
+    }
+
+    onUpdateGuardian(updatedGuardian);
+  };
+
+  const formatDuration = (reportedAt, retrievedAt) => {
+    const start = new Date(reportedAt);
+    const end = retrievedAt ? new Date(retrievedAt) : new Date();
+    const diffMs = end - start;
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMins / 60);
+    const diffDays = Math.floor(diffHours / 24);
+
+    if (diffDays > 0) return `${diffDays}d ${diffHours % 24}h`;
+    if (diffHours > 0) return `${diffHours}h ${diffMins % 60}m`;
+    return `${diffMins}m`;
+  };
+
+  return (
+    <div style={{ minHeight: "100vh", padding: 24, position: "relative" }}>
+      <div className="mesh-bg" /><div className="texture-overlay" />
+      <div style={{ position: "relative", zIndex: 1, maxWidth: 800, margin: "0 auto" }}>
+        <button onClick={onBack} style={{ background: "rgba(255,255,255,.9)", border: "1px solid rgba(0,0,0,.1)", borderRadius: 12, padding: "10px 20px", marginBottom: 20, cursor: "pointer", fontSize: 14, fontWeight: 600, display: "flex", alignItems: "center", gap: 8 }}>
+          ← {t('backDash')}
+        </button>
+
+        <div style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: 20, padding: 32, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)" }}>
+          <h2 style={{ fontSize: 24, marginBottom: 24 }}>{t('lostReports')}</h2>
+
+          {reports.length === 0 ? (
+            <p style={{ color: "var(--ink-muted)", textAlign: "center", padding: 40 }}>{t('noReports')}</p>
+          ) : (
+            <div>
+              {reports.map((report) => (
+                <div key={report.id} className={`report-card ${report.status === 'retrieved' ? 'retrieved' : ''}`}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start", marginBottom: 12 }}>
+                    <div>
+                      <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 4 }}>{report.dependentName}</h3>
+                      <p style={{ fontSize: 13, color: "var(--ink-muted)" }}>ID: {report.dependentId}</p>
+                    </div>
+                    <span style={{ 
+                      padding: "4px 12px", 
+                      borderRadius: 8, 
+                      fontSize: 12, 
+                      fontWeight: 600,
+                      background: report.status === 'retrieved' ? 'var(--sage)' : 'var(--coral)',
+                      color: '#fff'
+                    }}>
+                      {report.status === 'retrieved' ? t('retrieved') : t('active')}
+                    </span>
+                  </div>
+
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 16, fontSize: 14 }}>
+                    <div>
+                      <strong>{t('reportedAt')}:</strong><br />
+                      {new Date(report.reportedAt).toLocaleString()}
+                    </div>
+                    <div>
+                      <strong>{t('duration')}:</strong><br />
+                      {formatDuration(report.reportedAt, report.retrievedAt)}
+                    </div>
+                    <div style={{ gridColumn: "1 / -1" }}>
+                      <strong>{t('lastSeenLocation')}:</strong><br />
+                      {report.location.lat.toFixed(6)}, {report.location.lng.toFixed(6)}
+                    </div>
+                  </div>
+
+                  {report.image && (
+                    <div style={{ marginBottom: 16 }}>
+                      <img src={report.image} alt="Report" className="photo-preview" />
+                    </div>
+                  )}
+
+                  <details style={{ marginBottom: 16, fontSize: 13 }}>
+                    <summary style={{ cursor: "pointer", fontWeight: 600, marginBottom: 8 }}>{t('deviceInfo')}</summary>
+                    <div style={{ background: "rgba(0,0,0,.03)", padding: 12, borderRadius: 8, fontSize: 12, fontFamily: "monospace" }}>
+                      <div><strong>{t('platform')}:</strong> {report.deviceInfo.platform}</div>
+                      <div><strong>{t('browser')}:</strong> {report.deviceInfo.browser}</div>
+                      <div><strong>Screen:</strong> {report.deviceInfo.screenResolution}</div>
+                    </div>
+                  </details>
+
+                  {report.retrievedAt && (
+                    <div style={{ marginBottom: 16, padding: 12, background: "rgba(127,176,105,.1)", borderRadius: 8, fontSize: 14 }}>
+                      <strong>{t('retrievedAt')}:</strong> {new Date(report.retrievedAt).toLocaleString()}
+                    </div>
+                  )}
+
+                  <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                    <label className="toggle-switch">
+                      <input
+                        type="checkbox"
+                        checked={report.status === 'retrieved'}
+                        onChange={() => handleToggleRetrieved(report.id)}
+                        disabled={report.status === 'retrieved'}
+                      />
+                      <span className="toggle-slider"></span>
+                    </label>
+                    <span style={{ fontSize: 14, fontWeight: 600, color: report.status === 'retrieved' ? 'var(--sage)' : 'var(--ink)' }}>
+                      {report.status === 'retrieved' ? t('retrieved') : t('markRetrieved')}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+/* ═══════════════════════════════════════════════════════════════
    SIGN UP PAGE
    ═══════════════════════════════════════════════════════════════ */
 function SignUpPage({ onGuardianSignUp, onSwitchToLogin, onBack }) {
@@ -496,14 +1142,77 @@ function SignUpPage({ onGuardianSignUp, onSwitchToLogin, onBack }) {
   const [showLocationPicker, setShowLocationPicker] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [locationAddress, setLocationAddress] = useState('');
+  const [dependentPhoto, setDependentPhoto] = useState(null);
+  const [photoPreview, setPhotoPreview] = useState(null);
+  const fileInputRef = useRef(null);
+
+  const handlePhotoUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64 = reader.result;
+        setDependentPhoto(base64);
+        setPhotoPreview(base64);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const [guardianForm, setGuardianForm] = useState({
     email: "", password: "", confirmPassword: "", fullName: "", nationalId: "", phone: "", address: ""
   });
-  const [patientForm, setPatientForm] = useState({
-    fullName: "", nationalId: "", email: "", phone: "", address: "", guardianEmail: "", guardianToken: ""
+  const [dependentForm, setDependentForm] = useState({
+    fullName: "", nationalId: "", email: "", phone: "", address: "", guardianEmail: "", guardianToken: "", password: ""
   });
   const [err, setErr] = useState("");
+  const [tokenVerified, setTokenVerified] = useState(false);
+  const [isExistingDependent, setIsExistingDependent] = useState(false);
+  const [existingDependentData, setExistingDependentData] = useState(null);
+
+  // Function to verify token when dependent enters it
+  const verifyToken = () => {
+    if (!dependentForm.guardianToken) {
+      setErr(t('err4'));
+      return;
+    }
+
+    // Check if token belongs to existing dependent
+    const existingDep = accountsDB.find(acc => 
+      acc.role === 'dependent' && acc.token === dependentForm.guardianToken
+    );
+
+    if (existingDep) {
+      // Existing dependent found
+      setIsExistingDependent(true);
+      setExistingDependentData(existingDep);
+      setTokenVerified(true);
+      setErr("");
+      // Pre-fill the form with existing data
+      setDependentForm({
+        ...dependentForm,
+        fullName: existingDep.fullName,
+        nationalId: existingDep.nationalId,
+        phone: existingDep.phone
+      });
+    } else {
+      // Check if it's a guardian token for new dependent
+      const guardian = accountsDB.find(acc => 
+        acc.role === 'guardian' && acc.token === dependentForm.guardianToken
+      );
+      
+      if (guardian) {
+        setIsExistingDependent(false);
+        setExistingDependentData(null);
+        setTokenVerified(true);
+        setErr("");
+        setDependentForm({ ...dependentForm, guardianEmail: guardian.email });
+      } else {
+        setErr(t('err4'));
+        setTokenVerified(false);
+      }
+    }
+  };
 
   if (showRoleSelection) {
     return (
@@ -540,7 +1249,7 @@ function SignUpPage({ onGuardianSignUp, onSwitchToLogin, onBack }) {
         nationalId: guardianForm.nationalId,
         phone: guardianForm.phone,
         address: locationAddress || `${selectedLocation.lat.toFixed(4)}, ${selectedLocation.lng.toFixed(4)}`,
-        patient: null, // No patient initially
+        dependent: null, // No dependent initially
         location: selectedLocation,
         safeZoneCenter: selectedLocation,
         safeZoneRadius: 500, // Default radius in meters
@@ -551,47 +1260,93 @@ function SignUpPage({ onGuardianSignUp, onSwitchToLogin, onBack }) {
       localStorage.setItem("sanad-accounts", JSON.stringify(accountsDB));
       onGuardianSignUp(newAccount);
     } else {
-      if (!patientForm.fullName || !patientForm.nationalId || !patientForm.email || !patientForm.phone || !patientForm.guardianEmail || !patientForm.guardianToken) {
+      // Dependent signup flow
+      if (!dependentForm.guardianToken) {
         setErr(t('err2'));
         return;
       }
 
-      const guardianIndex = accountsDB.findIndex(acc => acc.role === "guardian" && acc.email === patientForm.guardianEmail && acc.token === patientForm.guardianToken);
-      if (guardianIndex === -1) {
-        setErr(t('err4'));
-        return;
-      }
+      // First, check if this token belongs to an already-listed dependent
+      const existingDependent = accountsDB.find(acc => 
+        acc.role === 'dependent' && acc.token === dependentForm.guardianToken
+      );
 
-      const guardian = accountsDB[guardianIndex];
-
-      // Create patient account
-      const newPatient = {
-        email: patientForm.email,
-        password: guardianForm.password || "patient123",
-        role: "patient",
-        fullName: patientForm.fullName,
-        nationalId: patientForm.nationalId,
-        phone: patientForm.phone,
-        linkedToken: patientForm.guardianToken
-      };
-
-      // Update guardian account with patient info
-      accountsDB[guardianIndex] = {
-        ...guardian,
-        patient: {
-          fullName: patientForm.fullName,
-          nationalId: patientForm.nationalId,
-          email: patientForm.email,
-          phone: patientForm.phone,
-          address: guardian.address
+      if (existingDependent) {
+        // Token matches an existing dependent - just link the account
+        if (!dependentForm.email || !dependentForm.password) {
+          setErr(t('err5'));
+          return;
         }
-      };
 
-      accountsDB.push(newPatient);
-      localStorage.setItem("sanad-accounts", JSON.stringify(accountsDB));
-      // Save session for patient
-      saveSession(newPatient);
-      onGuardianSignUp(accountsDB[guardianIndex]);
+        // Mark the dependent as linked and update with login credentials
+        const depIndex = accountsDB.findIndex(acc => acc.id === existingDependent.id);
+        if (depIndex !== -1) {
+          accountsDB[depIndex] = {
+            ...existingDependent,
+            email: dependentForm.email,
+            password: dependentForm.password,
+            isLinked: true
+          };
+
+          // Find and update the guardian
+          const guardianIndex = accountsDB.findIndex(acc => 
+            acc.role === 'guardian' && acc.token === existingDependent.guardianToken
+          );
+          
+          if (guardianIndex !== -1) {
+            accountsDB[guardianIndex].dependent = accountsDB[depIndex];
+            saveAccountsDB();
+            saveSession(accountsDB[depIndex]);
+            onGuardianSignUp(accountsDB[guardianIndex]);
+          }
+        }
+      } else {
+        // Token doesn't match existing dependent - check if it's a guardian token for new dependent
+        if (!dependentForm.fullName || !dependentForm.nationalId || !dependentForm.email || !dependentForm.phone || !dependentForm.guardianEmail) {
+          setErr(t('err2'));
+          return;
+        }
+
+        const guardianIndex = accountsDB.findIndex(acc => acc.role === "guardian" && acc.email === dependentForm.guardianEmail && acc.token === dependentForm.guardianToken);
+        if (guardianIndex === -1) {
+          setErr(t('err4'));
+          return;
+        }
+
+        const guardian = accountsDB[guardianIndex];
+
+        // Create dependent account
+        const newDependent = {
+          email: dependentForm.email,
+          password: dependentForm.password || "dependent123",
+          role: "dependent",
+          fullName: dependentForm.fullName,
+          nationalId: dependentForm.nationalId,
+          phone: dependentForm.phone,
+          linkedToken: dependentForm.guardianToken,
+          photo: dependentPhoto,
+          isLinked: true
+        };
+
+        // Update guardian account with dependent info
+        accountsDB[guardianIndex] = {
+          ...guardian,
+          dependent: {
+            fullName: dependentForm.fullName,
+            nationalId: dependentForm.nationalId,
+            email: dependentForm.email,
+            phone: dependentForm.phone,
+            address: guardian.address,
+            photo: dependentPhoto
+          }
+        };
+
+        accountsDB.push(newDependent);
+        localStorage.setItem("sanad-accounts", JSON.stringify(accountsDB));
+        // Save session for dependent
+        saveSession(newDependent);
+        onGuardianSignUp(accountsDB[guardianIndex]);
+      }
     }
   };
 
@@ -634,7 +1389,7 @@ function SignUpPage({ onGuardianSignUp, onSwitchToLogin, onBack }) {
                 <input className="input-base" type="text" placeholder={t('name')} value={guardianForm.fullName} onChange={(e) => setGuardianForm({ ...guardianForm, fullName: e.target.value })} style={{ marginBottom: 12 }} required />
                 <input className="input-base" type="text" placeholder={t('natId')} value={guardianForm.nationalId} onChange={(e) => setGuardianForm({ ...guardianForm, nationalId: e.target.value })} style={{ marginBottom: 12 }} required />
                 <input className="input-base" type="tel" placeholder={t('phone')} value={guardianForm.phone} onChange={(e) => setGuardianForm({ ...guardianForm, phone: e.target.value })} style={{ marginBottom: 12 }} required />
-                
+
                 <div style={{ marginBottom: 12 }}>
                   <button 
                     type="button"
@@ -654,19 +1409,118 @@ function SignUpPage({ onGuardianSignUp, onSwitchToLogin, onBack }) {
               </>
             )}
 
-            {role === "patient" && (
+            {role === "dependent" && (
               <>
-                <input className="input-base" type="text" placeholder={t('name')} value={patientForm.fullName} onChange={(e) => setPatientForm({ ...patientForm, fullName: e.target.value })} style={{ marginBottom: 12 }} required />
-                <input className="input-base" type="text" placeholder={t('natId')} value={patientForm.nationalId} onChange={(e) => setPatientForm({ ...patientForm, nationalId: e.target.value })} style={{ marginBottom: 12 }} required />
-                <input className="input-base" type="email" placeholder={t('email')} value={patientForm.email} onChange={(e) => setPatientForm({ ...patientForm, email: e.target.value })} style={{ marginBottom: 12 }} required />
-                <input className="input-base" type="tel" placeholder={t('phone')} value={patientForm.phone} onChange={(e) => setPatientForm({ ...patientForm, phone: e.target.value })} style={{ marginBottom: 12 }} required />
-                <input className="input-base" type="password" placeholder={t('pass')} value={guardianForm.password} onChange={(e) => setGuardianForm({ ...guardianForm, password: e.target.value })} style={{ marginBottom: 12 }} required />
-                <input className="input-base" type="email" placeholder={t('guardEmail')} value={patientForm.guardianEmail} onChange={(e) => setPatientForm({ ...patientForm, guardianEmail: e.target.value })} style={{ marginBottom: 12 }} required />
-                <input className="input-base" type="text" placeholder={t('guardToken')} value={patientForm.guardianToken} onChange={(e) => setPatientForm({ ...patientForm, guardianToken: e.target.value })} required />
+                {!tokenVerified ? (
+                  // Step 1: Token verification
+                  <>
+                    <div style={{ background: 'var(--azure-pale)', padding: 16, borderRadius: 12, marginBottom: 16, fontSize: 14 }}>
+                      <p style={{ marginBottom: 8 }}>
+                        <strong>{t('guardToken')}</strong>
+                      </p>
+                      <p style={{ fontSize: 13, color: 'var(--ink-muted)' }}>
+                        Enter the token provided by your guardian to link your account
+                      </p>
+                    </div>
+                    <input 
+                      className="input-base" 
+                      type="text" 
+                      placeholder={t('guardToken')} 
+                      value={dependentForm.guardianToken} 
+                      onChange={(e) => setDependentForm({ ...dependentForm, guardianToken: e.target.value })} 
+                      style={{ marginBottom: 12 }}
+                    />
+                    <button 
+                      type="button" 
+                      className="btn-primary" 
+                      onClick={verifyToken}
+                      style={{ marginTop: 12 }}
+                    >
+                      {t('continue')}
+                    </button>
+                  </>
+                ) : isExistingDependent ? (
+                  // Step 2a: Link existing dependent (only need email and password)
+                  <>
+                    <div style={{ background: 'var(--sage-pale)', padding: 16, borderRadius: 12, marginBottom: 16, fontSize: 14 }}>
+                      <p style={{ marginBottom: 8 }}>
+                        <strong>✓ Account Found!</strong>
+                      </p>
+                      <p style={{ fontSize: 13, color: 'var(--ink-muted)', marginBottom: 8 }}>
+                        {existingDependentData?.fullName}
+                      </p>
+                      <p style={{ fontSize: 13, color: 'var(--ink-muted)' }}>
+                        Create your login credentials to link this account
+                      </p>
+                    </div>
+                    <input 
+                      className="input-base" 
+                      type="email" 
+                      placeholder={t('email')} 
+                      value={dependentForm.email} 
+                      onChange={(e) => setDependentForm({ ...dependentForm, email: e.target.value })} 
+                      style={{ marginBottom: 12 }} 
+                      required 
+                    />
+                    <input 
+                      className="input-base" 
+                      type="password" 
+                      placeholder={t('pass')} 
+                      value={dependentForm.password} 
+                      onChange={(e) => setDependentForm({ ...dependentForm, password: e.target.value })} 
+                      style={{ marginBottom: 12 }} 
+                      required 
+                    />
+                  </>
+                ) : (
+                  // Step 2b: New dependent signup (full form)
+                  <>
+                    <div style={{ background: 'var(--azure-pale)', padding: 16, borderRadius: 12, marginBottom: 16, fontSize: 14 }}>
+                      <p style={{ marginBottom: 8 }}>
+                        <strong>✓ Guardian Token Verified!</strong>
+                      </p>
+                      <p style={{ fontSize: 13, color: 'var(--ink-muted)' }}>
+                        Complete your information to create your account
+                      </p>
+                    </div>
+                    <input className="input-base" type="text" placeholder={t('name')} value={dependentForm.fullName} onChange={(e) => setDependentForm({ ...dependentForm, fullName: e.target.value })} style={{ marginBottom: 12 }} required />
+                    <input className="input-base" type="text" placeholder={t('natId')} value={dependentForm.nationalId} onChange={(e) => setDependentForm({ ...dependentForm, nationalId: e.target.value })} style={{ marginBottom: 12 }} required />
+                    <input className="input-base" type="email" placeholder={t('email')} value={dependentForm.email} onChange={(e) => setDependentForm({ ...dependentForm, email: e.target.value })} style={{ marginBottom: 12 }} required />
+                    <input className="input-base" type="tel" placeholder={t('phone')} value={dependentForm.phone} onChange={(e) => setDependentForm({ ...dependentForm, phone: e.target.value })} style={{ marginBottom: 12 }} required />
+                    <input className="input-base" type="password" placeholder={t('pass')} value={dependentForm.password} onChange={(e) => setDependentForm({ ...dependentForm, password: e.target.value })} style={{ marginBottom: 12 }} required />
+                    <div style={{ marginBottom: 12 }}>
+                      <label style={{ display: "block", fontSize: 14, fontWeight: 600, marginBottom: 8, color: "var(--ink)" }}>
+                        {t('patPhoto')}
+                      </label>
+                      <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept="image/*"
+                        onChange={handlePhotoUpload}
+                        style={{ display: 'none' }}
+                      />
+                      <button
+                        type="button"
+                        className="btn-secondary"
+                        onClick={() => fileInputRef.current?.click()}
+                        style={{ width: '100%' }}
+                      >
+                        📷 {t('uploadPhoto')}
+                      </button>
+                      {photoPreview && (
+                        <div style={{ marginTop: 12, textAlign: 'center' }}>
+                          <img src={photoPreview} alt="Dependent" style={{ width: 120, height: 120, borderRadius: 12, objectFit: 'cover', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
+                        </div>
+                      )}
+                    </div>
+                  </>
+                )}
               </>
             )}
 
-            <button type="submit" className="btn-primary" style={{ marginTop: 24 }}>{t('create')}</button>
+            {(role === "guardian" || (role === "dependent" && tokenVerified)) && (
+              <button type="submit" className="btn-primary" style={{ marginTop: 24 }}>{t('create')}</button>
+            )}
           </form>
 
           <p style={{ textAlign: "center", fontSize: window.innerWidth <= 480 ? 12 : 13, color: "var(--ink-muted)", marginTop: 20 }}>
@@ -689,7 +1543,8 @@ function ensureAccountDefaults(account) {
     ...account,
     safeZoneRadius: account.safeZoneRadius || 500, // Default 500m if not set
     safeZoneCenter: account.safeZoneCenter || account.location || { lat: 30.0444, lng: 31.2357 },
-    location: account.location || { lat: 30.0444, lng: 31.2357 }
+    location: account.location || { lat: 30.0444, lng: 31.2357 },
+    lostReports: account.lostReports || []
   };
 }
 
@@ -736,7 +1591,7 @@ function LoginPage({ onGuardianLogin, onSwitchToSignUp, onBack }) {
           
           <div style={{ background: "var(--azure-pale)", padding: 12, borderRadius: 10, fontSize: window.innerWidth <= 480 ? 11 : 12, marginBottom: 16 }}>
             <div style={{ fontWeight: 600, marginBottom: 6 }}>{t('demoMsg')}</div>
-            <div>📧 guardian@demo.com / patient@demo.com</div>
+            <div>📧 guardian@demo.com / dependent@demo.com</div>
             <div>🔑 demo1234</div>
           </div>
 
@@ -794,13 +1649,386 @@ function TokenPage({ guardianData, onGoHome }) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   PHOTO UPLOADER COMPONENT
+   ═══════════════════════════════════════════════════════════════ */
+function PhotoUploader({ currentPhoto, onPhotoChange }) {
+  const { t } = useLang();
+  const fileInputRef = useRef(null);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files?.[0];
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        onPhotoChange(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  if (currentPhoto) {
+    return (
+      <div style={{ textAlign: 'center' }}>
+        <div style={{ 
+          width: 140, 
+          height: 140, 
+          borderRadius: 12, 
+          overflow: 'hidden', 
+          margin: '0 auto 16px',
+          boxShadow: '0 4px 16px rgba(0,0,0,0.1)'
+        }}>
+          <img 
+            src={currentPhoto} 
+            alt="Dependent" 
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        </div>
+        <button
+          onClick={() => fileInputRef.current?.click()}
+          className="btn-primary btn-secondary"
+          style={{ width: 'auto', padding: '10px 20px', fontSize: 14, display: 'inline-flex', alignItems: 'center', gap: 8 }}
+        >
+          <CameraIcon /> {t('changePhoto')}
+        </button>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          style={{ display: 'none' }}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <div 
+        onClick={() => fileInputRef.current?.click()}
+        style={{
+          border: '2px dashed var(--azure)',
+          borderRadius: 12,
+          padding: 40,
+          textAlign: 'center',
+          cursor: 'pointer',
+          transition: 'all 0.2s',
+          background: 'rgba(74, 144, 164, 0.05)'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.background = 'rgba(74, 144, 164, 0.1)';
+          e.currentTarget.style.borderColor = 'var(--azure-dark)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.background = 'rgba(74, 144, 164, 0.05)';
+          e.currentTarget.style.borderColor = 'var(--azure)';
+        }}
+      >
+        <div style={{ marginBottom: 12, color: 'var(--azure)', display: 'flex', justifyContent: 'center' }}>
+          <PlusIcon />
+        </div>
+        <p style={{ color: 'var(--azure)', fontWeight: 600, fontSize: 15 }}>
+          {t('addPhoto')}
+        </p>
+      </div>
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        onChange={handleFileChange}
+        style={{ display: 'none' }}
+      />
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MANAGE DEPENDENTS MODAL
+   ═══════════════════════════════════════════════════════════════ */
+function ManageDependentsModal({ guardianData, onClose, onUpdate }) {
+  const { t } = useLang();
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [newDependent, setNewDependent] = useState({
+    fullName: '',
+    nationalId: '',
+    email: '',
+    phone: '',
+    address: ''
+  });
+  const [showToast, setShowToast] = useState(false);
+  const [toastMsg, setToastMsg] = useState('');
+
+  const handleAddDependent = () => {
+    if (!newDependent.fullName || !newDependent.nationalId || !newDependent.email) {
+      setToastMsg(t('err2'));
+      setShowToast(true);
+      return;
+    }
+
+    // Generate unique token for this dependent
+    const dependentToken = `${guardianData.token}-DEP-${Date.now().toString().slice(-4)}`;
+
+    // Create new dependent account
+    const dependent = {
+      id: Date.now(),
+      role: 'dependent',
+      ...newDependent,
+      guardianToken: guardianData.token,
+      token: dependentToken,
+      password: 'demo1234',
+      location: guardianData.safeZoneCenter || guardianData.location || { lat: 30.0444, lng: 31.2357 },
+      photo: null,
+      isLinked: false // Not yet linked with a dependent account
+    };
+
+    // Add to accounts DB
+    accountsDB.push(dependent);
+    saveAccountsDB();
+    
+    // Update guardian data to link the new dependent
+    const updatedGuardian = {
+      ...guardianData,
+      dependent: dependent
+    };
+
+    onUpdate(updatedGuardian);
+    setToastMsg(t('dependentAdded'));
+    setShowToast(true);
+    setShowAddForm(false);
+    setNewDependent({ fullName: '', nationalId: '', email: '', phone: '', address: '' });
+  };
+
+  const handleDeleteDependent = () => {
+    if (!confirm(t('confirmDelete'))) return;
+
+    // Remove dependent from guardianData
+    const updatedGuardian = {
+      ...guardianData,
+      dependent: null
+    };
+
+    // Remove from accountsDB
+    const depIndex = accountsDB.findIndex(acc => acc.email === guardianData.dependent.email);
+    if (depIndex !== -1) {
+      accountsDB.splice(depIndex, 1);
+      saveAccountsDB();
+    }
+
+    onUpdate(updatedGuardian);
+    setToastMsg(t('dependentDeleted'));
+    setShowToast(true);
+  };
+
+  return (
+    <div className="modal-backdrop" onClick={(e) => e.target === e.currentTarget && onClose()}>
+      {showToast && <Toast msg={toastMsg} onClose={() => setShowToast(false)} />}
+      
+      <div className="modal-card" style={{ maxWidth: 600, maxHeight: '90vh', overflow: 'auto' }}>
+        <div style={{ padding: 32 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+            <h2 style={{ fontFamily: "'Fraunces',serif", fontSize: 22, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 8 }}>
+              <UsersIcon /> {t('manageDependents')}
+            </h2>
+            <button onClick={onClose} style={{
+              background: 'transparent',
+              border: 'none',
+              fontSize: 28,
+              cursor: 'pointer',
+              color: 'var(--ink-muted)',
+              lineHeight: 1
+            }}>
+              ×
+            </button>
+          </div>
+
+          {!showAddForm && !guardianData.dependent && (
+            <button
+              onClick={() => setShowAddForm(true)}
+              className="btn-primary"
+              style={{ marginBottom: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}
+            >
+              <PlusIcon /> {t('addDependent')}
+            </button>
+          )}
+
+          {showAddForm && (
+            <div style={{
+              background: 'var(--ice-blue)',
+              borderRadius: 12,
+              padding: 20,
+              marginBottom: 20
+            }}>
+              <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 16 }}>{t('patInfo')}</h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <input
+                  className="input-base"
+                  type="text"
+                  placeholder={t('patName')}
+                  value={newDependent.fullName}
+                  onChange={(e) => setNewDependent({ ...newDependent, fullName: e.target.value })}
+                />
+                <input
+                  className="input-base"
+                  type="text"
+                  placeholder={t('patId')}
+                  value={newDependent.nationalId}
+                  onChange={(e) => setNewDependent({ ...newDependent, nationalId: e.target.value })}
+                />
+                <input
+                  className="input-base"
+                  type="email"
+                  placeholder={t('patEmail')}
+                  value={newDependent.email}
+                  onChange={(e) => setNewDependent({ ...newDependent, email: e.target.value })}
+                />
+                <input
+                  className="input-base"
+                  type="tel"
+                  placeholder={t('patPhone')}
+                  value={newDependent.phone}
+                  onChange={(e) => setNewDependent({ ...newDependent, phone: e.target.value })}
+                />
+                <textarea
+                  className="input-base"
+                  placeholder={t('patAddr')}
+                  value={newDependent.address}
+                  onChange={(e) => setNewDependent({ ...newDependent, address: e.target.value })}
+                  rows={3}
+                />
+                <div style={{ display: 'flex', gap: 10 }}>
+                  <button onClick={handleAddDependent} className="btn-primary" style={{ flex: 1 }}>
+                    {t('create')}
+                  </button>
+                  <button onClick={() => setShowAddForm(false)} className="btn-primary btn-secondary" style={{ flex: 1 }}>
+                    {t('back')}
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div>
+            <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 16 }}>{t('dependentsList')}</h3>
+            {!guardianData.dependent ? (
+              <p style={{ color: 'var(--ink-muted)', textAlign: 'center', padding: 20, fontSize: 14 }}>
+                {t('noDependents')}
+              </p>
+            ) : (
+              <div style={{
+                background: 'var(--ice-blue)',
+                borderRadius: 12,
+                padding: 16
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
+                  <div style={{ flex: 1 }}>
+                    <p style={{ fontWeight: 600, marginBottom: 4, fontSize: 15 }}>{guardianData.dependent.fullName}</p>
+                    <p style={{ fontSize: 13, color: 'var(--ink-muted)', marginBottom: 8 }}>{guardianData.dependent.email}</p>
+                    {guardianData.dependent.token && (
+                      <div style={{ background: 'rgba(74, 144, 164, 0.1)', padding: 10, borderRadius: 8, marginTop: 8 }}>
+                        <p style={{ fontSize: 12, color: 'var(--ink-muted)', marginBottom: 4 }}>{t('dependentToken')}:</p>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                          <code style={{ fontFamily: 'monospace', fontSize: 13, fontWeight: 600, color: 'var(--azure)' }}>
+                            {guardianData.dependent.token}
+                          </code>
+                          <button
+                            onClick={() => {
+                              navigator.clipboard.writeText(guardianData.dependent.token);
+                              setToastMsg(t('copied'));
+                              setShowToast(true);
+                            }}
+                            style={{
+                              background: 'var(--azure)',
+                              color: '#fff',
+                              border: 'none',
+                              borderRadius: 6,
+                              padding: '4px 8px',
+                              cursor: 'pointer',
+                              fontSize: 11,
+                              fontWeight: 600
+                            }}
+                          >
+                            📋
+                          </button>
+                        </div>
+                        <p style={{ fontSize: 11, color: 'var(--ink-muted)', marginTop: 6, fontStyle: 'italic' }}>
+                          {t('shareToken')}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                  <button
+                    onClick={handleDeleteDependent}
+                    style={{
+                      background: 'var(--coral)',
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: 8,
+                      padding: '8px 14px',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 6,
+                      fontSize: 13,
+                      fontWeight: 600,
+                      marginLeft: 12
+                    }}
+                  >
+                    <TrashIcon /> {t('deleteDependent')}
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
    PROFILE MODAL
    ═══════════════════════════════════════════════════════════════ */
 function ProfileModal({ guardianData, onClose }) {
   const { t } = useLang();
+  const [showToast, setShowToast] = useState(false);
+  const [toastMsg, setToastMsg] = useState('');
+  const [dependentPhoto, setDependentPhoto] = useState(guardianData.dependent?.photo || null);
+
+  const handlePhotoChange = (newPhoto) => {
+    setDependentPhoto(newPhoto);
+    
+    // Update dependent photo in accountsDB
+    if (guardianData.dependent) {
+      const depIndex = accountsDB.findIndex(acc => acc.email === guardianData.dependent.email);
+      if (depIndex !== -1) {
+        accountsDB[depIndex].photo = newPhoto;
+        saveAccountsDB();
+        
+        // Update guardian data
+        const accounts = JSON.parse(localStorage.getItem("sanad-accounts")) || [];
+        const updatedAccounts = accounts.map(acc => {
+          if (acc.email === guardianData.email) {
+            return {
+              ...acc,
+              dependent: {
+                ...acc.dependent,
+                photo: newPhoto
+              }
+            };
+          }
+          return acc;
+        });
+        localStorage.setItem("sanad-accounts", JSON.stringify(updatedAccounts));
+        saveSession({ ...guardianData, dependent: { ...guardianData.dependent, photo: newPhoto } });
+      }
+    }
+
+    setToastMsg(t('photoUpdated'));
+    setShowToast(true);
+  };
   
   return (
     <div className="modal-backdrop" onClick={(e) => e.target === e.currentTarget && onClose()}>
+      {showToast && <Toast msg={toastMsg} onClose={() => setShowToast(false)} />}
       <div className="modal-card" style={{ maxWidth: 600 }}>
         <div style={{ padding: 32 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
@@ -839,34 +2067,41 @@ function ProfileModal({ guardianData, onClose }) {
             </div>
           </div>
 
-          {/* Patient Info */}
-          {guardianData.patient ? (
+          {/* Dependent Info */}
+          {guardianData.dependent ? (
             <div style={{ background: "var(--cyan-pale)", padding: 20, borderRadius: 12 }}>
-              <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 16, color: "var(--cyan)" }}>{t('patientLinked')}</h3>
+              <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 16, color: "var(--cyan)" }}>{t('dependentLinked')}</h3>
+              
+              {/* Photo Uploader in Dependent Section */}
+              <div style={{ marginBottom: 20 }}>
+                <h4 style={{ fontSize: 14, fontWeight: 600, marginBottom: 12, color: "var(--cyan)" }}>{t('patPhoto')}</h4>
+                <PhotoUploader currentPhoto={dependentPhoto} onPhotoChange={handlePhotoChange} />
+              </div>
+
               <div style={{ display: "grid", gap: 12, fontSize: 14 }}>
                 <div style={{ display: "grid", gridTemplateColumns: "140px 1fr", gap: 8 }}>
                   <span style={{ fontWeight: 600 }}>{t('name')}:</span>
-                  <span>{guardianData.patient.fullName}</span>
+                  <span>{guardianData.dependent.fullName}</span>
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "140px 1fr", gap: 8 }}>
                   <span style={{ fontWeight: 600 }}>{t('email')}:</span>
-                  <span>{guardianData.patient.email}</span>
+                  <span>{guardianData.dependent.email}</span>
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "140px 1fr", gap: 8 }}>
                   <span style={{ fontWeight: 600 }}>{t('natId')}:</span>
-                  <span>{guardianData.patient.nationalId}</span>
+                  <span>{guardianData.dependent.nationalId}</span>
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "140px 1fr", gap: 8 }}>
                   <span style={{ fontWeight: 600 }}>{t('phone')}:</span>
-                  <span>{guardianData.patient.phone}</span>
+                  <span>{guardianData.dependent.phone}</span>
                 </div>
               </div>
             </div>
           ) : (
             <div style={{ background: "rgba(212,117,106,.1)", padding: 20, borderRadius: 12, textAlign: "center" }}>
               <div style={{ fontSize: 40, marginBottom: 12 }}>⏳</div>
-              <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: "var(--coral)" }}>{t('noPatientLinked')}</h3>
-              <p style={{ fontSize: 13, color: "var(--ink-muted)" }}>{t('waitingForPatient')}</p>
+              <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: "var(--coral)" }}>{t('noDependentLinked')}</h3>
+              <p style={{ fontSize: 13, color: "var(--ink-muted)" }}>{t('waitingForDependent')}</p>
             </div>
           )}
 
@@ -880,8 +2115,8 @@ function ProfileModal({ guardianData, onClose }) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   HOME PAGE / DASHBOARD
-   ═══════════════════════════════════════════════════════════════ */
+HOME PAGE / DASHBOARD
+═══════════════════════════════════════════════════════════════ */
 function HomePage({ guardianData: initialGuardianData, onLogout }) {
   const { t } = useLang();
   const [view, setView] = useState("dashboard");
@@ -898,7 +2133,16 @@ function HomePage({ guardianData: initialGuardianData, onLogout }) {
     const saved = localStorage.getItem('sanad-use-test-location');
     return saved === 'true';
   });
+  const [isTrackingPaused, setIsTrackingPaused] = useState(() => {
+    const saved = localStorage.getItem('sanad-tracking-paused');
+    return saved === 'true';
+  });
+  const [isDependentLocationHidden, setIsDependentLocationHidden] = useState(() => {
+    const saved = localStorage.getItem('sanad-dependent-location-hidden');
+    return saved === 'true';
+  });
   const [showProfile, setShowProfile] = useState(false);
+  const [showManageDependents, setShowManageDependents] = useState(false);
   
   // Reload guardian data from localStorage to get latest updates (like radius changes)
   const getLatestGuardianData = () => {
@@ -908,6 +2152,20 @@ function HomePage({ guardianData: initialGuardianData, onLogout }) {
   
   // Initialize with latest data from localStorage (ensures safe zone and other updates persist)
   const [guardianData, setGuardianData] = useState(() => getLatestGuardianData());
+
+  // Function to update guardian data in both state and localStorage
+  const updateGuardianData = (newData) => {
+    setGuardianData(newData);
+    const accounts = JSON.parse(localStorage.getItem("sanad-accounts")) || [];
+    const updatedAccounts = accounts.map(acc => 
+      acc.email === newData.email ? newData : acc
+    );
+    localStorage.setItem("sanad-accounts", JSON.stringify(updatedAccounts));
+    saveSession(newData);
+  };
+
+  // Calculate active reports count
+  const activeReportsCount = (guardianData.lostReports || []).filter(r => r.status === 'active').length;
   
   // Refresh guardian data when view changes to pick up any updates
   useEffect(() => {
@@ -915,8 +2173,8 @@ function HomePage({ guardianData: initialGuardianData, onLogout }) {
     setGuardianData(latestData);
   }, [view]);
 
-  // Get patient's current location (either test or actual from geolocation)
-  const [patientLiveLocation, setPatientLiveLocation] = useState(guardianData.location || { lat: 30.0444, lng: 31.2357 });
+  // Get dependent's current location (either test or actual from geolocation)
+  const [dependentLiveLocation, setDependentLiveLocation] = useState(guardianData.location || { lat: 30.0444, lng: 31.2357 });
   const [safeZoneCenter, setSafeZoneCenter] = useState(guardianData.safeZoneCenter || guardianData.location || { lat: 30.0444, lng: 31.2357 });
 
   // Update safeZoneCenter when guardianData changes (including on mount)
@@ -926,9 +2184,9 @@ function HomePage({ guardianData: initialGuardianData, onLogout }) {
     }
   }, [guardianData.safeZoneCenter]);
 
-  // Track patient's actual location via geolocation
+  // Track dependent's actual location via geolocation
   useEffect(() => {
-    if (useTestLocation) return; // Don't update if using test location
+    if (useTestLocation || isTrackingPaused) return; // Don't update if using test location or tracking is paused
 
     const watchId = navigator.geolocation?.watchPosition(
       (position) => {
@@ -936,10 +2194,11 @@ function HomePage({ guardianData: initialGuardianData, onLogout }) {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
-        setPatientLiveLocation(newLoc);
+        setDependentLiveLocation(newLoc);
         
-        // Update in database
-        const updatedAccounts = accountsDB.map(acc => {
+        // Update in database - read fresh from localStorage
+        const currentAccounts = JSON.parse(localStorage.getItem("sanad-accounts")) || [];
+        const updatedAccounts = currentAccounts.map(acc => {
           if (acc.email === guardianData.email) {
             return { ...acc, location: newLoc };
           }
@@ -956,9 +2215,9 @@ function HomePage({ guardianData: initialGuardianData, onLogout }) {
     return () => {
       if (watchId) navigator.geolocation?.clearWatch(watchId);
     };
-  }, [useTestLocation, guardianData.email]);
+  }, [useTestLocation, isTrackingPaused, guardianData.email]);
 
-  const currentPatientLocation = useTestLocation ? testLocation : patientLiveLocation;
+  const currentDependentLocation = useTestLocation ? testLocation : dependentLiveLocation;
 
   const copyToken = () => {
     navigator.clipboard.writeText(guardianData.token);
@@ -971,8 +2230,9 @@ function HomePage({ guardianData: initialGuardianData, onLogout }) {
     setShowLocationPicker(false);
     setIsEditingSafeZone(false);
     
-    // Update in database
-    const updatedAccounts = accountsDB.map(acc => {
+    // Read fresh data from localStorage
+    const currentAccounts = JSON.parse(localStorage.getItem("sanad-accounts")) || [];
+    const updatedAccounts = currentAccounts.map(acc => {
       if (acc.email === guardianData.email) {
         return { ...acc, safeZoneCenter: newLocation };
       }
@@ -1010,28 +2270,56 @@ function HomePage({ guardianData: initialGuardianData, onLogout }) {
     setShowToast(true);
   };
 
-  // Check if patient is outside safe zone
+  const toggleTracking = () => {
+    const newPausedState = !isTrackingPaused;
+    setIsTrackingPaused(newPausedState);
+    localStorage.setItem('sanad-tracking-paused', newPausedState.toString());
+    setToastMsg(newPausedState ? t('trackingPaused') : t('trackingResumed'));
+    setShowToast(true);
+  };
+
+  const toggleDependentLocation = () => {
+    const newHiddenState = !isDependentLocationHidden;
+    setIsDependentLocationHidden(newHiddenState);
+    localStorage.setItem('sanad-dependent-location-hidden', newHiddenState.toString());
+    setToastMsg(newHiddenState ? t('dependentLocationCleared') : t('dependentLocationShown'));
+    setShowToast(true);
+  };
+
+  // Check if dependent is outside safe zone
   const distance = calculateDistance(
-    currentPatientLocation.lat,
-    currentPatientLocation.lng,
+    currentDependentLocation.lat,
+    currentDependentLocation.lng,
     safeZoneCenter.lat,
     safeZoneCenter.lng
   );
   const safeZoneRadius = (guardianData.safeZoneRadius || 500) / 1000; // Convert meters to km
-  const isOutsideSafeZone = distance > safeZoneRadius;
+  // Dependent is considered "outside" if either: (1) they're beyond the safe zone, OR (2) their marker is hidden (simulating being missing/untrackable)
+  const isOutsideSafeZone = distance > safeZoneRadius || isDependentLocationHidden;
 
-  // Auto-navigate to map if patient is outside
+  // Auto-navigate to map if dependent is outside (only once per transition)
+  const [hasAutoNavigated, setHasAutoNavigated] = useState(false);
+  
   useEffect(() => {
-    if (isOutsideSafeZone && view === "dashboard") {
+    if (isOutsideSafeZone && view === "dashboard" && !hasAutoNavigated) {
       setView("map");
+      setHasAutoNavigated(true);
+    } else if (!isOutsideSafeZone && hasAutoNavigated) {
+      // Reset flag when dependent returns inside
+      setHasAutoNavigated(false);
     }
-  }, [isOutsideSafeZone]);
+  }, [isOutsideSafeZone, view, hasAutoNavigated]);
+
+  if (view === "reports") {
+    return <LostReportsViewer guardianData={guardianData} onBack={() => setView("dashboard")} onUpdateGuardian={updateGuardianData} />;
+  }
 
   if (view === "map") {
     return (
       <>
         {showToast && <Toast msg={toastMsg} onClose={() => setShowToast(false)} />}
         {showProfile && <ProfileModal guardianData={guardianData} onClose={() => setShowProfile(false)} />}
+        {showManageDependents && <ManageDependentsModal guardianData={guardianData} onClose={() => setShowManageDependents(false)} onUpdate={updateGuardianData} />}
         {showLocationPicker && (
           <LocationPicker
             initialLocation={safeZoneCenter}
@@ -1044,17 +2332,17 @@ function HomePage({ guardianData: initialGuardianData, onLogout }) {
         )}
         {showTestLocationPicker && (
           <LocationPicker
-            initialLocation={testLocation || currentPatientLocation}
+            initialLocation={testLocation || currentDependentLocation}
             onLocationSelected={handleTestLocationSet}
             onCancel={() => setShowTestLocationPicker(false)}
             showSafeZone={true}
             safeZoneCenter={safeZoneCenter}
-            safeZoneRadius={500}
+            safeZoneRadius={guardianData.safeZoneRadius || 500}
           />
         )}
         <MapView
           guardianData={guardianData}
-          patientLocation={currentPatientLocation}
+          dependentLocation={currentDependentLocation}
           safeZoneCenter={safeZoneCenter}
           onBack={() => setView("dashboard")}
           onEditSafeZone={() => {
@@ -1064,6 +2352,10 @@ function HomePage({ guardianData: initialGuardianData, onLogout }) {
           onSetTestLocation={() => setShowTestLocationPicker(true)}
           onResetTestLocation={resetToActualLocation}
           isUsingTestLocation={useTestLocation}
+          isTrackingPaused={isTrackingPaused}
+          onToggleTracking={toggleTracking}
+          isDependentLocationHidden={isDependentLocationHidden}
+          onToggleDependentLocation={toggleDependentLocation}
         />
       </>
     );
@@ -1073,6 +2365,7 @@ function HomePage({ guardianData: initialGuardianData, onLogout }) {
     <>
       {showToast && <Toast msg={toastMsg} onClose={() => setShowToast(false)} />}
       {showProfile && <ProfileModal guardianData={guardianData} onClose={() => setShowProfile(false)} />}
+      {showManageDependents && <ManageDependentsModal guardianData={guardianData} onClose={() => setShowManageDependents(false)} onUpdate={updateGuardianData} />}
       {showLocationPicker && (
         <LocationPicker
           initialLocation={safeZoneCenter}
@@ -1085,14 +2378,14 @@ function HomePage({ guardianData: initialGuardianData, onLogout }) {
       )}
       {showTestLocationPicker && (
         <LocationPicker
-          initialLocation={testLocation || currentPatientLocation}
+          initialLocation={testLocation || currentDependentLocation}
           onLocationSelected={handleTestLocationSet}
           onCancel={() => setShowTestLocationPicker(false)}
         />
       )}
       <DashboardView
         guardianData={guardianData}
-        patientLocation={currentPatientLocation}
+        dependentLocation={currentDependentLocation}
         safeZoneCenter={safeZoneCenter}
         onLogout={onLogout}
         onViewMap={() => setView("map")}
@@ -1102,16 +2395,23 @@ function HomePage({ guardianData: initialGuardianData, onLogout }) {
           setShowLocationPicker(true);
         }}
         onViewProfile={() => setShowProfile(true)}
+        onManageDependents={() => setShowManageDependents(true)}
         isOutsideSafeZone={isOutsideSafeZone}
         isUsingTestLocation={useTestLocation}
+        activeReportsCount={activeReportsCount}
+        onViewReports={() => setView("reports")}
+        isDependentLocationHidden={isDependentLocationHidden}
       />
     </>
   );
 }
 
-function DashboardView({ guardianData, patientLocation, safeZoneCenter, onLogout, onViewMap, onCopyToken, onEditSafeZone, onViewProfile, isOutsideSafeZone, isUsingTestLocation }) {
+function DashboardView({ guardianData, dependentLocation, safeZoneCenter, onLogout, onViewMap, onCopyToken, onEditSafeZone, onViewProfile, onManageDependents, isOutsideSafeZone, isUsingTestLocation, activeReportsCount, onViewReports, isDependentLocationHidden }) {
   const { t } = useLang();
-  const distance = calculateDistance(patientLocation.lat, patientLocation.lng, safeZoneCenter.lat, safeZoneCenter.lng);
+  const distance = calculateDistance(dependentLocation.lat, dependentLocation.lng, safeZoneCenter.lat, safeZoneCenter.lng);
+  
+  // Calculate active reports count if not provided
+  const reportsCount = activeReportsCount !== undefined ? activeReportsCount : (guardianData.lostReports || []).filter(r => r.status === 'active').length;
 
   return (
     <div style={{ minHeight: "100vh", background: "var(--ice-blue)", position: "relative", paddingBottom: 40 }}>
@@ -1128,6 +2428,9 @@ function DashboardView({ guardianData, patientLocation, safeZoneCenter, onLogout
             <button onClick={onViewProfile} className="btn-primary btn-secondary" style={{ width: window.innerWidth <= 640 ? "auto" : "auto", padding: window.innerWidth <= 480 ? "8px 16px" : "10px 20px", fontSize: window.innerWidth <= 480 ? 13 : 14, flex: window.innerWidth <= 640 ? "1" : "none" }}>
               👤 {window.innerWidth <= 480 ? "" : t('viewProfile')}
             </button>
+            <button onClick={onManageDependents} className="btn-primary btn-secondary" style={{ width: window.innerWidth <= 640 ? "auto" : "auto", padding: window.innerWidth <= 480 ? "8px 14px" : "10px 18px", fontSize: window.innerWidth <= 480 ? 13 : 14, flex: window.innerWidth <= 640 ? "1" : "none", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
+              <UsersIcon /> {window.innerWidth <= 480 ? "" : t('manageDependents')}
+            </button>
             <button onClick={onLogout} className="btn-primary btn-coral" style={{ width: window.innerWidth <= 640 ? "auto" : "auto", padding: window.innerWidth <= 480 ? "8px 16px" : "10px 20px", fontSize: window.innerWidth <= 480 ? 13 : 14, flex: window.innerWidth <= 640 ? "1" : "none" }}>
               {t('logout')}
             </button>
@@ -1135,7 +2438,7 @@ function DashboardView({ guardianData, patientLocation, safeZoneCenter, onLogout
         </div>
 
         {/* Critical Alert - More Visible */}
-        {guardianData.patient && isOutsideSafeZone && (
+        {guardianData.dependent && isOutsideSafeZone && (
           <div 
             className="fade-up alert-pulse" 
             style={{ 
@@ -1153,11 +2456,17 @@ function DashboardView({ guardianData, patientLocation, safeZoneCenter, onLogout
             <div style={{ display: "flex", alignItems: "center", gap: window.innerWidth <= 480 ? 12 : 16 }}>
               <div style={{ fontSize: window.innerWidth <= 480 ? 36 : 48 }}>🚨</div>
               <div style={{ flex: 1 }}>
-                <h3 style={{ fontSize: window.innerWidth <= 480 ? 16 : 20, fontWeight: 700, marginBottom: 6 }}>{t('alertTitle')}</h3>
-                <p style={{ fontSize: window.innerWidth <= 480 ? 12 : 14, opacity: 0.95 }}>{t('alertSub')}</p>
-                <p style={{ fontSize: window.innerWidth <= 480 ? 11 : 13, marginTop: 8, opacity: 0.9 }}>
-                  {t('dist')}: {distance.toFixed(2)} km ({(distance * 1000).toFixed(0)}m)
+                <h3 style={{ fontSize: window.innerWidth <= 480 ? 16 : 20, fontWeight: 700, marginBottom: 6 }}>
+                  {isDependentLocationHidden ? t('dependentUntrackable') : t('alertTitle')}
+                </h3>
+                <p style={{ fontSize: window.innerWidth <= 480 ? 12 : 14, opacity: 0.95 }}>
+                  {isDependentLocationHidden ? t('dependentMissingAlert') : t('alertSub')}
                 </p>
+                {!isDependentLocationHidden && (
+                  <p style={{ fontSize: window.innerWidth <= 480 ? 11 : 13, marginTop: 8, opacity: 0.9 }}>
+                    {t('dist')}: {distance.toFixed(2)} km ({(distance * 1000).toFixed(0)}m)
+                  </p>
+                )}
               </div>
               <div style={{ fontSize: window.innerWidth <= 480 ? 20 : 28 }}>→</div>
             </div>
@@ -1173,39 +2482,48 @@ function DashboardView({ guardianData, patientLocation, safeZoneCenter, onLogout
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20, marginBottom: 24 }}>
           <div className="fade-up" style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: 16, padding: 24, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)" }}>
             <h3 style={{ fontSize: 14, fontWeight: 600, color: "var(--ink-muted)", marginBottom: 16 }}>{t('patStatus')}</h3>
-            {guardianData.patient ? (
+            {guardianData.dependent ? (
               <>
                 <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
                   <div style={{ width: 12, height: 12, borderRadius: "50%", background: isOutsideSafeZone ? "var(--coral)" : "#4ade80", boxShadow: isOutsideSafeZone ? "0 0 8px var(--coral)" : "0 0 8px #4ade80" }} />
                   <span style={{ fontSize: 18, fontWeight: 600, color: isOutsideSafeZone ? "var(--coral)" : "#16a34a" }}>
-                    {isOutsideSafeZone ? t('outside') : t('inside')}
+                    {isDependentLocationHidden ? "⚠️ Untrackable" : (isOutsideSafeZone ? t('outside') : t('inside'))}
                   </span>
                 </div>
                 <p style={{ fontSize: 13, color: "var(--ink-light)" }}>
-                  {isOutsideSafeZone ? t('patOutside') : t('patInside')}
+                  {isDependentLocationHidden ? "Dependent location is currently Unknown" : (isOutsideSafeZone ? t('patOutside') : t('patInside'))}
                 </p>
               </>
             ) : (
               <div style={{ textAlign: "center", padding: "20px 0", color: "var(--ink-muted)" }}>
                 <div style={{ fontSize: 32, marginBottom: 8 }}>⏳</div>
-                <div style={{ fontSize: 13 }}>{t('noPatientLinked')}</div>
+                <div style={{ fontSize: 13 }}>{t('noDependentLinked')}</div>
               </div>
             )}
           </div>
-
+            <div className="stat-card" style={{ background: reportsCount > 0 ? "linear-gradient(135deg, rgba(235,111,111,.12), rgba(235,111,111,.06))" : "rgba(0,0,0,.02)",  borderRadius: 16, padding: 24, }}>
+              <div style={{ fontSize: 32, marginBottom: 8 }}>{reportsCount > 0 ? "🚨" : "📋"}</div>
+              <p style={{ fontSize: 13, color: "var(--ink-muted)", marginBottom: 4 }}>{t('lostReports')}</p>
+              <h3 style={{ fontSize: 18, fontWeight: 600, color: reportsCount > 0 ? "var(--coral)" : "var(--ink)" }}>
+                {reportsCount} {t('active')}
+              </h3>
+              <p style={{ fontSize: 12, color: "var(--ink-muted)", marginTop: 8 }}>
+                {(guardianData.lostReports || []).length} {t('reportHistory')}
+              </p>
+            </div>
           <div className="fade-up fade-up-d1" style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: 16, padding: 24, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)" }}>
             <h3 style={{ fontSize: 14, fontWeight: 600, color: "var(--ink-muted)", marginBottom: 16 }}>{t('patInfoTitle')}</h3>
-            {guardianData.patient ? (
+            {guardianData.dependent ? (
               <div style={{ fontSize: 13, lineHeight: 1.8 }}>
-                <div><strong>{t('nameLabel')}:</strong> {guardianData.patient.fullName}</div>
-                <div><strong>{t('email')}:</strong> {guardianData.patient.email}</div>
-                <div><strong>{t('phone')}:</strong> {guardianData.patient.phone}</div>
+                <div><strong>{t('nameLabel')}:</strong> {guardianData.dependent.fullName}</div>
+                <div><strong>{t('email')}:</strong> {guardianData.dependent.email}</div>
+                <div><strong>{t('phone')}:</strong> {guardianData.dependent.phone}</div>
               </div>
             ) : (
               <div style={{ textAlign: "center", padding: "20px 0", color: "var(--ink-muted)" }}>
                 <div style={{ fontSize: 32, marginBottom: 8 }}>⏳</div>
-                <div style={{ fontSize: 13 }}>{t('noPatientLinked')}</div>
-                <div style={{ fontSize: 12, marginTop: 4 }}>{t('waitingForPatient')}</div>
+                <div style={{ fontSize: 13 }}>{t('noDependentLinked')}</div>
+                <div style={{ fontSize: 12, marginTop: 4 }}>{t('waitingForDependent')}</div>
               </div>
             )}
           </div>
@@ -1223,21 +2541,26 @@ function DashboardView({ guardianData, patientLocation, safeZoneCenter, onLogout
             <button className="btn-primary btn-secondary" onClick={onCopyToken} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
               📋 {t('copyLink')}
             </button>
-          </div>
+            {(guardianData.lostReports || []).length > 0 && (
+              <button className="btn-primary btn-danger" onClick={onViewReports}>
+                <AlertIcon /> {t('viewReports')} ({(guardianData.lostReports || []).length})
+              </button>
+            )}
+        </div>
         </div>
 
         <div className="fade-up fade-up-d3" style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: 16, padding: 24, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)" }}>
           <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 16 }}>{t('recent')}</h3>
-          <ActivityLog isOutside={isOutsideSafeZone} hasPatient={!!guardianData.patient} />
+          <ActivityLog isOutside={isOutsideSafeZone} hasDependent={!!guardianData.dependent} />
         </div>
       </div>
     </div>
   );
 }
 
-function ActivityLog({ isOutside, hasPatient }) {
+function ActivityLog({ isOutside, hasDependent }) {
   const { t } = useLang();
-  const activities = hasPatient 
+  const activities = hasDependent 
     ? [
         { icon: isOutside ? "⚠️" : "✓", msg: isOutside ? t('outsideMsg') : t('insideMsg'), time: t('now'), type: isOutside ? "alert" : "normal" },
         { icon: "📍", msg: t('locUpdate'), time: `2 ${t('min')}`, type: "normal" },
@@ -1263,17 +2586,18 @@ function ActivityLog({ isOutside, hasPatient }) {
   );
 }
 
-function MapView({ guardianData, patientLocation, safeZoneCenter, onBack, onEditSafeZone, onSetTestLocation, onResetTestLocation, isUsingTestLocation }) {
+function MapView({ guardianData, dependentLocation, safeZoneCenter, onBack, onEditSafeZone, onSetTestLocation, onResetTestLocation, isUsingTestLocation, isTrackingPaused, onToggleTracking, isDependentLocationHidden, onToggleDependentLocation }) {
   const { t } = useLang();
   const mapRef = useRef(null);
   const circleRef = useRef(null);
   const centerMarkerRef = useRef(null);
-  const patientMarkerRef = useRef(null);
+  const dependentMarkerRef = useRef(null);
   const [radius, setRadius] = useState(guardianData.safeZoneRadius || 500);
   const [prevOutsideState, setPrevOutsideState] = useState(false);
 
-  const distance = calculateDistance(patientLocation.lat, patientLocation.lng, safeZoneCenter.lat, safeZoneCenter.lng);
-  const isOutside = distance > (radius / 1000);
+  const distance = calculateDistance(dependentLocation.lat, dependentLocation.lng, safeZoneCenter.lat, safeZoneCenter.lng);
+  // Dependent is considered "outside" if either: (1) they're beyond the safe zone, OR (2) their marker is hidden (simulating being missing/untrackable)
+  const isOutside = distance > (radius / 1000) || isDependentLocationHidden;
 
   // Persist radius changes to database
   useEffect(() => {
@@ -1297,10 +2621,22 @@ function MapView({ guardianData, patientLocation, safeZoneCenter, onBack, onEdit
 
   useEffect(() => {
     if (isOutside && !prevOutsideState) {
-      console.log("ALERT: Patient left safe zone!", { distance: distance.toFixed(3), radius: (radius / 1000).toFixed(3), timestamp: new Date().toISOString() });
+      if (isDependentLocationHidden) {
+        console.log("ALERT: Dependent location hidden - cannot track!", { 
+          reason: "marker_hidden",
+          timestamp: new Date().toISOString() 
+        });
+      } else {
+        console.log("ALERT: Dependent left safe zone!", { 
+          reason: "zone_breach",
+          distance: distance.toFixed(3), 
+          radius: (radius / 1000).toFixed(3), 
+          timestamp: new Date().toISOString() 
+        });
+      }
     }
     setPrevOutsideState(isOutside);
-  }, [isOutside]);
+  }, [isOutside, isDependentLocationHidden]);
 
   useEffect(() => {
     // Wait for Leaflet to load
@@ -1347,16 +2683,38 @@ function MapView({ guardianData, patientLocation, safeZoneCenter, onBack, onEdit
       }).addTo(map).bindPopup(`<b>${t('curLoc')} (Center)</b>`);
       centerMarkerRef.current = centerMarker;
 
-      const patientMarker = L.marker([patientLocation.lat, patientLocation.lng], {
-        icon: L.divIcon({
-          className: 'custom-marker',
-          html: '<div style="background:#d4756a;width:20px;height:20px;border-radius:50%;border:4px solid #fff;box-shadow:0 3px 12px rgba(212,117,106,.5)"></div>',
-          iconSize: [20, 20]
-        })
-      }).addTo(map).bindPopup(`<b>${guardianData.patient?.fullName || 'Patient'}</b><br/>${t('curLoc')}`);
-      patientMarkerRef.current = patientMarker;
+      // Only create dependent marker if not hidden
+      if (!isDependentLocationHidden) {
+        const dependentMarker = L.marker([dependentLocation.lat, dependentLocation.lng], {
+          icon: L.divIcon({
+            className: 'custom-marker',
+            html: '<div style="background:#d4756a;width:20px;height:20px;border-radius:50%;border:4px solid #fff;box-shadow:0 3px 12px rgba(212,117,106,.5)"></div>',
+            iconSize: [20, 20]
+          })
+        }).addTo(map).bindPopup(`<b>${guardianData.dependent?.fullName || 'Dependent'}</b><br/>${t('curLoc')}`);
+        dependentMarkerRef.current = dependentMarker;
+      } else {
+        dependentMarkerRef.current = null;
+      }
+      // Add lost report markers if any
+      const activeReports = (guardianData.lostReports || []).filter(r => r.status === 'active');
+      activeReports.forEach(report => {
+        window.L.marker([report.location.lat, report.location.lng], {
+          icon: window.L.divIcon({
+            className: 'lost-report-marker',
+            html: '<div style="width:32px;height:32px;background:#ff6b6b;border-radius:50%;border:3px solid white;box-shadow:0 2px 12px rgba(255,107,107,.5);display:flex;align-items:center;justify-content:center;font-size:18px;">🚨</div>',
+            iconSize: [32, 32],
+            iconAnchor: [16, 16]
+          })
+        }).addTo(map).bindPopup(`
+          <div style="padding:8px;">
+            <strong>${t('reportedAt')}:</strong><br/>
+            ${new Date(report.reportedAt).toLocaleString()}<br/><br/>
+            <strong>${t('lastSeenLocation')}</strong>
+          </div>
+        `);
+      });
     };
-
     initMap();
 
     return () => {
@@ -1366,7 +2724,7 @@ function MapView({ guardianData, patientLocation, safeZoneCenter, onBack, onEdit
       }
       circleRef.current = null;
       centerMarkerRef.current = null;
-      patientMarkerRef.current = null;
+      dependentMarkerRef.current = null;
     };
   }, [safeZoneCenter]); // Re-initialize when safe zone center changes
 
@@ -1378,10 +2736,34 @@ function MapView({ guardianData, patientLocation, safeZoneCenter, onBack, onEdit
   }, [radius]);
 
   useEffect(() => {
-    if (patientMarkerRef.current) {
-      patientMarkerRef.current.setLatLng([patientLocation.lat, patientLocation.lng]);
+    if (dependentMarkerRef.current) {
+      dependentMarkerRef.current.setLatLng([dependentLocation.lat, dependentLocation.lng]);
     }
-  }, [patientLocation]);
+  }, [dependentLocation]);
+
+  // Handle showing/hiding dependent marker
+  useEffect(() => {
+    if (!mapRef.current) return;
+
+    const L = window.L;
+    if (!L) return;
+
+    if (isDependentLocationHidden && dependentMarkerRef.current) {
+      // Remove dependent marker
+      mapRef.current.removeLayer(dependentMarkerRef.current);
+      dependentMarkerRef.current = null;
+    } else if (!isDependentLocationHidden && !dependentMarkerRef.current) {
+      // Add dependent marker
+      const dependentMarker = L.marker([dependentLocation.lat, dependentLocation.lng], {
+        icon: L.divIcon({
+          className: 'custom-marker',
+          html: '<div style="background:#d4756a;width:20px;height:20px;border-radius:50%;border:4px solid #fff;box-shadow:0 3px 12px rgba(212,117,106,.5)"></div>',
+          iconSize: [20, 20]
+        })
+      }).addTo(mapRef.current).bindPopup(`<b>${guardianData.dependent?.fullName || 'Dependent'}</b><br/>${t('curLoc')}`);
+      dependentMarkerRef.current = dependentMarker;
+    }
+  }, [isDependentLocationHidden, dependentLocation, guardianData.dependent]);
 
   return (
     <div style={{ minHeight: "100vh", background: "var(--ice-blue)", position: "relative" }}>
@@ -1393,13 +2775,17 @@ function MapView({ guardianData, patientLocation, safeZoneCenter, onBack, onEdit
           ← {t('backDash')}
         </button>
 
-        {isOutside && guardianData.patient && (
+        {isOutside && guardianData.dependent && (
           <div className="fade-up alert-pulse" style={{ background: "linear-gradient(135deg, #dc2626, #b91c1c)", color: "#fff", padding: window.innerWidth <= 480 ? 16 : 20, borderRadius: window.innerWidth <= 480 ? 12 : 16, marginBottom: 20, boxShadow: "0 8px 32px rgba(220, 38, 38, 0.4)", border: "2px solid #fca5a5" }}>
             <div style={{ display: "flex", alignItems: "center", gap: window.innerWidth <= 480 ? 12 : 16 }}>
               <div style={{ fontSize: window.innerWidth <= 480 ? 32 : 40 }}>🚨</div>
               <div>
-                <h3 style={{ fontSize: window.innerWidth <= 480 ? 15 : 18, fontWeight: 700, marginBottom: 4 }}>{t('alertTitle')}</h3>
-                <p style={{ fontSize: window.innerWidth <= 480 ? 12 : 13, opacity: 0.95 }}>{guardianData.patient.fullName} {t('alertSub').toLowerCase()}</p>
+                <h3 style={{ fontSize: window.innerWidth <= 480 ? 15 : 18, fontWeight: 700, marginBottom: 4 }}>
+                  {isDependentLocationHidden ? t('dependentUntrackable') : t('alertTitle')}
+                </h3>
+                <p style={{ fontSize: window.innerWidth <= 480 ? 12 : 13, opacity: 0.95 }}>
+                  {guardianData.dependent.fullName} {isDependentLocationHidden ? t('dependentMissingAlert') : t('alertSub').toLowerCase()}
+                </p>
               </div>
             </div>
           </div>
@@ -1411,6 +2797,18 @@ function MapView({ guardianData, patientLocation, safeZoneCenter, onBack, onEdit
             <button className="btn-primary btn-coral" onClick={onResetTestLocation} style={{ width: window.innerWidth <= 480 ? "100%" : "auto", padding: "8px 16px", fontSize: 13 }}>
               {t('resetToActual')}
             </button>
+          </div>
+        )}
+
+        {isTrackingPaused && (
+          <div style={{ background: "#fef3c7", color: "#92400e", padding: window.innerWidth <= 480 ? 12 : 16, borderRadius: 12, marginBottom: 20, fontSize: window.innerWidth <= 480 ? 12 : 14, border: "2px solid #fbbf24" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+              <span style={{ fontSize: 18 }}>⏸️</span>
+              <strong>{t('demoMode')}</strong>
+            </div>
+            <p style={{ fontSize: window.innerWidth <= 480 ? 11 : 12, opacity: 0.9 }}>
+              {t('trackingPausedNote')}
+            </p>
           </div>
         )}
 
@@ -1446,14 +2844,30 @@ function MapView({ guardianData, patientLocation, safeZoneCenter, onBack, onEdit
               <button className="btn-primary" onClick={onEditSafeZone} style={{ marginBottom: 12, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontSize: window.innerWidth <= 480 ? 13 : 14 }}>
                 <EditIcon /> {t('editSafeZone')}
               </button>
-              <button className="btn-primary btn-secondary" onClick={onSetTestLocation} style={{ marginBottom: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontSize: window.innerWidth <= 480 ? 13 : 14 }}>
+              <button className="btn-primary btn-secondary" onClick={onSetTestLocation} style={{ marginBottom: 12, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontSize: window.innerWidth <= 480 ? 13 : 14 }}>
                 📍 {t('setTestLoc')}
               </button>
               {isUsingTestLocation && (
-                <button className="btn-primary btn-coral" onClick={onResetTestLocation} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontSize: window.innerWidth <= 480 ? 13 : 14 }}>
+                <button className="btn-primary btn-coral" onClick={onResetTestLocation} style={{ marginBottom: 12, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontSize: window.innerWidth <= 480 ? 13 : 14 }}>
                   ↩️ {t('resetToActual')}
                 </button>
               )}
+              <div style={{ borderTop: "1px solid rgba(74,144,164,.15)", paddingTop: 12, marginTop: 4, marginBottom: 12 }}>
+                <button 
+                  className={`btn-primary ${isTrackingPaused ? 'btn-secondary' : 'btn-coral'}`}
+                  onClick={onToggleTracking} 
+                  style={{ marginBottom: 12, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontSize: window.innerWidth <= 480 ? 13 : 14 }}
+                >
+                  {isTrackingPaused ? '▶️' : '⏸️'} {isTrackingPaused ? t('resumeTracking') : t('pauseTracking')}
+                </button>
+                <button 
+                  className={`btn-primary ${isDependentLocationHidden ? 'btn-secondary' : 'btn-coral'}`}
+                  onClick={onToggleDependentLocation} 
+                  style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontSize: window.innerWidth <= 480 ? 13 : 14 }}
+                >
+                  {isDependentLocationHidden ? '👁️' : '🙈'} {isDependentLocationHidden ? t('showDependentLocation') : t('clearDependentLocation')}
+                </button>
+              </div>
             </div>
 
             <div style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: 16, padding: window.innerWidth <= 480 ? 16 : 20, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)" }}>
@@ -1495,7 +2909,7 @@ export default function App() {
     if (session) {
       // User is logged in, restore their session
       // Fetch latest data from accountsDB instead of using stale session data
-      if (session.role === "patient") {
+      if (session.role === "dependent") {
         const guardian = accountsDB.find(
           g => g.role === "guardian" && g.token === session.linkedToken
         );
@@ -1533,8 +2947,11 @@ export default function App() {
             <button className="btn-primary" onClick={() => setPage("signup")} style={{ marginBottom: 12 }}>
               👤 &nbsp;{t('signUp')}
             </button>
-            <button className="btn-primary btn-secondary" onClick={() => setPage("login")}>
+            <button className="btn-primary btn-secondary" onClick={() => setPage("login")} style={{ marginBottom: 12 }}>
               <LogInIcon /> &nbsp;{t('logIn')}
+            </button>
+            <button className="btn-primary btn-danger" onClick={() => setPage("report-lost")}>
+              🚨 &nbsp;{t('reportLost')}
             </button>
           </div>
           <p className="fade-up fade-up-d2" style={{ fontSize: window.innerWidth <= 480 ? 11 : 12, color: "var(--ink-muted)", marginTop: 24 }}>
@@ -1583,7 +3000,7 @@ export default function App() {
       {page === "login" && (
         <LoginPage
           onGuardianLogin={(acc) => {
-            if (acc.role === "patient") {
+            if (acc.role === "dependent") {
               const guardian = accountsDB.find(
                 g => g.role === "guardian" && g.token === acc.linkedToken
               );
@@ -1597,6 +3014,7 @@ export default function App() {
           onBack={() => setPage("landing")}
         />
       )}
+      {page === "report-lost" && <ReportLostDependentPage onBack={() => setPage("landing")} />}
       {page === "token" && <TokenPage guardianData={guardianData} onGoHome={() => setPage("home")} />}
       {page === "home" && <HomePage guardianData={guardianData} onLogout={handleLogout} />}
     </LanguageProvider>
