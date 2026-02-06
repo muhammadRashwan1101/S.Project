@@ -210,12 +210,28 @@ function initializeSessionId() {
    FAKE AUTH STORE
    ═══════════════════════════════════════════════════════════════ */
 const DEMO_PATIENT_PHOTO = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect fill='%234a90a4' width='200' height='200'/%3E%3Ctext x='50%25' y='50%25' font-size='60' text-anchor='middle' dy='.3em' fill='white' font-family='Arial'%3ESH%3C/text%3E%3C/svg%3E";
-
+const DEMO_VERSION = "1";
 const DEMO_ACCOUNTS = [
   { email: "guardian@demo.com", password: "demo1234", role: "guardian", fullName: "Ahmed Hassan", nationalId: "30101011234", phone: "+20 123 456 7890", address: "15 Tahrir St, Cairo", dependent: { fullName: "Sara Hassan", nationalId: "85050512345", email: "dependent@demo.com", phone: "+20 987 654 3210", address: "15 Tahrir St, Cairo" }, location: { lat: 30.0444, lng: 31.2357 }, safeZoneCenter: { lat: 30.0444, lng: 31.2357 }, safeZoneRadius: 500, token: "DEMO-TKNA-ABCD" },
   { email: "dependent@demo.com", password: "demo1234", role: "dependent", fullName: "Sara Hassan", nationalId: "85050512345", phone: "+20 987 654 3210", linkedToken: "DEMO-TKNA-ABCD" }
 ];
-const accountsDB = JSON.parse(localStorage.getItem("sanad-accounts")) || [...DEMO_ACCOUNTS];
+function initializeAccounts() {
+  const storedVersion = localStorage.getItem("sanad-demo-version");
+  const storedAccounts = localStorage.getItem("sanad-accounts");
+
+  // If version changed OR no accounts exist → reset demo data
+  if (!storedAccounts || storedVersion !== DEMO_VERSION) {
+    localStorage.setItem(
+      "sanad-accounts",
+      JSON.stringify(DEMO_ACCOUNTS)
+    );
+    localStorage.setItem("sanad-demo-version", DEMO_VERSION);
+    return [...DEMO_ACCOUNTS];
+  }
+
+  return JSON.parse(storedAccounts);
+}
+const accountsDB = initializeAccounts();
 
 // Add lost reports database
 let lostReportsDB = JSON.parse(localStorage.getItem('sanad-lost-reports') || '[]');
