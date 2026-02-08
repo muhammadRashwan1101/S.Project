@@ -111,11 +111,11 @@ export default function DashboardView({
                 <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
                   <div style={{ width: 12, height: 12, borderRadius: "50%", background: effectiveOutside ? "var(--coral)" : "#4ade80", boxShadow: effectiveOutside ? "0 0 8px var(--coral)" : "0 0 8px #4ade80" }} />
                   <span style={{ fontSize: 18, fontWeight: 600, color: effectiveOutside ? "var(--coral)" : "#16a34a" }}>
-                    {isDependentLocationHidden ? "⚠️ Untrackable" : (effectiveOutside ? t('outside') : t('inside'))}
+                    {isDependentLocationHidden ? t('untrackableStatus') : (effectiveOutside ? t('outside') : t('inside'))}
                   </span>
                 </div>
                 <p style={{ fontSize: 13, color: "var(--ink-light)" }}>
-                  {isDependentLocationHidden ? "Dependent location is currently Unknown" : (effectiveOutside ? t('patOutside') : t('patInside'))}
+                  {isDependentLocationHidden ? t('dependentLocationUnknown') : (effectiveOutside ? t('patOutside') : t('patInside'))}
                 </p>
               </>
             ) : (
