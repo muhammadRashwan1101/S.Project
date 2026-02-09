@@ -1,21 +1,23 @@
 import { useState, useEffect } from 'react';
-import { LanguageProvider, useLang } from './context/LanguageContext';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { LanguageProvider } from './context/LanguageContext';
 import { GlobalStyle } from './constants/styles';
 import LandingPage from './pages/LandingPage';
 import {SignUpPage} from './pages/Auth/SignUpPage';
 import {LoginPage} from './pages/Auth/LoginPage';
 import {TokenPage} from './pages/Auth/TokenPage';
 import {ReportLostDependentPage} from './pages/ReportLostDependentPage';
+import DependentHomePage from './pages/Dashboard/DependentHomePage';
 import HomePage from './pages/Dashboard/HomePage';
-import { initializeSessionId, getSession, clearSession, saveSession } from './utils/sessionManager';
+import SubscriptionsPage from './pages/SubscriptionsPage';
+import ServicesPage from './pages/Services';
+import ProductsPage from './pages/Product';
+import CareGuidePage from './pages/careGuide';
+import { initializeSessionId, getSession } from './utils/sessionManager';
 import { initializeAccounts, accountsDB } from './utils/dataStore';
 import { ensureAccountDefaults } from './utils/helpers';
-import { LangSwitch } from './components/UI/LangSwitch';
-import { ShieldIcon, LogInIcon } from './components/UI/Icons';
 
 function AppContent() {
-  const { t } = useLang();
-  const [page, setPage] = useState('landing');
   const [guardianData, setGuardianData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -42,17 +44,30 @@ function AppContent() {
     if (session && session.email) {
       // Restore from fresh data, not stale session
       const freshGuardian = accountsDB.find(acc => acc.email === session.email);
-      if (freshGuardian) {
+      if (freshGuardian && freshGuardian.role !== 'dependent') {
         setGuardianData(ensureAccountDefaults(freshGuardian));
-        setPage('home');
-      } else {
-        setPage('landing');
       }
-    } else {
-      setPage('landing');
     }
 
     setLoading(false);
+  }, []);
+
+  // Listen for session changes (login/logout)
+  useEffect(() => {
+    const checkSession = () => {
+      const session = getSession();
+      if (session && session.email && session.role !== 'dependent') {
+        const freshGuardian = accountsDB.find(acc => acc.email === session.email);
+        if (freshGuardian) {
+          setGuardianData(ensureAccountDefaults(freshGuardian));
+        }
+      } else {
+        setGuardianData(null);
+      }
+    };
+
+    window.addEventListener('storage', checkSession);
+    return () => window.removeEventListener('storage', checkSession);
   }, []);
 
   if (loading) {
@@ -63,78 +78,22 @@ function AppContent() {
     );
   }
 
-  const handleSignUp = () => setPage('signup');
-  const handleLogIn = () => setPage('login');
-  const handleReportLost = () => setPage('report');
-
-  const handleGuardianSignUp = (data) => {
-    saveSession(data);
-    setGuardianData(data);
-    setPage('token');
-  };
-
-  const handleGuardianLogin = (data) => {
-    saveSession(data);
-    setGuardianData(data);
-    setPage('home');
-  };
-
-  const handleTokenPageDone = () => {
-    setPage('home');
-  };
-
-  const handleLogout = () => {
-    clearSession();
-    setGuardianData(null);
-    setPage('landing');
-  };
-
-  const handleBackToLanding = () => {
-    setPage('landing');
-  };
-
   return (
     <>
       <GlobalStyle />
-      {page === 'landing' && (
-        <LandingPage
-          onSignUp={handleSignUp}
-          onLogIn={handleLogIn}
-          onReportLost={handleReportLost}
-        />
-      )}
-      {page === 'signup' && (
-        <SignUpPage
-          onGuardianSignUp={handleGuardianSignUp}
-          onSwitchToLogin={handleLogIn}
-          onBack={handleBackToLanding}
-        />
-      )}
-      {page === 'login' && (
-        <LoginPage
-          onGuardianLogin={handleGuardianLogin}
-          onSwitchToSignUp={handleSignUp}
-          onBack={handleBackToLanding}
-        />
-      )}
-      {page === 'token' && (
-        <TokenPage
-          guardianData={guardianData}
-          onGoHome={handleTokenPageDone}
-        />
-      )}
-      {page === 'report' && (
-        <ReportLostDependentPage
-          onBack={handleBackToLanding}
-        />
-      )}
-      {page === 'home' && guardianData && (
-        <HomePage
-          guardianData={guardianData}
-          updateGuardianData={setGuardianData}
-          onLogout={handleLogout}
-        />
-      )}
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/token" element={<TokenPage guardianData={guardianData} />} />
+        <Route path="/report" element={<ReportLostDependentPage />} />
+        <Route path="/home" element={guardianData ? <HomePage guardianData={guardianData} updateGuardianData={setGuardianData} /> : <LandingPage />} />
+        <Route path="/dependent-home" element={<DependentHomePage />} />
+        <Route path="/subscriptions" element={<SubscriptionsPage />} />
+        <Route path="/services" element={<ServicesPage />} />
+        <Route path="/products" element={<ProductsPage />} />
+        <Route path="/careguide" element={<CareGuidePage />} />
+      </Routes>
     </>
   );
 }

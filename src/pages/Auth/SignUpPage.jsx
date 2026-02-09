@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { useLang } from "../../context/LanguageContext";
 import { LangSwitch } from "../../components/UI/LangSwitch";
 import RoleSelectionPage from "./RoleSelectionPage";
@@ -7,9 +8,14 @@ import { MapPinIcon } from "../../components/UI/Icons";
 import PhotoUploader from "../../components/PhotoUploader";
 import { accountsDB, saveAccountsDB } from "../../utils/dataStore";
 import { saveSession } from "../../utils/sessionManager";
+import Logo from "../../components/Logo";
 
-export function SignUpPage({ onGuardianSignUp, onSwitchToLogin, onBack }) {
+export function SignUpPage() {
+  const navigate = useNavigate();
   const { t } = useLang();
+
+  const handleBack = () => navigate('/');
+  const handleSwitchToLogin = () => navigate('/login');
   const [role, setRole] = useState(null);
   const [showRoleSelection, setShowRoleSelection] = useState(true);
   const [showLocationPicker, setShowLocationPicker] = useState(false);
@@ -102,12 +108,12 @@ export function SignUpPage({ onGuardianSignUp, onSwitchToLogin, onBack }) {
 
   if (showRoleSelection) {
     return (
-      <RoleSelectionPage 
+      <RoleSelectionPage
         onRoleSelected={(selectedRole) => {
           setRole(selectedRole);
           setShowRoleSelection(false);
         }}
-        onBack={onBack}
+        onBack={handleBack}
       />
     );
   }
@@ -144,7 +150,7 @@ export function SignUpPage({ onGuardianSignUp, onSwitchToLogin, onBack }) {
 
       accountsDB.push(newAccount);
       saveAccountsDB();
-      onGuardianSignUp(newAccount);
+      navigate('/token');
     } else {
       if (!dependentForm.guardianToken) {
         setErr(t('err2'));
@@ -178,7 +184,7 @@ export function SignUpPage({ onGuardianSignUp, onSwitchToLogin, onBack }) {
             accountsDB[guardianIndex].dependent = accountsDB[depIndex];
             saveAccountsDB();
             saveSession(accountsDB[depIndex]);
-            onGuardianSignUp(accountsDB[guardianIndex]);
+            navigate('/dependent-home');
           }
         }
       } else {
@@ -222,15 +228,16 @@ export function SignUpPage({ onGuardianSignUp, onSwitchToLogin, onBack }) {
         accountsDB.push(newDependent);
         saveAccountsDB();
         saveSession(newDependent);
-        onGuardianSignUp(accountsDB[guardianIndex]);
+        navigate('/dependent-home');
       }
     }
   };
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", padding: window.innerWidth <= 480 ? 16 : 24, paddingTop: window.innerWidth <= 480 ? 60 : 80, paddingBottom: window.innerWidth <= 480 ? 60 : 80 }}>
-      <div className="mesh-bg" /><div className="texture-overlay" />
-      <LangSwitch />
+    <>
+      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", padding: window.innerWidth <= 480 ? 16 : 24, paddingTop: window.innerWidth <= 480 ? 140 : 160, paddingBottom: window.innerWidth <= 480 ? 60 : 80 }}>
+        <div className="mesh-bg" /><div className="texture-overlay" />
+        <LangSwitch />
 
       {showLocationPicker && (
         <LocationPicker
@@ -245,6 +252,14 @@ export function SignUpPage({ onGuardianSignUp, onSwitchToLogin, onBack }) {
       )}
 
       <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 480 }}>
+        <div style={{ textAlign: "center", marginBottom: 32 }}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 8 }}>
+            <Logo width={60} height={60} />
+          </div>
+          <h1 className="appName" style={{ fontFamily: "'Fraunces',serif", fontSize: 28, fontWeight: 700, color: "var(--ink)" }}>
+            {t('app')}
+          </h1>
+        </div>
         <button onClick={() => setShowRoleSelection(true)} style={{ background: "transparent", border: "none", color: "var(--azure)", fontSize: window.innerWidth <= 480 ? 13 : 14, fontWeight: 600, cursor: "pointer", marginBottom: 20, display: "flex", alignItems: "center", gap: 6 }}>
           ← {t('back')}
         </button>
@@ -295,7 +310,7 @@ export function SignUpPage({ onGuardianSignUp, onSwitchToLogin, onBack }) {
                         <strong>{t('guardToken')}</strong>
                       </p>
                       <p style={{ fontSize: 13, color: 'var(--ink-muted)' }}>
-                        Enter the token provided by your guardian to link your account
+                        {t('tokenMessage')}
                       </p>
                     </div>
                     <input 
@@ -351,10 +366,10 @@ export function SignUpPage({ onGuardianSignUp, onSwitchToLogin, onBack }) {
                   <>
                     <div style={{ background: 'var(--azure-pale)', padding: 16, borderRadius: 12, marginBottom: 16, fontSize: 14 }}>
                       <p style={{ marginBottom: 8 }}>
-                        <strong>✓ Guardian Token Verified!</strong>
+                        <strong>{t('tokenVerified')}</strong>
                       </p>
                       <p style={{ fontSize: 13, color: 'var(--ink-muted)' }}>
-                        Complete your information to create your account
+                        {t('completeInfo')}
                       </p>
                     </div>
                     <input className="input-base" type="text" placeholder={t('name')} value={dependentForm.fullName} onChange={(e) => setDependentForm({ ...dependentForm, fullName: e.target.value })} style={{ marginBottom: 12 }} required />
@@ -439,10 +454,11 @@ export function SignUpPage({ onGuardianSignUp, onSwitchToLogin, onBack }) {
           </form>
 
           <p style={{ textAlign: "center", fontSize: window.innerWidth <= 480 ? 12 : 13, color: "var(--ink-muted)", marginTop: 20 }}>
-            {t('already')} <span onClick={onSwitchToLogin} style={{ color: "var(--azure)", cursor: "pointer", fontWeight: 600 }}>{t('logIn')}</span>
+            {t('already')} <span onClick={handleSwitchToLogin} style={{ color: "var(--azure)", cursor: "pointer", fontWeight: 600 }}>{t('logIn')}</span>
           </p>
         </div>
       </div>
     </div>
+    </>
   );
 }

@@ -6,10 +6,13 @@ import LostReportsViewer from "../../modals/LostReportsViewer";
 import LocationPicker from "../../components/LocationPicker";
 import DashboardView from "./DashboardView";
 import MapView from "./MapView";
+import { useNavigate } from "react-router-dom";
 import {ProfileModal} from "../../modals/ProfileModal";
 import {ManageDependentsModal} from "../../modals/ManageDependentsModal";
+import SideNavbar from "../../components/SideNavbar";
 
-export default function HomePage({ guardianData: initialGuardianData, onLogout }) {
+export default function HomePage({ guardianData: initialGuardianData }) {
+  const navigate = useNavigate();
   const { t } = useLang();
   const [view, setView] = useState("dashboard");
   const [showToast, setShowToast] = useState(false);
@@ -36,7 +39,8 @@ export default function HomePage({ guardianData: initialGuardianData, onLogout }
   const [autoHiddenByReport, setAutoHiddenByReport] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [showManageDependents, setShowManageDependents] = useState(false);
-  
+  const [activeNav, setActiveNav] = useState('homepage');
+
   const getLatestGuardianData = () => {
     const accounts = JSON.parse(localStorage.getItem("sanad-accounts")) || [];
     return accounts.find(acc => acc.email === initialGuardianData.email) || initialGuardianData;
@@ -52,7 +56,7 @@ export default function HomePage({ guardianData: initialGuardianData, onLogout }
     );
     localStorage.setItem("sanad-accounts", JSON.stringify(updatedAccounts));
   };
-
+  const handleLogout = () => { navigate('/') };
   const activeReportsCount = (guardianData.lostReports || []).filter(r => r.status === 'active').length;
   
   useEffect(() => {
@@ -217,10 +221,87 @@ export default function HomePage({ guardianData: initialGuardianData, onLogout }
     // only run when isOutsideSafeZone or view changes
   }, [isOutsideSafeZone, view]);
 
+  useEffect(() => {
+    if (view === 'dashboard') setActiveNav('homepage');
+    else if (view === 'services') setActiveNav('services');
+    else if (view === 'faqs') setActiveNav('faqs');
+    else if (view === 'dependent') setActiveNav('dependent');
+  }, [view]);
+
   if (view === "reports") {
     return <LostReportsViewer guardianData={guardianData} onBack={() => setView("dashboard")} onUpdateGuardian={updateGuardianData} />;
   }
 
+  if (view === "services") {
+    return (
+      <>
+        <SideNavbar activeNav={activeNav} setView={setView} setActiveNav={setActiveNav} navigate={navigate} homeRoute={'/home'} />
+        <div style={{ marginLeft: '250px', padding: '40px 24px', minHeight: '100vh', background: 'var(--ice-blue)' }}>
+          <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+            <h1 style={{ fontSize: '32px', fontWeight: '700', color: 'var(--ink)', marginBottom: '24px' }}>Services</h1>
+            <div style={{ background: 'var(--card-bg)', backdropFilter: 'blur(20px)', borderRadius: '16px', padding: '32px', boxShadow: 'var(--shadow)', border: '1px solid rgba(255,255,255,.6)' }}>
+              <p style={{ fontSize: '16px', color: 'var(--ink-light)', lineHeight: '1.6' }}>
+                Our services include real-time location tracking, safe zone monitoring, emergency alerts, and comprehensive reporting features to ensure the safety and well-being of your dependents.
+              </p>
+              <div style={{ marginTop: '24px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
+                <div style={{ padding: '16px', background: 'rgba(74,144,164,.1)', borderRadius: '8px' }}>
+                  <h3 style={{ fontSize: '18px', fontWeight: '600', color: 'var(--azure)', marginBottom: '8px' }}>Location Tracking</h3>
+                  <p style={{ fontSize: '14px', color: 'var(--ink-muted)' }}>Real-time GPS monitoring with safe zone alerts.</p>
+                </div>
+                <div style={{ padding: '16px', background: 'rgba(212,117,106,.1)', borderRadius: '8px' }}>
+                  <h3 style={{ fontSize: '18px', fontWeight: '600', color: 'var(--coral)', marginBottom: '8px' }}>Emergency Alerts</h3>
+                  <p style={{ fontSize: '14px', color: 'var(--ink-muted)' }}>Instant notifications when dependents leave safe zones.</p>
+                </div>
+                <div style={{ padding: '16px', background: 'rgba(212,167,106,.1)', borderRadius: '8px' }}>
+                  <h3 style={{ fontSize: '18px', fontWeight: '600', color: 'var(--gold)', marginBottom: '8px' }}>Reporting</h3>
+                  <p style={{ fontSize: '14px', color: 'var(--ink-muted)' }}>Comprehensive lost dependent reporting system.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  if (view === "faqs") {
+    return (
+      <>
+        <SideNavbar activeNav={activeNav} setView={setView} setActiveNav={setActiveNav} navigate={navigate} homeRoute={'/home'} />
+        <div style={{ marginLeft: '250px', padding: '40px 24px', minHeight: '100vh', background: 'var(--ice-blue)' }}>
+          <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+            <h1 style={{ fontSize: '32px', fontWeight: '700', color: 'var(--ink)', marginBottom: '24px' }}>Frequently Asked Questions</h1>
+            <div style={{ background: 'var(--card-bg)', backdropFilter: 'blur(20px)', borderRadius: '16px', padding: '32px', boxShadow: 'var(--shadow)', border: '1px solid rgba(255,255,255,.6)' }}>
+              <div style={{ marginBottom: '24px' }}>
+                <h3 style={{ fontSize: '18px', fontWeight: '600', color: 'var(--azure)', marginBottom: '8px' }}>How does location tracking work?</h3>
+                <p style={{ fontSize: '14px', color: 'var(--ink-light)', lineHeight: '1.6' }}>
+                  Our app uses GPS technology to track the real-time location of your dependents. You can set up safe zones and receive alerts when they leave these areas.
+                </p>
+              </div>
+              <div style={{ marginBottom: '24px' }}>
+                <h3 style={{ fontSize: '18px', fontWeight: '600', color: 'var(--azure)', marginBottom: '8px' }}>What happens if my dependent gets lost?</h3>
+                <p style={{ fontSize: '14px', color: 'var(--ink-light)', lineHeight: '1.6' }}>
+                  You can immediately report a lost dependent through the app. This triggers our emergency response system and shares location data with authorities if needed.
+                </p>
+              </div>
+              <div style={{ marginBottom: '24px' }}>
+                <h3 style={{ fontSize: '18px', fontWeight: '600', color: 'var(--azure)', marginBottom: '8px' }}>Is my data secure?</h3>
+                <p style={{ fontSize: '14px', color: 'var(--ink-light)', lineHeight: '1.6' }}>
+                  Yes, we prioritize data security and privacy. All location data is encrypted and only accessible to authorized guardians. We comply with all relevant data protection regulations.
+                </p>
+              </div>
+              <div>
+                <h3 style={{ fontSize: '18px', fontWeight: '600', color: 'var(--azure)', marginBottom: '8px' }}>How do I set up safe zones?</h3>
+                <p style={{ fontSize: '14px', color: 'var(--ink-light)', lineHeight: '1.6' }}>
+                  In the dashboard, navigate to the map view and use the location picker to set your safe zone center. You can adjust the radius to define the area you want to monitor.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
   if (view === "map") {
     return (
       <>
@@ -245,6 +326,7 @@ export default function HomePage({ guardianData: initialGuardianData, onLogout }
             safeZoneRadius={guardianData.safeZoneRadius || 500}
           />
         )}
+        <SideNavbar activeNav={activeNav} setView={setView} setActiveNav={setActiveNav} navigate={navigate} homeRoute={'/home'} />
         <MapView
           guardianData={guardianData}
           dependentLocation={currentDependentLocation}
@@ -286,30 +368,35 @@ export default function HomePage({ guardianData: initialGuardianData, onLogout }
           onCancel={() => setShowTestLocationPicker(false)}
         />
       )}
-      <DashboardView
-        guardianData={guardianData}
-        dependentLocation={currentDependentLocation}
-        safeZoneCenter={safeZoneCenter}
-        onLogout={onLogout}
-        onViewMap={() => setView("map")}
-        onCopyToken={copyToken}
-        onEditSafeZone={() => {
-          setIsEditingSafeZone(true);
-          setShowLocationPicker(true);
-        }}
-        onViewProfile={() => setShowProfile(true)}
-        onManageDependents={() => setShowManageDependents(true)}
-        isOutsideSafeZone={isOutsideSafeZone}
-        isUsingTestLocation={useTestLocation}
-        activeReportsCount={activeReportsCount}
-        onViewReports={() => setView("reports")}
-        isDependentLocationHidden={isDependentLocationHidden}
-        showProfile={showProfile}
-        setShowProfile={setShowProfile}
-        showManageDependents={showManageDependents}
-        setShowManageDependents={setShowManageDependents}
-        updateGuardianData={updateGuardianData}
-      />
+      <div style={{display:'flex'}}>
+        <SideNavbar activeNav={activeNav} setView={setView} setActiveNav={setActiveNav} navigate={navigate} homeRoute={'/home'} />
+        <div style={{flex:1, marginLeft:'250px'}}>
+          <DashboardView
+            guardianData={guardianData}
+            dependentLocation={currentDependentLocation}
+            safeZoneCenter={safeZoneCenter}
+            onLogout={handleLogout}
+            onViewMap={() => setView("map")}
+            onCopyToken={copyToken}
+            onEditSafeZone={() => {
+              setIsEditingSafeZone(true);
+              setShowLocationPicker(true);
+            }}
+            onViewProfile={() => setShowProfile(true)}
+            onManageDependents={() => setShowManageDependents(true)}
+            isOutsideSafeZone={isOutsideSafeZone}
+            isUsingTestLocation={useTestLocation}
+            activeReportsCount={activeReportsCount}
+            onViewReports={() => setView("reports")}
+            isDependentLocationHidden={isDependentLocationHidden}
+            showProfile={showProfile}
+            setShowProfile={setShowProfile}
+            showManageDependents={showManageDependents}
+            setShowManageDependents={setShowManageDependents}
+            updateGuardianData={updateGuardianData}
+          />
+        </div>
+      </div>
     </>
   );
 }

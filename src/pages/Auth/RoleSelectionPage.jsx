@@ -1,18 +1,22 @@
 import { useState } from "react";
 import { useLang } from "../../context/LanguageContext";
 import { LangSwitch } from "../../components/UI/LangSwitch";
+import { useNavigate } from "react-router-dom";
+
 
 export default function RoleSelectionPage({ onRoleSelected, onBack }) {
   const { t } = useLang();
   const [selectedRole, setSelectedRole] = useState(null);
+  const navigate = useNavigate();
 
+  const handleBack = () => navigate('/');
   return (
     <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", padding: 24 }}>
       <div className="mesh-bg" /><div className="texture-overlay" />
       <LangSwitch />
       
       <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 480 }}>
-        <button onClick={onBack} style={{ background: "transparent", border: "none", color: "var(--azure)", fontSize: 14, fontWeight: 600, cursor: "pointer", marginBottom: 20, display: "flex", alignItems: "center", gap: 6 }}>
+        <button onClick={handleBack} style={{ background: "transparent", border: "none", color: "var(--azure)", fontSize: 14, fontWeight: 600, cursor: "pointer", marginBottom: 20, display: "flex", alignItems: "center", gap: 6 }}>
           ← {t('back')}
         </button>
 

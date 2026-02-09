@@ -14,7 +14,7 @@ export function LanguageProvider({ children }) {
 
   const t = (k) => TR[lang][k] || k;
   
-  return <LanguageContext.Provider value={{ lang, setLang, t }}>{children}</LanguageContext.Provider>;
+  return <LanguageContext.Provider value={{ lang, setLang, t, TR: TR[lang] }}>{children}</LanguageContext.Provider>;
 }
 
 export function useLang() {

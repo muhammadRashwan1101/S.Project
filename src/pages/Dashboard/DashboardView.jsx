@@ -3,6 +3,7 @@ import { LangSwitch } from "../../components/UI/LangSwitch";
 import { EditIcon, AlertIcon, UsersIcon } from "../../components/UI/Icons";
 import { ProfileModal } from "../../modals/ProfileModal";
 import { ManageDependentsModal } from "../../modals/ManageDependentsModal";
+import LogoHeader from "../../components/LogoHeader";
 
 function ActivityLog({ isOutside, hasDependent, t }) {
   const activities = hasDependent 

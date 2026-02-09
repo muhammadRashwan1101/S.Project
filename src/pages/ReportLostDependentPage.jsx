@@ -1,12 +1,16 @@
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { useLang } from "../context/LanguageContext";
 import { LangSwitch } from "../components/UI/LangSwitch";
+import Navbar from "../components/Navbar";
 import { Toast } from "../components/UI/Toast";
 import { UploadIcon, XIcon, CheckIcon } from "../components/UI/Icons";
 import { accountsDB, lostReportsDB, saveLostReportsDB, saveAccountsDB } from "../utils/dataStore";
 import { matchImage, getDeviceInfo } from "../utils/helpers";
+import Logo from "../components/Logo";
 
 export function ReportLostDependentPage({ onBack }) {
+  const navigate = useNavigate();
   const { t } = useLang();
   const [uploadedImage, setUploadedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
@@ -123,6 +127,14 @@ export function ReportLostDependentPage({ onBack }) {
         <div className="mesh-bg" /><div className="texture-overlay" />
         <LangSwitch />
         <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 480, textAlign: "center" }}>
+          <div style={{ textAlign: "center", marginBottom: 32 }}>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 8 }}>
+              <Logo width={60} height={60} />
+            </div>
+            <h1 className="appName" style={{ fontFamily: "'Fraunces',serif", fontSize: 28, fontWeight: 700, color: "var(--ink)" }}>
+              {t('app')}
+            </h1>
+          </div>
           <div className="fade-up" style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: 20, padding: 32, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)" }}>
             <div style={{ width: 72, height: 72, borderRadius: 20, background: "linear-gradient(135deg,#4ade80,#22c55e)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px", boxShadow: "0 6px 28px rgba(76,175,80,.3)", color: "#fff" }}>
               <CheckIcon />
@@ -137,7 +149,7 @@ export function ReportLostDependentPage({ onBack }) {
                 </p>
               </div>
             )}
-            <button className="btn-primary" onClick={onBack}>
+            <button className="btn-primary" onClick={() => navigate('/')}>
               {t('back')}
             </button>
           </div>
@@ -152,6 +164,14 @@ export function ReportLostDependentPage({ onBack }) {
         <div className="mesh-bg" /><div className="texture-overlay" />
         <LangSwitch />
         <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 480, textAlign: "center" }}>
+          <div style={{ textAlign: "center", marginBottom: 32 }}>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 8 }}>
+              <Logo width={60} height={60} />
+            </div>
+            <h1 className="appName" style={{ fontFamily: "'Fraunces',serif", fontSize: 28, fontWeight: 700, color: "var(--ink)" }}>
+              {t('app')}
+            </h1>
+          </div>
           <div className="fade-up" style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: 20, padding: 32, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)" }}>
             <div style={{ width: 72, height: 72, borderRadius: 20, background: "linear-gradient(135deg,#d4756a,#c0635a)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px", boxShadow: "0 6px 28px rgba(212,117,106,.3)", color: "#fff" }}>
               <XIcon />
@@ -172,7 +192,15 @@ export function ReportLostDependentPage({ onBack }) {
       <div className="mesh-bg" /><div className="texture-overlay" />
       <LangSwitch />
       <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 480 }}>
-        <button onClick={onBack} style={{ background: "rgba(255,255,255,.9)", border: "1px solid rgba(0,0,0,.1)", borderRadius: 12, padding: "10px 20px", marginBottom: 20, cursor: "pointer", fontSize: 14, fontWeight: 600, display: "flex", alignItems: "center", gap: 8 }}>
+        <div style={{ textAlign: "center", marginBottom: 32 }}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 8 }}>
+            <Logo width={60} height={60} />
+          </div>
+          <h1 className="appName" style={{ fontFamily: "'Fraunces',serif", fontSize: 28, fontWeight: 700, color: "var(--ink)" }}>
+            {t('app')}
+          </h1>
+        </div>
+        <button onClick={() => navigate('/')} style={{ background: "rgba(255,255,255,.9)", border: "1px solid rgba(0,0,0,.1)", borderRadius: 12, padding: "10px 20px", marginBottom: 20, cursor: "pointer", fontSize: 14, fontWeight: 600, display: "flex", alignItems: "center", gap: 8 }}>
           ← {t('back')}
         </button>
         

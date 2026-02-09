@@ -1,7 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import { useLang } from "../context/LanguageContext";
 import { LangSwitch } from "../components/UI/LangSwitch";
-
-export default function LandingPage({ onSignUp, onLogIn, onReportLost }) {
+import Logo from "../components/Logo";
+export default function LandingPage() {
+  const navigate = useNavigate();
   const { t } = useLang();
 
   return (
@@ -16,7 +18,10 @@ export default function LandingPage({ onSignUp, onLogIn, onReportLost }) {
       <div style={{ position: "relative", zIndex: 1, flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "20px", maxWidth: 800, margin: "0 auto", width: "100%" }}>
         {/* Logo / Header */}
         <div style={{ textAlign: "center", marginBottom: 40 }}>
-          <h1 style={{ fontFamily: "'Fraunces',serif", fontSize: window.innerWidth <= 480 ? 36 : 56, fontWeight: 700, marginBottom: 16, color: "var(--ink)" }}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 0 }}>
+            <Logo />
+          </div>
+          <h1 className="appName" style={{ fontFamily: "'Fraunces',serif", fontSize: window.innerWidth <= 480 ? 36 : 56, fontWeight: 700, marginBottom: 16, color: "var(--ink)" }}>
             {t('app')}
           </h1>
           <p style={{ fontSize: window.innerWidth <= 480 ? 13 : 15, color: "var(--ink-muted)", fontStyle: "italic" }}>
@@ -62,7 +67,7 @@ export default function LandingPage({ onSignUp, onLogIn, onReportLost }) {
         {/* CTA Buttons */}
         <div style={{ display: "grid", gridTemplateColumns: window.innerWidth <= 640 ? "1fr" : "1fr 1fr 1fr", gap: 12, width: "100%" }}>
           <button
-            onClick={onSignUp}
+            onClick={() => navigate('/signup')}
             className="btn-primary fade-up fade-up-d1"
             style={{
               padding: window.innerWidth <= 480 ? "10px 14px" : "10px 16px",
@@ -80,7 +85,7 @@ export default function LandingPage({ onSignUp, onLogIn, onReportLost }) {
           </button>
 
           <button
-            onClick={onLogIn}
+            onClick={() => navigate('/login')}
             className="btn-primary btn-secondary fade-up fade-up-d2"
             style={{
               padding: window.innerWidth <= 480 ? "10px 14px" : "10px 16px",
@@ -98,7 +103,7 @@ export default function LandingPage({ onSignUp, onLogIn, onReportLost }) {
           </button>
 
           <button
-            onClick={onReportLost}
+            onClick={() => navigate('/report')}
             className="btn-primary btn-danger fade-up fade-up-d3"
             style={{
               padding: window.innerWidth <= 480 ? "10px 14px" : "10px 16px",
