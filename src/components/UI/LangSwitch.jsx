@@ -2,6 +2,7 @@ import { useLang } from "../../context/LanguageContext";
 
 export function LangSwitch() {
   const { lang, setLang } = useLang();
+  const isRTL = lang === 'ar';
   
   return (
     <button 
@@ -9,7 +10,8 @@ export function LangSwitch() {
       style={{ 
         position: "fixed", 
         top: window.innerWidth <= 480 ? 12 : 20, 
-        right: window.innerWidth <= 480 ? 12 : 20, 
+        left: isRTL ? (window.innerWidth <= 480 ? 12 : 20) : 'auto',
+        right: isRTL ? 'auto' : (window.innerWidth <= 480 ? 12 : 20), 
         zIndex: 900, 
         background: "var(--card-bg)", 
         backdropFilter: "blur(20px)", 

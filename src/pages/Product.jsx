@@ -169,9 +169,10 @@ function ProductCard({ product, delay, showDetails, onToggleDetails }) {
 }
 
 export default function ProductsPage() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const navigate = useNavigate();
   const [expandedProducts, setExpandedProducts] = useState({});
+  const isRTL = lang === 'ar';
 
   const products = [
     {
@@ -229,7 +230,7 @@ export default function ProductsPage() {
   return (
     <>
       <SideNavbar activeNav="products" navigate={navigate} />
-      <div style={{ marginLeft: '250px' }}>
+      <div style={{ marginLeft: isRTL ? 0 : '250px', marginRight: isRTL ? '250px' : 0 }}>
         <div style={{ minHeight: "100vh", position: "relative", padding: "24px 24px 80px" }}>
           <div className="mesh-bg" />
           <div className="texture-overlay" />

@@ -3,7 +3,7 @@ import { CheckIcon } from "./Icons";
 
 export function Toast({ msg, onClose }) {
   useEffect(() => {
-    const timer = setTimeout(onClose, 3000);
+    const timer = setTimeout(onClose, 1600);
     return () => clearTimeout(timer);
   }, [onClose]);
   

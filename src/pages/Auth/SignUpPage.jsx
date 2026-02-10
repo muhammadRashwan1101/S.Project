@@ -74,7 +74,7 @@ export function SignUpPage() {
     }
 
     const existingDep = accountsDB.find(acc => 
-      acc.role === 'dependent' && acc.token === dependentForm.guardianToken
+      acc && acc.role === 'dependent' && acc.token && dependentForm.guardianToken && acc.token === dependentForm.guardianToken
     );
 
     if (existingDep) {
@@ -90,7 +90,7 @@ export function SignUpPage() {
       });
     } else {
       const guardian = accountsDB.find(acc => 
-        acc.role === 'guardian' && acc.token === dependentForm.guardianToken
+        acc && acc.role === 'guardian' && acc.token && dependentForm.guardianToken && acc.token === dependentForm.guardianToken
       );
       
       if (guardian) {
@@ -150,6 +150,7 @@ export function SignUpPage() {
 
       accountsDB.push(newAccount);
       saveAccountsDB();
+      saveSession(newAccount);
       navigate('/token');
     } else {
       if (!dependentForm.guardianToken) {
@@ -158,7 +159,7 @@ export function SignUpPage() {
       }
 
       const existingDependent = accountsDB.find(acc => 
-        acc.role === 'dependent' && acc.token === dependentForm.guardianToken
+        acc && acc.role === 'dependent' && acc.token && dependentForm.guardianToken && acc.token === dependentForm.guardianToken
       );
 
       if (existingDependent) {
@@ -177,7 +178,7 @@ export function SignUpPage() {
           };
 
           const guardianIndex = accountsDB.findIndex(acc => 
-            acc.role === 'guardian' && acc.token === existingDependent.guardianToken
+            acc && acc.role === 'guardian' && acc.token && existingDependent.guardianToken && acc.token === existingDependent.guardianToken
           );
           
           if (guardianIndex !== -1) {
@@ -193,7 +194,7 @@ export function SignUpPage() {
           return;
         }
 
-        const guardianIndex = accountsDB.findIndex(acc => acc.role === "guardian" && acc.email === dependentForm.guardianEmail && acc.token === dependentForm.guardianToken);
+        const guardianIndex = accountsDB.findIndex(acc => acc && acc.role === "guardian" && acc.email === dependentForm.guardianEmail && acc.token && dependentForm.guardianToken && acc.token === dependentForm.guardianToken);
         if (guardianIndex === -1) {
           setErr(t('err4'));
           return;

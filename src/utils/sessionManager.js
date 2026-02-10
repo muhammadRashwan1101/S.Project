@@ -19,6 +19,7 @@ export function saveSession(userData) {
   try {
     localStorage.setItem(SESSION_KEY, JSON.stringify(userData));
     sessionStorage.setItem(SESSION_ID_KEY, sessionId);
+    window.dispatchEvent(new CustomEvent('sessionChange'));
     return sessionId;
   } catch (err) {
     if (isQuotaExceeded(err)) {

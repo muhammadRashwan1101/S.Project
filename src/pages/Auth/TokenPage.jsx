@@ -5,14 +5,26 @@ import { useNavigate } from "react-router-dom";
 import { Toast } from "../../components/UI/Toast";
 import { CheckIcon } from "../../components/UI/Icons";
 import Logo from "../../components/Logo";
+import { getSession } from "../../utils/sessionManager";
 
-export function TokenPage({ guardianData, onGoHome }) {
+export function TokenPage({ guardianData }) {
   const navigate = useNavigate()
   const { t } = useLang();
   const [showToast, setShowToast] = useState(false);
 
+  const session = getSession();
+  const data = guardianData || session;
+
+  if (!data) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: 'var(--ice-blue)', fontSize: 18 }}>
+        ⏳ Loading...
+      </div>
+    );
+  }
+
   const copyToken = () => {
-    navigator.clipboard.writeText(guardianData.token);
+    navigator.clipboard.writeText(data.token);
     setShowToast(true);
   };
 
@@ -37,7 +49,7 @@ export function TokenPage({ guardianData, onGoHome }) {
           <p style={{ fontSize: 14, color: "var(--ink-muted)", marginBottom: 32 }}>{t('shareMsg')}</p>
           <div style={{ background: "var(--azure-pale)", padding: 20, borderRadius: 12, marginBottom: 20 }}>
             <div style={{ fontSize: 12, fontWeight: 600, color: "var(--azure)", marginBottom: 8 }}>{t('yourToken')}</div>
-            <div style={{ fontFamily: "monospace", fontSize: 20, fontWeight: 700, color: "var(--ink)", letterSpacing: 2 }}>{guardianData.token}</div>
+            <div style={{ fontFamily: "monospace", fontSize: 20, fontWeight: 700, color: "var(--ink)", letterSpacing: 2 }}>{data.token}</div>
           </div>
           <button className="btn-primary" onClick={copyToken} style={{ marginBottom: 12 }}>
             📋 &nbsp;{t('copyToken')}

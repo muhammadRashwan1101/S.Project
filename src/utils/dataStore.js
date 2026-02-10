@@ -1,4 +1,14 @@
 const DEMO_VERSION = "1";
+// Mock chronic conditions for demo dependent only
+export const DEMO_CHRONIC_CONDITIONS = {
+  "0": true,  // Diabetes
+  "1": true,  // High blood pressure
+  "2": false, // Heart disease
+  "3": false, // Kidney disease
+  "4": false, // Respiratory diseases
+  "5": true   // Thyroid disorders
+};
+
 export const DEMO_ACCOUNTS = [
   { 
     email: "guardian@demo.com", 

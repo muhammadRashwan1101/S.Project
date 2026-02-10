@@ -75,8 +75,7 @@ export default function HomePage({ guardianData: initialGuardianData }) {
       // only mark as auto-hidden when caused by an active report
       setIsDependentLocationHidden(true);
       setAutoHiddenByReport(true);
-      setToastMsg(t('dependentMissingAlert'));
-      setShowToast(true);
+      // Don't show toast for missing alert - user will see the red warning banner
     } else {
       // If we previously auto-hidden due to a report, restore marker and location.
       // Do not override a manual hide set by the user.
@@ -236,7 +235,7 @@ export default function HomePage({ guardianData: initialGuardianData }) {
     return (
       <>
         <SideNavbar activeNav={activeNav} setView={setView} setActiveNav={setActiveNav} navigate={navigate} homeRoute={'/home'} />
-        <div style={{ marginLeft: '250px', padding: '40px 24px', minHeight: '100vh', background: 'var(--ice-blue)' }}>
+        <div style={{ marginLeft: '220px', padding: '40px 24px', minHeight: '100vh', background: 'var(--ice-blue)' }}>
           <div style={{ maxWidth: '800px', margin: '0 auto' }}>
             <h1 style={{ fontSize: '32px', fontWeight: '700', color: 'var(--ink)', marginBottom: '24px' }}>Services</h1>
             <div style={{ background: 'var(--card-bg)', backdropFilter: 'blur(20px)', borderRadius: '16px', padding: '32px', boxShadow: 'var(--shadow)', border: '1px solid rgba(255,255,255,.6)' }}>
@@ -268,7 +267,7 @@ export default function HomePage({ guardianData: initialGuardianData }) {
     return (
       <>
         <SideNavbar activeNav={activeNav} setView={setView} setActiveNav={setActiveNav} navigate={navigate} homeRoute={'/home'} />
-        <div style={{ marginLeft: '250px', padding: '40px 24px', minHeight: '100vh', background: 'var(--ice-blue)' }}>
+        <div style={{ marginLeft: '220px', padding: '40px 24px', minHeight: '100vh', background: 'var(--ice-blue)' }}>
           <div style={{ maxWidth: '800px', margin: '0 auto' }}>
             <h1 style={{ fontSize: '32px', fontWeight: '700', color: 'var(--ink)', marginBottom: '24px' }}>Frequently Asked Questions</h1>
             <div style={{ background: 'var(--card-bg)', backdropFilter: 'blur(20px)', borderRadius: '16px', padding: '32px', boxShadow: 'var(--shadow)', border: '1px solid rgba(255,255,255,.6)' }}>

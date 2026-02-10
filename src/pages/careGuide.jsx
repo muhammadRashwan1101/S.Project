@@ -6,6 +6,7 @@ import SideNavbar from '../components/SideNavbar';
 import { LangSwitch } from '../components/UI/LangSwitch';
 import { TR } from "../constants/translations";
 import LogoHeader from '../components/LogoHeader';
+import { DEMO_CHRONIC_CONDITIONS } from '../utils/dataStore';
 /* ═══════════════════════════════════════════════════════════════
    ICONS
    ═══════════════════════════════════════════════════════════════ */
@@ -31,7 +32,8 @@ function CareGuide() {
 
   // Get current user email from localStorage
   const getCurrentUserEmail = () => {
-    return localStorage.getItem('sanad-current-user-email') || null;
+    let currentEmail = JSON.parse(localStorage.getItem("sanad-session")).email;
+    return currentEmail || null;
   };
 
   // Load saved chronic conditions on mount
@@ -41,6 +43,10 @@ function CareGuide() {
       const savedConditions = localStorage.getItem(`sanad-chronic-${userEmail}`);
       if (savedConditions) {
         setChronicConditions(JSON.parse(savedConditions));
+      } else if (userEmail === 'dependent@demo.com') {
+        // Only load mock data for demo dependent account
+        setChronicConditions(DEMO_CHRONIC_CONDITIONS);
+        localStorage.setItem(`sanad-chronic-${userEmail}`, JSON.stringify(DEMO_CHRONIC_CONDITIONS));
       }
     }
   }, []);
@@ -113,7 +119,7 @@ function CareGuide() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", position: "relative", padding: 24, background: '#f5f5f5' }}>
+    <div style={{ minHeight: "100vh", position: "relative", padding: 24, background: 'var(--ice-blue)' }}>
       <div className="texture-overlay" />
       <LangSwitch />
 
@@ -317,7 +323,7 @@ function CareGuide() {
             {t('submit')}
           </button>
           <button
-            onClick={() => window.location.href = '/'}
+            onClick={() => window.location.href = '/home'}
             className="btn-primary btn-secondary"
             style={{ maxWidth: 300, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}
           >
@@ -331,15 +337,14 @@ function CareGuide() {
 
 export default function CareGuidePage() {
   const navigate = useNavigate();
+  const { lang } = useLang();
+  const isRTL = lang === 'ar';
+  
   return (
     <>
       <SideNavbar activeNav="questions" navigate={navigate} />
-      <div style={{ marginLeft: '250px' }}>
-        <div style={{ minHeight: "100vh", position: "relative", padding: 24, background: '#f5f5f5' }}>
-          <div className="texture-overlay" />
-          <LangSwitch />
-          <CareGuide />
-        </div>
+      <div style={{ marginLeft: isRTL ? 0 : '250px', marginRight: isRTL ? '250px' : 0 }}>
+        <CareGuide />
       </div>
     </>
   );

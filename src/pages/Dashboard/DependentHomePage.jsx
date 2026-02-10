@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLang } from '../../context/LanguageContext';
 import { LangSwitch } from '../../components/UI/LangSwitch';
 import { getSession, clearSession } from '../../utils/sessionManager';
+import { accountsDB } from '../../utils/dataStore';
 import { PlusIcon, TrashIcon, EditIcon } from '../../components/UI/Icons';
 import PhotoUploader from '../../components/PhotoUploader';
 import SideNavbar from '../../components/SideNavbar';
@@ -10,46 +11,102 @@ import LogoHeader from '../../components/LogoHeader';
 import FavoriteLocations from '../../components/FavoriteLocations';
 
 export default function DependentHomePage() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const navigate = useNavigate();
   const [dependent, setDependent] = useState(null);
   const [reminders, setReminders] = useState([]);
   const [importantInfo, setImportantInfo] = useState([]);
   const [memories, setMemories] = useState([]);
   const [emergencyNumbers, setEmergencyNumbers] = useState([]);
+  const isRTL = lang === 'ar';
 
-  useEffect(() => {
+  const loadData = () => {
     const session = getSession();
     if (session && session.role === 'dependent') {
       setDependent(session);
+      const userKey = session.email;
       // Load data from localStorage with error handling
       try {
-        setReminders(JSON.parse(localStorage.getItem('dependentReminders') || '[]'));
+        setReminders(JSON.parse(localStorage.getItem('dependentReminders_' + userKey) || '[]'));
       } catch (e) {
         setReminders([]);
-        localStorage.setItem('dependentReminders', '[]');
+        localStorage.setItem('dependentReminders_' + userKey, '[]');
       }
       try {
-        const info = localStorage.getItem('dependentImportantInfo');
+        const info = localStorage.getItem('dependentImportantInfo_' + userKey);
         setImportantInfo(JSON.parse(info || '[]'));
       } catch (e) {
         setImportantInfo([]);
-        localStorage.setItem('dependentImportantInfo', '[]');
+        localStorage.setItem('dependentImportantInfo_' + userKey, '[]');
       }
       try {
-        setMemories(JSON.parse(localStorage.getItem('dependentMemories') || '[]'));
+        setMemories(JSON.parse(localStorage.getItem('dependentMemories_' + userKey) || '[]'));
       } catch (e) {
         setMemories([]);
-        localStorage.setItem('dependentMemories', '[]');
+        localStorage.setItem('dependentMemories_' + userKey, '[]');
       }
       try {
-        setEmergencyNumbers(JSON.parse(localStorage.getItem('dependentEmergencyNumbers') || '[]'));
+        setEmergencyNumbers(JSON.parse(localStorage.getItem('dependentEmergencyNumbers_' + userKey) || '[]'));
       } catch (e) {
         setEmergencyNumbers([]);
-        localStorage.setItem('dependentEmergencyNumbers', '[]');
+        localStorage.setItem('dependentEmergencyNumbers_' + userKey, '[]');
+      }
+    } else {
+      setDependent(null);
+    }
+  };
+
+  useEffect(() => {
+    loadData();
+
+    // Check for active reports and redirect to map view
+    const session = getSession();
+    if (session && session.role === 'dependent' && session.linkedToken) {
+      const guardian = accountsDB.find(acc => acc.token === session.linkedToken);
+      if (guardian && guardian.lostReports && guardian.lostReports.some(r => r.status === 'active')) {
+        navigate('/map-view');
       }
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    // Initialize mock data for demo account if empty
+    if (session && session.email === 'dependent@demo.com') {
+      const userKey = session.email;
+      const hasReminders = localStorage.getItem('dependentReminders_' + userKey);
+      if (!hasReminders || JSON.parse(hasReminders).length === 0) {
+        const mockReminders = [
+          { id: 1, type: 'medicine', title: 'Take Blood Pressure Medication', time: '08:00' },
+          { id: 2, type: 'medicine', title: 'Diabetes Medication', time: '14:00' },
+          { id: 3, type: 'meeting', title: 'Doctor Appointment', time: '10:30' }
+        ];
+        localStorage.setItem('dependentReminders_' + userKey, JSON.stringify(mockReminders));
+        setReminders(mockReminders);
+      }
+
+      const hasInfo = localStorage.getItem('dependentImportantInfo_' + userKey);
+      if (!hasInfo || JSON.parse(hasInfo).length === 0) {
+        const mockInfo = [
+          { id: 1, title: 'Medical Allergies', description: 'Allergic to Penicillin and Aspirin' },
+          { id: 2, title: 'Emergency Contact', description: 'Dr. Mohamed Ali - +20 123 456 7890' }
+        ];
+        localStorage.setItem('dependentImportantInfo_' + userKey, JSON.stringify(mockInfo));
+        setImportantInfo(mockInfo);
+      }
+
+      const hasNumbers = localStorage.getItem('dependentEmergencyNumbers_' + userKey);
+      if (!hasNumbers || JSON.parse(hasNumbers).length === 0) {
+        const mockNumbers = [
+          { id: 1, name: 'Ahmed (Guardian)', number: '+20 123 456 7890' },
+          { id: 2, name: 'Emergency Services', number: '123' },
+          { id: 3, name: 'Family Doctor', number: '+20 111 222 3333' }
+        ];
+        localStorage.setItem('dependentEmergencyNumbers_' + userKey, JSON.stringify(mockNumbers));
+        setEmergencyNumbers(mockNumbers);
+      }
+    }
+
+    window.addEventListener('storage', loadData);
+    return () => window.removeEventListener('storage', loadData);
+  }, []);
 
   const saveReminders = (newReminders) => {
     setReminders(newReminders);
@@ -83,24 +140,24 @@ export default function DependentHomePage() {
   return (
     <>
       <SideNavbar activeNav={'homepage'} navigate={navigate} homeRoute={'/dependent-home'} />
-      <div style={{ fontFamily: "Fraunces" ,marginLeft: '250px', minHeight: '100vh', background: 'var(--ice-blue)', position: 'relative' }}>
+      <div style={{ fontFamily: "Fraunces", marginLeft: isRTL ? 0 : '250px', marginRight: isRTL ? '250px' : 0, minHeight: '100vh', background: 'var(--ice-blue)', position: 'relative', padding: '40px 24px' }}>
         <div className="texture-overlay" />
         <div className="mesh-bg" />
-        <div style={{ position: 'relative', zIndex: 1, padding: '24px', maxWidth: '1400px', margin: '0 auto' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
+        <div style={{ position: 'relative', zIndex: 1, maxWidth: '1400px', margin: '0 auto' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px', paddingTop: '20px' }}>
             <LangSwitch />
-            <button onClick={handleLogout} style={{ background: 'var(--coral)', color: '#fff', border: 'none', borderRadius: '10px', padding: '10px 20px', fontWeight: '600', cursor: 'pointer' }}>
+            <button onClick={handleLogout} style={{ background: 'var(--coral)', color: '#fff', border: 'none', borderRadius: '10px', padding: '12px 24px', fontWeight: '600', cursor: 'pointer', transition: 'all .2s', boxShadow: '0 2px 8px rgba(212,117,106,.3)' }}>
               {t("logout")}
             </button>
           </div>
 
-          <h1 style={{ fontSize: '32px', fontWeight: '700', color: 'var(--ink)', marginBottom: '32px' }}>
+          <h1 style={{ fontSize: '36px', fontWeight: '700', color: 'var(--ink)', marginBottom: '40px', fontFamily: "'Fraunces',serif" }}>
             {t('welcome')}, {dependent.fullName}
           </h1>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px' }}>
-            <div style={{ background: 'var(--card-bg)', backdropFilter: 'blur(20px)', padding: '24px', borderRadius: '16px', boxShadow: 'var(--shadow)', border: '1px solid rgba(255,255,255,.6)', minHeight: '500px', display: 'flex', flexDirection: 'column' }}>
-              <h2 style={{ fontSize: '20px', fontWeight: '600', color: 'var(--azure)', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>📅 {t('reminders')}</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))', gap: '24px' }}>
+            <div style={{ background: 'linear-gradient(135deg, rgba(74,144,164,.12), rgba(74,144,164,.05))', backdropFilter: 'blur(20px)', padding: '24px', borderRadius: '16px', boxShadow: '0 4px 16px rgba(74,144,164,.2)', border: '2px solid rgba(74,144,164,.3)', minHeight: '500px', display: 'flex', flexDirection: 'column' }}>
+              <h2 style={{ fontSize: '22px', fontWeight: '700', color: 'var(--azure)', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px', textShadow: '0 1px 2px rgba(0,0,0,.1)' }}>📅 {t('reminders')}</h2>
               <div style={{ flex: 1, overflow: 'hidden' }}>
                 <ReminderSection reminders={reminders} onSave={saveReminders} />
               </div>
@@ -162,6 +219,15 @@ function ReminderSection({ reminders, onSave }) {
     }
   };
 
+  const formatTime12Hour = (time24) => {
+    if (!time24) return '';
+    const [hours, minutes] = time24.split(':');
+    const hour = parseInt(hours);
+    const ampm = hour >= 12 ? 'PM' : 'AM';
+    const hour12 = hour % 12 || 12;
+    return `${hour12}:${minutes} ${ampm}`;
+  };
+
   return (
     <div>
       <div style={{ marginBottom: '16px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -190,16 +256,16 @@ function ReminderSection({ reminders, onSave }) {
       </div>
       <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
         {reminders.map(reminder => (
-          <div key={reminder.id} style={{ background: 'rgba(74,144,164,.08)', padding: '12px', marginBottom: '10px', borderRadius: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div key={reminder.id} style={{ background: 'linear-gradient(135deg, rgba(74,144,164,.15), rgba(74,144,164,.08))', padding: '16px', marginBottom: '12px', borderRadius: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', border: '2px solid rgba(74,144,164,.25)', boxShadow: '0 2px 8px rgba(74,144,164,.15)' }}>
             <div style={{ flex: 1 }}>
-              <div style={{ fontSize: '15px', fontWeight: '600', color: 'var(--ink)', marginBottom: '4px' }}>
+              <div style={{ fontSize: '16px', fontWeight: '700', color: 'var(--ink)', marginBottom: '6px' }}>
                 {getIcon(reminder.type)} {reminder.title}
               </div>
-              <div style={{ fontSize: '13px', color: 'var(--ink-light)' }}>
-                {reminder.time}
+              <div style={{ fontSize: '14px', fontWeight: '600', color: 'var(--azure)', background: 'rgba(255,255,255,.7)', padding: '4px 10px', borderRadius: '6px', display: 'inline-block' }}>
+                🕐 {formatTime12Hour(reminder.time)}
               </div>
             </div>
-            <button onClick={() => removeReminder(reminder.id)} style={{ background: 'var(--coral)', color: '#fff', border: 'none', borderRadius: '6px', padding: '6px 10px', cursor: 'pointer' }}>
+            <button onClick={() => removeReminder(reminder.id)} style={{ background: 'var(--coral)', color: '#fff', border: 'none', borderRadius: '8px', padding: '8px 12px', cursor: 'pointer', transition: 'all .2s' }}>
               <TrashIcon />
             </button>
           </div>

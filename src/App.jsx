@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { LanguageProvider } from './context/LanguageContext';
 import { GlobalStyle } from './constants/styles';
@@ -13,6 +13,7 @@ import SubscriptionsPage from './pages/SubscriptionsPage';
 import ServicesPage from './pages/Services';
 import ProductsPage from './pages/Product';
 import CareGuidePage from './pages/careGuide';
+import MapViewPage from './pages/MapViewPage';
 import { initializeSessionId, getSession } from './utils/sessionManager';
 import { initializeAccounts, accountsDB } from './utils/dataStore';
 import { ensureAccountDefaults } from './utils/helpers';
@@ -53,22 +54,26 @@ function AppContent() {
   }, []);
 
   // Listen for session changes (login/logout)
-  useEffect(() => {
-    const checkSession = () => {
-      const session = getSession();
-      if (session && session.email && session.role !== 'dependent') {
-        const freshGuardian = accountsDB.find(acc => acc.email === session.email);
-        if (freshGuardian) {
-          setGuardianData(ensureAccountDefaults(freshGuardian));
-        }
-      } else {
-        setGuardianData(null);
+  const checkSession = useCallback(() => {
+    const session = getSession();
+    if (session && session.email && session.role !== 'dependent') {
+      const freshGuardian = accountsDB.find(acc => acc.email === session.email);
+      if (freshGuardian) {
+        setGuardianData(ensureAccountDefaults(freshGuardian));
       }
-    };
-
-    window.addEventListener('storage', checkSession);
-    return () => window.removeEventListener('storage', checkSession);
+    } else {
+      setGuardianData(null);
+    }
   }, []);
+
+  useEffect(() => {
+    window.addEventListener('storage', checkSession);
+    window.addEventListener('sessionChange', checkSession);
+    return () => {
+      window.removeEventListener('storage', checkSession);
+      window.removeEventListener('sessionChange', checkSession);
+    };
+  }, [checkSession]);
 
   if (loading) {
     return (
@@ -87,8 +92,9 @@ function AppContent() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/token" element={<TokenPage guardianData={guardianData} />} />
         <Route path="/report" element={<ReportLostDependentPage />} />
-        <Route path="/home" element={guardianData ? <HomePage guardianData={guardianData} updateGuardianData={setGuardianData} /> : <LandingPage />} />
+        <Route path="/home" element={<HomePage guardianData={guardianData} updateGuardianData={setGuardianData} />} />
         <Route path="/dependent-home" element={<DependentHomePage />} />
+        <Route path="/map-view" element={<MapViewPage />} />
         <Route path="/subscriptions" element={<SubscriptionsPage />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/products" element={<ProductsPage />} />

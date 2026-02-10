@@ -43,10 +43,11 @@ const GlobeIcon = () => (<svg width="20" height="20" viewBox="0 0 24 24" fill="n
    ═══════════════════════════════════════════════════════════════ */
 function PricingPage() {
   const navigate = useNavigate();
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const [currentPlan] = useState('forall'); // Mock current plan
   const [view, setView] = useState("pricing");
   const [activeNav, setActiveNav] = useState('subscriptions');
+  const isRTL = lang === 'ar';
 
   useEffect(() => {
     if (view === 'pricing') setActiveNav('subscriptions');
@@ -58,7 +59,7 @@ function PricingPage() {
     return (
       <>
         <SideNavbar activeNav={activeNav} setView={setView} setActiveNav={setActiveNav} navigate={navigate} />
-        <div style={{ marginLeft: '250px', padding: '40px 24px', minHeight: '100vh', background: 'var(--ice-blue)' }}>
+        <div style={{ marginLeft: isRTL ? 0 : '250px', marginRight: isRTL ? '250px' : 0, padding: '40px 24px', minHeight: '100vh', background: 'var(--ice-blue)' }}>
           <div style={{ maxWidth: '800px', margin: '0 auto' }}>
             <h1 style={{ fontSize: '32px', fontWeight: '700', color: 'var(--ink)', marginBottom: '24px' }}>Services</h1>
             <div style={{ background: 'var(--card-bg)', backdropFilter: 'blur(20px)', borderRadius: '16px', padding: '32px', boxShadow: 'var(--shadow)', border: '1px solid rgba(255,255,255,.6)' }}>
@@ -90,7 +91,7 @@ function PricingPage() {
     return (
       <>
         <SideNavbar activeNav={activeNav} setView={setView} setActiveNav={setActiveNav} navigate={navigate} />
-        <div style={{ marginLeft: '250px', padding: '40px 24px', minHeight: '100vh', background: 'var(--ice-blue)' }}>
+        <div style={{ marginLeft: isRTL ? 0 : '250px', marginRight: isRTL ? '250px' : 0, padding: '40px 24px', minHeight: '100vh', background: 'var(--ice-blue)' }}>
           <div style={{ maxWidth: '800px', margin: '0 auto' }}>
             <h1 style={{ fontSize: '32px', fontWeight: '700', color: 'var(--ink)', marginBottom: '24px' }}>Frequently Asked Questions</h1>
             <div style={{ background: 'var(--card-bg)', backdropFilter: 'blur(20px)', borderRadius: '16px', padding: '32px', boxShadow: 'var(--shadow)', border: '1px solid rgba(255,255,255,.6)' }}>
@@ -195,7 +196,7 @@ function PricingPage() {
     <>
       <div style={{ display: 'flex' }}>
         <SideNavbar activeNav={activeNav} setView={setView} setActiveNav={setActiveNav} navigate={navigate} />
-        <div style={{ flex: 1, marginLeft: '250px' }}>
+        <div style={{ flex: 1, marginLeft: isRTL ? 0 : '250px', marginRight: isRTL ? '250px' : 0 }}>
           <div style={{ minHeight: "100vh", position: "relative", padding: "40px 24px 60px" }}>
             <div className="mesh-bg" />
             <div className="texture-overlay" />

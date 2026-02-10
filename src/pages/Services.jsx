@@ -75,8 +75,9 @@ function ServiceCard({ icon: Icon, title, description, delay }) {
 }
 
 export default function ServicesPage() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const navigate = useNavigate();
+  const isRTL = lang === 'ar';
 
   const services = [
     { icon: LocationIcon, titleKey: 'service1Title', descKey: 'service1Desc' },
@@ -93,7 +94,7 @@ export default function ServicesPage() {
   return (
     <>
       <SideNavbar activeNav="services" navigate={navigate} />
-      <div style={{ marginLeft: '250px' }}>
+      <div style={{ marginLeft: isRTL ? 0 : '250px', marginRight: isRTL ? '250px' : 0 }}>
         <div style={{ minHeight: "100vh", position: "relative", padding: "24px 24px 80px" }}>
           <div className="mesh-bg" />
           <div className="texture-overlay" />
