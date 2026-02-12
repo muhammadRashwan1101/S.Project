@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useLang } from '../context/LanguageContext';
 import { useNavigate } from 'react-router-dom';
+import { useResponsive } from '../hooks/useResponsive';
 import SideNavbar from '../components/SideNavbar';
-import { LangSwitch } from '../components/UI/LangSwitch';
 import LogoHeader from '../components/LogoHeader';
+import { SparklesIcon, ClipboardIcon } from '../components/UI/Icons';
 
 const ShieldIcon = () => (<img src="/assets/logo.png" alt="Logo" style={{ width: 22, height: 22, objectFit: 'contain' }} />);
 const CheckIcon = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>);
@@ -140,13 +141,13 @@ function ProductCard({ product, delay, showDetails, onToggleDetails }) {
             </div>
 
             <div>
-              <h4 style={{ 
-                fontSize: 14, 
-                fontWeight: 600, 
+              <h4 style={{
+                fontSize: 14,
+                fontWeight: 600,
                 marginBottom: 12,
                 color: 'var(--ink-light)'
               }}>
-                📋 {t('specs')}
+                <ClipboardIcon /> {t('specs')}
               </h4>
               <div style={{ 
                 background: 'var(--azure-pale)', 
@@ -171,6 +172,8 @@ function ProductCard({ product, delay, showDetails, onToggleDetails }) {
 export default function ProductsPage() {
   const { t, lang } = useLang();
   const navigate = useNavigate();
+  const { isMobile, isTablet } = useResponsive();
+  const isSmallScreen = isMobile || isTablet;
   const [expandedProducts, setExpandedProducts] = useState({});
   const isRTL = lang === 'ar';
 
@@ -230,20 +233,18 @@ export default function ProductsPage() {
   return (
     <>
       <SideNavbar activeNav="products" navigate={navigate} />
-      <div style={{ marginLeft: isRTL ? 0 : '250px', marginRight: isRTL ? '250px' : 0 }}>
-        <div style={{ minHeight: "100vh", position: "relative", padding: "24px 24px 80px" }}>
+      <div style={{ marginLeft: isRTL ? 0 : (isSmallScreen ? 0 : '104px'), marginRight: isRTL ? (isSmallScreen ? 0 : '104px') : 0, marginBottom: isSmallScreen ? '64px' : 0 }}>
+        <div style={{ minHeight: "100vh", position: "relative", padding: isSmallScreen ? "20px 16px 80px" : "24px 24px 80px" }}>
           <div className="mesh-bg" />
           <div className="texture-overlay" />
-          <LangSwitch />
-          
           <div style={{ position: "relative", zIndex: 1, maxWidth: 1100, margin: "0 auto" }}>
-            <div className="fade-up" style={{ textAlign: "center", marginBottom: 56, marginTop: 60 }}>
+            <div className="fade-up" style={{ textAlign: "center", marginBottom: isSmallScreen ? 40 : 56, marginTop: isSmallScreen ? 20 : 60 }}>
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 20 }}>
             <LogoHeader />
           </div>
           
           <h2 style={{ 
-            fontSize: 36, 
+            fontSize: isSmallScreen ? 28 : 36, 
             fontWeight: 600, 
             marginBottom: 12,
             fontFamily: "'Fraunces',serif",
@@ -253,7 +254,7 @@ export default function ProductsPage() {
           </h2>
           
           <p style={{ 
-            fontSize: 16, 
+            fontSize: isSmallScreen ? 14 : 16, 
             color: "var(--ink-muted)",
             maxWidth: 600,
             margin: '0 auto'
@@ -264,9 +265,9 @@ export default function ProductsPage() {
 
             <div style={{ 
               display: "grid", 
-              gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))", 
-              gap: 32,
-              marginTop: 48,
+              gridTemplateColumns: isSmallScreen ? "1fr" : "repeat(auto-fit, minmax(400px, 1fr))", 
+              gap: isSmallScreen ? 20 : 32,
+              marginTop: isSmallScreen ? 32 : 48,
               alignItems: 'start'
             }}>
               {products.map((product, idx) => (

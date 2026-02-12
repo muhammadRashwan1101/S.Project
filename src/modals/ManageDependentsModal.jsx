@@ -4,6 +4,8 @@ import { Toast } from "../components/UI/Toast";
 import { PlusIcon, UsersIcon, TrashIcon } from "../components/UI/Icons";
 import { accountsDB, saveAccountsDB } from "../utils/dataStore";
 
+const CopyIcon = () => (<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>);
+
 export function ManageDependentsModal({ guardianData, onClose, onUpdate }) {
   const { t } = useLang();
   const [showAddForm, setShowAddForm] = useState(false);
@@ -16,6 +18,13 @@ export function ManageDependentsModal({ guardianData, onClose, onUpdate }) {
   });
   const [showToast, setShowToast] = useState(false);
   const [toastMsg, setToastMsg] = useState('');
+
+  // Find pending dependent created by this guardian
+  const pendingDependent = accountsDB.find(acc => 
+    acc.role === 'dependent' && 
+    acc.guardianToken === guardianData.token && 
+    !acc.isLinked
+  );
 
   const handleAddDependent = () => {
     if (!newDependent.fullName || !newDependent.nationalId || !newDependent.email) {
@@ -41,10 +50,8 @@ export function ManageDependentsModal({ guardianData, onClose, onUpdate }) {
     accountsDB.push(dependent);
     saveAccountsDB();
     
-    const updatedGuardian = {
-      ...guardianData,
-      dependent: dependent
-    };
+    // Don't link dependent to guardian until they sign up with token
+    const updatedGuardian = { ...guardianData };
 
     onUpdate(updatedGuardian);
     setToastMsg(t('dependentAdded'));
@@ -94,7 +101,7 @@ export function ManageDependentsModal({ guardianData, onClose, onUpdate }) {
             </button>
           </div>
 
-          {!showAddForm && !guardianData.dependent && (
+          {!showAddForm && !guardianData.dependent && !pendingDependent && (
             <button
               onClick={() => setShowAddForm(true)}
               className="btn-primary"
@@ -162,10 +169,52 @@ export function ManageDependentsModal({ guardianData, onClose, onUpdate }) {
 
           <div>
             <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 16 }}>{t('dependentsList')}</h3>
-            {!guardianData.dependent ? (
+            {!guardianData.dependent && !pendingDependent ? (
               <p style={{ color: 'var(--ink-muted)', textAlign: 'center', padding: 20, fontSize: 14 }}>
                 {t('noDependents')}
               </p>
+            ) : pendingDependent && !guardianData.dependent ? (
+              <div style={{
+                background: 'var(--ice-blue)',
+                borderRadius: 12,
+                padding: 16
+              }}>
+                <p style={{ fontWeight: 600, marginBottom: 4, fontSize: 15 }}>{pendingDependent.fullName}</p>
+                <p style={{ fontSize: 13, color: 'var(--ink-muted)', marginBottom: 8 }}>{pendingDependent.email}</p>
+                <div style={{ background: 'rgba(74, 144, 164, 0.1)', padding: 10, borderRadius: 8 }}>
+                  <p style={{ fontSize: 12, color: 'var(--ink-muted)', marginBottom: 4 }}>{t('dependentToken')}:</p>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <code style={{ fontFamily: 'monospace', fontSize: 13, fontWeight: 600, color: 'var(--azure)', flex: 1 }}>
+                      {pendingDependent.token}
+                    </code>
+                    <button
+                      onClick={() => {
+                        navigator.clipboard.writeText(pendingDependent.token);
+                        setToastMsg(t('copied'));
+                        setShowToast(true);
+                      }}
+                      style={{
+                        background: 'var(--azure)',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: 6,
+                        padding: '4px 8px',
+                        cursor: 'pointer',
+                        fontSize: 11,
+                        fontWeight: 600,
+                        display: 'flex',
+                        alignItems: 'center',
+                        flexShrink: 0
+                      }}
+                    >
+                      <CopyIcon />
+                    </button>
+                  </div>
+                  <p style={{ fontSize: 11, color: 'var(--ink-muted)', marginTop: 6, fontStyle: 'italic' }}>
+                    {t('shareToken')}
+                  </p>
+                </div>
+              </div>
             ) : (
               <div style={{
                 background: 'var(--ice-blue)',
@@ -173,41 +222,9 @@ export function ManageDependentsModal({ guardianData, onClose, onUpdate }) {
                 padding: 16
               }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
-                  <div style={{ flex: 1 }}>
+                  <div>
                     <p style={{ fontWeight: 600, marginBottom: 4, fontSize: 15 }}>{guardianData.dependent.fullName}</p>
                     <p style={{ fontSize: 13, color: 'var(--ink-muted)', marginBottom: 8 }}>{guardianData.dependent.email}</p>
-                    {guardianData.dependent.token && (
-                      <div style={{ background: 'rgba(74, 144, 164, 0.1)', padding: 10, borderRadius: 8, marginTop: 8 }}>
-                        <p style={{ fontSize: 12, color: 'var(--ink-muted)', marginBottom: 4 }}>{t('dependentToken')}:</p>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                          <code style={{ fontFamily: 'monospace', fontSize: 13, fontWeight: 600, color: 'var(--azure)' }}>
-                            {guardianData.dependent.token}
-                          </code>
-                          <button
-                            onClick={() => {
-                              navigator.clipboard.writeText(guardianData.dependent.token);
-                              setToastMsg(t('copied'));
-                              setShowToast(true);
-                            }}
-                            style={{
-                              background: 'var(--azure)',
-                              color: '#fff',
-                              border: 'none',
-                              borderRadius: 6,
-                              padding: '4px 8px',
-                              cursor: 'pointer',
-                              fontSize: 11,
-                              fontWeight: 600
-                            }}
-                          >
-                            📋
-                          </button>
-                        </div>
-                        <p style={{ fontSize: 11, color: 'var(--ink-muted)', marginTop: 6, fontStyle: 'italic' }}>
-                          {t('shareToken')}
-                        </p>
-                      </div>
-                    )}
                   </div>
                   <button
                     onClick={handleDeleteDependent}
@@ -223,12 +240,48 @@ export function ManageDependentsModal({ guardianData, onClose, onUpdate }) {
                       gap: 6,
                       fontSize: 13,
                       fontWeight: 600,
-                      marginLeft: 12
+                      marginLeft: 12,
+                      flexShrink: 0
                     }}
                   >
                     <TrashIcon /> {t('deleteDependent')}
                   </button>
                 </div>
+                {guardianData.dependent.token && (
+                  <div style={{ background: 'rgba(74, 144, 164, 0.1)', padding: 10, borderRadius: 8 }}>
+                    <p style={{ fontSize: 12, color: 'var(--ink-muted)', marginBottom: 4 }}>{t('dependentToken')}:</p>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <code style={{ fontFamily: 'monospace', fontSize: 13, fontWeight: 600, color: 'var(--azure)', flex: 1 }}>
+                        {guardianData.dependent.token}
+                      </code>
+                      <button
+                        onClick={() => {
+                          navigator.clipboard.writeText(guardianData.dependent.token);
+                          setToastMsg(t('copied'));
+                          setShowToast(true);
+                        }}
+                        style={{
+                          background: 'var(--azure)',
+                          color: '#fff',
+                          border: 'none',
+                          borderRadius: 6,
+                          padding: '4px 8px',
+                          cursor: 'pointer',
+                          fontSize: 11,
+                          fontWeight: 600,
+                          display: 'flex',
+                          alignItems: 'center',
+                          flexShrink: 0
+                        }}
+                      >
+                        <CopyIcon />
+                      </button>
+                    </div>
+                    <p style={{ fontSize: 11, color: 'var(--ink-muted)', marginTop: 6, fontStyle: 'italic' }}>
+                      {t('shareToken')}
+                    </p>
+                  </div>
+                )}
               </div>
             )}
           </div>

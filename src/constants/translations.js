@@ -16,7 +16,7 @@ export const TR = {
     pat: "Dependent", email: "Email", pass: "Password", confirmPass: "Confirm Password", name: "Full Name", natId: "National ID", phone: "Phone", addr: "Address", patInfo: "Dependent Information", patName: "Dependent Full Name", patId: "Dependent National ID", patEmail: "Dependent Email", patPhone: "Dependent Phone", patAddr: "Dependent Address", guardEmail: "Guardian Email", guardToken: "Guardian Token (e.g. XXXX-XXXX-XXXX)", already: "Already have an account?", dontHave: "Don't have an account?", welcomeBack: "Welcome Back", loginMsg: "Log in to continue caring", demoMsg: "Demo Credentials:", created: "Account Created!", shareMsg: "Share this token with your dependent so they can link their account", yourToken: "YOUR LINKING TOKEN", copyToken: "Copy Token", contDash: "Continue to Dashboard", keepSafe: "Keep this token safe. You can find it again in your dashboard settings.", copied: "Token copied to clipboard!", welcome: "Welcome", dash: "Dashboard", patStatus: "Dependent Status", inside: "Inside Safe Zone", outside: "Outside Safe Zone", patInside: "Dependent is within designated area", patOutside: "Alert: Dependent has left safe zone", patInfoTitle: "Dependent Info", nameLabel: "Name", quickAct: "Quick Actions", viewMap: "View Live Map & Geofence", copyLink: "Copy Linking Token", recent: "Recent Activity", insideMsg: "Dependent inside safe zone", outsideMsg: "Dependent left safe zone", locUpdate: "Location updated", sysCheck: "System check completed", now: "Just now", min: "min ago", liveTrack: "Live Location Tracking", monPat: "Monitor dependent location in real-time and configure the safe zone radius", radius: "Safe Zone Radius", inZone: "Inside Zone", outZone: "Outside Zone", curLoc: "Current Location", dist: "Distance from center", how: "How It Works:", tip1: "The blue zone shows the safe area around the center point", tip2: "The coral marker shows the dependent's current location", tip3: "Adjust the radius slider to customize the safe zone size", tip4: "You'll receive alerts when the dependent leaves the safe zone", tip5: "Status is automatically sent to the backend (console.log)", alertTitle: "Dependent Left Safe Zone!", alertSub: "Check location immediately", err1: "Please fill in all guardian and dependent fields", err2: "Please fill in all dependent fields", err3: "Passwords do not match", err4: "Invalid token. Please check with your guardian.", err5: "Please enter both email and password", err6: "Invalid credentials",
     selectRole: "Select Your Role", selectRoleMsg: "Choose how you'll be using Sanad", guardianRole: "Guardian", guardianDesc: "Monitor and care for a dependent", dependentRole: "Care Recipient", dependentDesc: "Connect with my guardian", continue: "Continue", chooseLocation: "Choose Location", locationMsg: "Set your safe zone center location", searchLocation: "Search for a location...", useCurrentLoc: "Use Current Location", dragPin: "Drag the pin to your desired location", clickMap: "Or click anywhere on the map", confirmLoc: "Confirm Location", locPermDenied: "Location permission denied", editSafeZone: "Edit Safe Zone", saveChanges: "Save Changes", testLocation: "Test Dependent Location", setTestLoc: "Set Test Location", currentTestLoc: "Current Test Location", resetToActual: "Reset to Actual Location", viewOnMap: "View on Map", locationSaved: "Location saved successfully!", safeZoneUpdated: "Safe zone updated!", usingTestLoc: "Using test location", testLocSet: "Test location set", returnToActual: "Returned to actual location", locating: "Getting your location...", mapInstructions: "Search, click on map, or drag the marker to set location", myProfile: "My Profile", guardianInfo: "Guardian Information", noDependentLinked: "No dependent linked yet", waitingForDependent: "Waiting for dependent to sign up with your token", dependentLinked: "Dependent Linked", viewProfile: "View Profile", closeProfile: "Close",
     tokenMessage: "Enter the token provided by your guardian to link your account",
-    tokenVerified: "Token Verified Succefully ✓",
+    tokenVerified: "Token Verified Successfully ✓",
     completeInfo: "Complete your information to create your account",
     patPhoto: "Dependent Photo",
     uploadPhoto: "Upload Photo",
@@ -135,6 +135,9 @@ export const TR = {
     editLocation: "Edit Location",
     deleteLocation: "Delete Location",
     updateLocation: "Update Location",
+    save: "Save",
+    darkMode: "Dark Mode",
+    lightMode: "Light Mode",
     // Plan names
     planForAll: "Sanad For All",
     planGold: "Sanad Gold", 
@@ -251,12 +254,12 @@ export const TR = {
     popular: "POPULAR",
     advanced: "ADVANCED",
     tips: [
-      "🧠 Create a consistent daily routine to reduce confusion and anxiety",
-      "💊 Ensure medication is taken on time and monitor side effects carefully",
-      "🏠 Maintain a safe home environment by removing hazards and sharp objects",
-      "💬 Communicate using simple, clear sentences and maintain eye contact",
-      "🎵 Use music, photos, and familiar activities to stimulate memory",
-      "🤝 Show patience, empathy, and avoid arguing about confused memories"
+      "Create a consistent daily routine to reduce confusion and anxiety",
+      "Ensure medication is taken on time and monitor side effects carefully",
+      "Maintain a safe home environment by removing hazards and sharp objects",
+      "Communicate using simple, clear sentences and maintain eye contact",
+      "Use music, photos, and familiar activities to stimulate memory",
+      "Show patience, empathy, and avoid arguing about confused memories"
     ],
     questions: [
       {
@@ -295,7 +298,7 @@ export const TR = {
     app: "سَنَد", tag: "آمن، متصل، معاً دائماً", tagline: "أنت في أيد آمنة.", signUp: "إنشاء حساب", logIn: "تسجيل الدخول", logout: "تسجيل الخروج", back: "رجوع", backDash: "العودة إلى لوحة التحكم", terms: "الشروط", privacy: "الخصوصية", byContinuing: "بالمتابعة، أنت توافق على", create: "إنشاء حساب", join: "انضم إلى سند وابدأ الرعاية", guard: "الوصي", pat: "متلقّي الرعاية", email: "البريد الإلكتروني", pass: "كلمة المرور", confirmPass: "تأكيد كلمة المرور", name: "الاسم الكامل", natId: "الرقم القومي", phone: "رقم الهاتف", addr: "العنوان", patInfo: "معلومات متلقّي الرعاية", patName: "الاسم الكامل لمتلقّي الرعاية", patId: "الرقم القومي لمتلقّي الرعاية", patEmail: "البريد الإلكتروني لمتلقّي الرعاية", patPhone: "رقم هاتف متلقّي الرعاية", patAddr: "عنوان متلقّي الرعاية", guardEmail: "البريد الإلكتروني للوصي", guardToken: "رمز الوصي (مثال: XXXX-XXXX-XXXX)", already: "لديك حساب بالفعل؟", dontHave: "ليس لديك حساب؟", welcomeBack: "مرحباً بعودتك", loginMsg: "سجل الدخول للمتابعة", demoMsg: "بيانات تجريبية:", created: "تم إنشاء الحساب!", shareMsg: "شارك هذا الرمز مع متلقّي الرعايةك حتى يتمكن من ربط حسابه", yourToken: "رمز الربط الخاص بك", copyToken: "نسخ الرمز", contDash: "المتابعة إلى لوحة التحكم", keepSafe: "احتفظ بهذا الرمز بأمان. يمكنك العثور عليه مرة أخرى في إعدادات لوحة التحكم.", copied: "تم نسخ الرمز!", welcome: "مرحباً", dash: "لوحة التحكم", patStatus: "حالة متلقّي الرعاية", inside: "داخل المنطقة الآمنة", outside: "خارج المنطقة الآمنة", patInside: "متلقّي الرعاية داخل المنطقة المحددة", patOutside: "تنبيه: متلقّي الرعاية غادر المنطقة الآمنة", patInfoTitle: "معلومات متلقّي الرعاية", nameLabel: "الاسم", quickAct: "إجراءات سريعة", viewMap: "عرض الخريطة المباشرة", copyLink: "نسخ رمز الربط", recent: "النشاط الأخير", insideMsg: "متلقّي الرعاية داخل المنطقة الآمنة", outsideMsg: "⚠️ متلقّي الرعاية غادر المنطقة الآمنة", locUpdate: "تم تحديث الموقع", sysCheck: "تم فحص النظام", now: "الآن", min: "دقيقة مضت", liveTrack: "تتبع الموقع المباشر", monPat: "راقب موقع متلقّي الرعاية في الوقت الفعلي وقم بتكوين نصف قطر المنطقة الآمنة", radius: "نصف قطر المنطقة الآمنة", inZone: "✓ داخل المنطقة", outZone: "⚠️ خارج المنطقة", curLoc: "الموقع الحالي", dist: "المسافة من المركز", how: "كيف يعمل:", tip1: "المنطقة الزرقاء توضح المنطقة الآمنة حول نقطة المركز", tip2: "العلامة المرجانية توضح موقع متلقّي الرعاية الحالي", tip3: "اضبط شريط التمرير لتخصيص حجم المنطقة الآمنة", tip4: "ستتلقى تنبيهات عندما يغادر متلقّي الرعاية المنطقة الآمنة", tip5: "يتم إرسال الحالة تلقائياً إلى الخادم", alertTitle: "متلقّي الرعاية غادر المنطقة الآمنة!", alertSub: "تحقق من الموقع فوراً", err1: "يرجى ملء جميع حقول الوصي ومتلقّي الرعاية", err2: "يرجى ملء جميع حقول متلقّي الرعاية", err3: "كلمات المرور غير متطابقة", err4: "رمز غير صالح. يرجى التحقق مع الوصي الخاص بك.", err5: "يرجى إدخال البريد الإلكتروني وكلمة المرور", err6: "بيانات اعتماد غير صالحة",
     selectRole: "اختر دورك", selectRoleMsg: "اختر كيف ستستخدم سند", guardianRole: "وصي", guardianDesc: "مراقبة والعناية بمتلقّي الرعاية", dependentRole: "متلقّي الرعاية", dependentDesc: "الاتصال مع الوصي الخاص بي", continue: "متابعة", chooseLocation: "اختر الموقع", locationMsg: "حدد موقع مركز المنطقة الآمنة", searchLocation: "ابحث عن موقع...", useCurrentLoc: "استخدم الموقع الحالي", dragPin: "اسحب الدبوس إلى الموقع المطلوب", clickMap: "أو انقر في أي مكان على الخريطة", confirmLoc: "تأكيد الموقع", locPermDenied: "تم رفض إذن الموقع", editSafeZone: "تعديل المنطقة الآمنة", saveChanges: "حفظ التغييرات", testLocation: "اختبار موقع متلقّي الرعاية", setTestLoc: "تعيين موقع اختباري", currentTestLoc: "الموقع الاختباري الحالي", resetToActual: "العودة للموقع الفعلي", viewOnMap: "عرض على الخريطة", locationSaved: "تم حفظ الموقع بنجاح!", safeZoneUpdated: "تم تحديث المنطقة الآمنة!", usingTestLoc: "استخدام موقع اختباري", testLocSet: "تم تعيين موقع اختباري", returnToActual: "تم العودة للموقع الفعلي", locating: "جاري تحديد موقعك...", mapInstructions: "ابحث، انقر على الخريطة، أو اسحب العلامة لتحديد الموقع", myProfile: "ملفي الشخصي", guardianInfo: "معلومات الوصي", noDependentLinked: "لا يوجد متلقّي رعاية مرتبط بعد", waitingForDependent: "في انتظار متلقّي الرعاية للتسجيل باستخدام الرمز الخاص بك", dependentLinked: "متلقّي الرعاية مرتبط", viewProfile: "عرض الملف الشخصي", closeProfile: "إغلاق",
     tokenMessage: "أدخل الرمز المقدم من الوصي الخاص بك لربط حسابك",
-    tokenVerified: "✓ تم التحقق من رمز الوصي!",
+    tokenVerified: "تم التحقق من الرمز بنجاح ✓",
     completeInfo: "أكمل معلوماتك لإنشاء حسابك",
     patPhoto: "صورة متلقّي الرعاية",
     uploadPhoto: "رفع صورة",
@@ -497,6 +500,7 @@ export const TR = {
     memoryTitle: "عنوان الذكرى",
     date: "التاريخ",
     phoneNumber: "رقم الهاتف",
+    save: "حفظ",
     noNotes: "لم يتم إضافة ملاحظات مهمة بعد.",
     favoriteLocations: "الأماكن المفضلة",
     addLocation: "إضافة موقع",
@@ -512,12 +516,12 @@ export const TR = {
     deleteLocation: "حذف الموقع",
     updateLocation: "تحديث الموقع",
     tips: [
-      "🧠 إنشاء روتين يومي ثابت لتقليل الارتباك والقلق",
-      "💊 التأكد من تناول الدواء في الوقت المحدد ومراقبة الآثار الجانبية بعناية",
-      "🏠 الحفاظ على بيئة منزلية آمنة بإزالة المخاطر والأدوات الحادة",
-      "💬 التواصل باستخدام جمل بسيطة وواضحة مع الحفاظ على التواصل البصري",
-      "🎵 استخدام الموسيقى والصور والأنشطة المألوفة لتحفيز الذاكرة",
-      "🤝 إظهار الصبر والتعاطف وتجنب الجدال حول الذكريات المشوشة"
+      "إنشاء روتين يومي ثابت لتقليل الارتباك والقلق",
+      "التأكد من تناول الدواء في الوقت المحدد ومراقبة الآثار الجانبية بعناية",
+      "الحفاظ على بيئة منزلية آمنة بإزالة المخاطر والأدوات الحادة",
+      "التواصل باستخدام جمل بسيطة وواضحة مع الحفاظ على التواصل البصري",
+      "استخدام الموسيقى والصور والأنشطة المألوفة لتحفيز الذاكرة",
+      "إظهار الصبر والتعاطف وتجنب الجدال حول الذكريات المشوشة"
     ],
     questions: [
       {
@@ -549,6 +553,8 @@ export const TR = {
     subscriptions: "الاشتراكات",
     services: "الخدمات",
     products: "المنتجات",
-    careGuide: "دليل الرعاية "
+    careGuide: "دليل الرعاية ",
+    darkMode: "وضع داكن",
+    lightMode: "وضع فاتح",
   }
 };

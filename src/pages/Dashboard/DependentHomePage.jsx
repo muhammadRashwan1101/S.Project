@@ -1,18 +1,22 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLang } from '../../context/LanguageContext';
-import { LangSwitch } from '../../components/UI/LangSwitch';
+import { useTheme } from '../../context/ThemeContext';
+import { useResponsive } from '../../hooks/useResponsive';
 import { getSession, clearSession } from '../../utils/sessionManager';
 import { accountsDB } from '../../utils/dataStore';
-import { PlusIcon, TrashIcon, EditIcon } from '../../components/UI/Icons';
+import { PlusIcon, TrashIcon, EditIcon, CalendarIcon, PillIcon, CheckSquareIcon, UsersGroupIcon, AlertCircleIcon, ClockIcon, BrainIcon, PhoneIcon, MapPinIcon, GlobeIcon, SunIcon, MoonIcon } from '../../components/UI/Icons';
 import PhotoUploader from '../../components/PhotoUploader';
 import SideNavbar from '../../components/SideNavbar';
 import LogoHeader from '../../components/LogoHeader';
 import FavoriteLocations from '../../components/FavoriteLocations';
 
 export default function DependentHomePage() {
-  const { t, lang } = useLang();
+  const { t, lang, setLang } = useLang();
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
+  const { isMobile, isTablet } = useResponsive();
+  const isSmallScreen = isMobile || isTablet;
   const [dependent, setDependent] = useState(null);
   const [reminders, setReminders] = useState([]);
   const [importantInfo, setImportantInfo] = useState([]);
@@ -140,52 +144,113 @@ export default function DependentHomePage() {
   return (
     <>
       <SideNavbar activeNav={'homepage'} navigate={navigate} homeRoute={'/dependent-home'} />
-      <div style={{ fontFamily: "Fraunces", marginLeft: isRTL ? 0 : '250px', marginRight: isRTL ? '250px' : 0, minHeight: '100vh', background: 'var(--ice-blue)', position: 'relative', padding: '40px 24px' }}>
+      <div style={{ fontFamily: "Fraunces", marginLeft: isRTL ? 0 : (isSmallScreen ? 0 : '124px'), marginRight: isRTL ? (isSmallScreen ? 0 : '124px') : 0, marginBottom: isSmallScreen ? '64px' : 0, minHeight: '100vh', background: 'var(--ice-blue)', position: 'relative', padding: isSmallScreen ? '20px 16px' : '40px 40px', paddingTop: isSmallScreen ? '80px' : '100px' }}>
         <div className="texture-overlay" />
         <div className="mesh-bg" />
-        <div style={{ position: 'relative', zIndex: 1, maxWidth: '1400px', margin: '0 auto' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px', paddingTop: '20px' }}>
-            <LangSwitch />
-            <button onClick={handleLogout} style={{ background: 'var(--coral)', color: '#fff', border: 'none', borderRadius: '10px', padding: '12px 24px', fontWeight: '600', cursor: 'pointer', transition: 'all .2s', boxShadow: '0 2px 8px rgba(212,117,106,.3)' }}>
-              {t("logout")}
+        <div style={{ position: 'relative', zIndex: 1, maxWidth: '1200px', margin: '0 auto' }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
+            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+              <button 
+                onClick={() => setLang(lang === 'en' ? 'ar' : 'en')} 
+                style={{ 
+                  width: 44,
+                  height: 44,
+                  padding: 0,
+                  background: "var(--card-bg)", 
+                  backdropFilter: "blur(20px)", 
+                  border: "1.5px solid rgba(255,255,255,.6)", 
+                  borderRadius: 10, 
+                  cursor: "pointer", 
+                  color: "var(--azure)", 
+                  transition: "all .2s", 
+                  boxShadow: "var(--shadow)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <GlobeIcon />
+              </button>
+              <button
+                onClick={toggleTheme}
+                style={{
+                  width: 44,
+                  height: 44,
+                  padding: 0,
+                  border: '1.5px solid rgba(255,255,255,.6)',
+                  borderRadius: 10,
+                  background: 'var(--card-bg)',
+                  backdropFilter: 'blur(20px)',
+                  color: 'var(--ink)',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: 'var(--shadow)'
+                }}
+              >
+                {theme === 'light' ? <MoonIcon /> : <SunIcon />}
+              </button>
+            </div>
+            <button
+              onClick={handleLogout}
+              style={{
+                height: 44,
+                padding: '0 16px',
+                border: '1.5px solid rgba(212,117,106,.6)',
+                borderRadius: 10,
+                background: 'var(--card-bg)',
+                backdropFilter: 'blur(20px)',
+                color: 'var(--coral)',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: 'var(--shadow)',
+                fontSize: 14,
+                fontWeight: 500
+              }}
+            >
+              {t('logout')}
             </button>
           </div>
-
-          <h1 style={{ fontSize: '36px', fontWeight: '700', color: 'var(--ink)', marginBottom: '40px', fontFamily: "'Fraunces',serif" }}>
+          <h1 style={{ fontSize: isSmallScreen ? '28px' : '36px', fontWeight: '700', color: 'var(--ink)', marginBottom: isSmallScreen ? '24px' : '40px', fontFamily: "'Fraunces',serif" }}>
             {t('welcome')}, {dependent.fullName}
           </h1>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))', gap: '24px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isSmallScreen ? '1fr' : 'repeat(auto-fit, minmax(450px, 1fr))', gap: isSmallScreen ? '16px' : '24px' }}>
             <div style={{ background: 'linear-gradient(135deg, rgba(74,144,164,.12), rgba(74,144,164,.05))', backdropFilter: 'blur(20px)', padding: '24px', borderRadius: '16px', boxShadow: '0 4px 16px rgba(74,144,164,.2)', border: '2px solid rgba(74,144,164,.3)', minHeight: '500px', display: 'flex', flexDirection: 'column' }}>
-              <h2 style={{ fontSize: '22px', fontWeight: '700', color: 'var(--azure)', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px', textShadow: '0 1px 2px rgba(0,0,0,.1)' }}>📅 {t('reminders')}</h2>
+              <h2 style={{ fontSize: '22px', fontWeight: '700', color: 'var(--azure)', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px', textShadow: '0 1px 2px rgba(0,0,0,.1)' }}><CalendarIcon /> {t('reminders')}</h2>
               <div style={{ flex: 1, overflow: 'hidden' }}>
                 <ReminderSection reminders={reminders} onSave={saveReminders} />
               </div>
             </div>
 
             <div style={{ background: 'var(--card-bg)', backdropFilter: 'blur(20px)', padding: '24px', borderRadius: '16px', boxShadow: 'var(--shadow)', border: '1px solid rgba(255,255,255,.6)', minHeight: '500px', display: 'flex', flexDirection: 'column' }}>
-              <h2 style={{ fontSize: '20px', fontWeight: '600', color: 'var(--azure)', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>📝 {t('importantInfo')}</h2>
+              <h2 style={{ fontSize: '20px', fontWeight: '600', color: 'var(--azure)', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}><AlertCircleIcon /> {t('importantInfo')}</h2>
               <div style={{ flex: 1, overflow: 'hidden' }}>
                 <ImportantInfoSection info={importantInfo} onSave={saveImportantInfo} />
               </div>
             </div>
 
             <div style={{ background: 'var(--card-bg)', backdropFilter: 'blur(20px)', padding: '24px', borderRadius: '16px', boxShadow: 'var(--shadow)', border: '1px solid rgba(255,255,255,.6)', minHeight: '500px', display: 'flex', flexDirection: 'column' }}>
-              <h2 style={{ fontSize: '20px', fontWeight: '600', color: 'var(--azure)', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>💭 {t("yourMemories")}</h2>
+              <h2 style={{ fontSize: '20px', fontWeight: '600', color: 'var(--azure)', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}><BrainIcon /> {t("yourMemories")}</h2>
               <div style={{ flex: 1, overflow: 'hidden' }}>
                 <MemoriesSection memories={memories} onSave={saveMemories} />
               </div>
             </div>
 
             <div style={{ background: 'var(--card-bg)', backdropFilter: 'blur(20px)', padding: '24px', borderRadius: '16px', boxShadow: 'var(--shadow)', border: '1px solid rgba(255,255,255,.6)', minHeight: '500px', display: 'flex', flexDirection: 'column' }}>
-              <h2 style={{ fontSize: '20px', fontWeight: '600', color: 'var(--azure)', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>🚨 {t('emergencyNumbers')}</h2>
+              <h2 style={{ fontSize: '20px', fontWeight: '600', color: 'var(--azure)', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}><PhoneIcon /> {t('emergencyNumbers')}</h2>
               <div style={{ flex: 1, overflow: 'hidden' }}>
                 <EmergencyNumbersSection numbers={emergencyNumbers} onSave={saveEmergencyNumbers} />
               </div>
             </div>
 
-            <div style={{ background: 'var(--card-bg)', backdropFilter: 'blur(20px)', padding: '24px', borderRadius: '16px', boxShadow: 'var(--shadow)', border: '1px solid rgba(255,255,255,.6)', gridColumn: 'span 2', minHeight: '600px' }}>
-              <h2 style={{ fontSize: '20px', fontWeight: '600', color: 'var(--azure)', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>📍 {t('favoriteLocations')}</h2>
+            <div style={{ background: 'var(--card-bg)', backdropFilter: 'blur(20px)', padding: isSmallScreen ? '20px' : '24px', borderRadius: '16px', boxShadow: 'var(--shadow)', border: '1px solid rgba(255,255,255,.6)', gridColumn: isSmallScreen ? '1' : 'span 2', minHeight: isSmallScreen ? '400px' : '600px' }}>
+              <h2 style={{ fontSize: '20px', fontWeight: '600', color: 'var(--azure)', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}><MapPinIcon /> {t('favoriteLocations')}</h2>
               <FavoriteLocations />
             </div>
           </div>
@@ -196,7 +261,8 @@ export default function DependentHomePage() {
 }
 
 function ReminderSection({ reminders, onSave }) {
-  const { t } = useLang()
+  const { t, lang } = useLang()
+  const isRTL = lang === 'ar';
   const [newReminder, setNewReminder] = useState({ type: 'medicine', title: '', time: '', description: '' });
 
   const addReminder = () => {
@@ -212,10 +278,10 @@ function ReminderSection({ reminders, onSave }) {
 
   const getIcon = (type) => {
     switch (type) {
-      case 'medicine': return '💊';
-      case 'task': return '✅';
-      case 'meeting': return '📅';
-      default: return '📝';
+      case 'medicine': return <PillIcon />;
+      case 'task': return <CheckSquareIcon />;
+      case 'meeting': return <CalendarIcon />;
+      default: return <AlertCircleIcon />;
     }
   };
 
@@ -243,12 +309,14 @@ function ReminderSection({ reminders, onSave }) {
           value={newReminder.title}
           onChange={(e) => setNewReminder({ ...newReminder, title: e.target.value })}
           className="input-base"
+          style={{ direction: isRTL ? 'rtl' : 'ltr' }}
         />
         <input
           type="time"
           value={newReminder.time}
           onChange={(e) => setNewReminder({ ...newReminder, time: e.target.value })}
           className="input-base"
+          style={{ direction: isRTL ? 'rtl' : 'ltr', colorScheme: 'dark' }}
         />
         <button onClick={addReminder} style={{ background: 'var(--azure)', color: '#fff', border: 'none', borderRadius: '8px', padding: '10px', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
           <PlusIcon /> {t("add")}
@@ -258,11 +326,11 @@ function ReminderSection({ reminders, onSave }) {
         {reminders.map(reminder => (
           <div key={reminder.id} style={{ background: 'linear-gradient(135deg, rgba(74,144,164,.15), rgba(74,144,164,.08))', padding: '16px', marginBottom: '12px', borderRadius: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', border: '2px solid rgba(74,144,164,.25)', boxShadow: '0 2px 8px rgba(74,144,164,.15)' }}>
             <div style={{ flex: 1 }}>
-              <div style={{ fontSize: '16px', fontWeight: '700', color: 'var(--ink)', marginBottom: '6px' }}>
+              <div style={{ fontSize: '16px', fontWeight: '700', color: 'var(--ink)', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                 {getIcon(reminder.type)} {reminder.title}
               </div>
-              <div style={{ fontSize: '14px', fontWeight: '600', color: 'var(--azure)', background: 'rgba(255,255,255,.7)', padding: '4px 10px', borderRadius: '6px', display: 'inline-block' }}>
-                🕐 {formatTime12Hour(reminder.time)}
+              <div style={{ fontSize: '14px', fontWeight: '600', color: 'var(--azure)', background: 'rgba(255,255,255,.7)', padding: '4px 10px', borderRadius: '6px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                <ClockIcon /> {formatTime12Hour(reminder.time)}
               </div>
             </div>
             <button onClick={() => removeReminder(reminder.id)} style={{ background: 'var(--coral)', color: '#fff', border: 'none', borderRadius: '8px', padding: '8px 12px', cursor: 'pointer', transition: 'all .2s' }}>
@@ -276,7 +344,8 @@ function ReminderSection({ reminders, onSave }) {
 }
 
 function ImportantInfoSection({ info, onSave }) {
-  const { t } = useLang()
+  const { t, lang } = useLang()
+  const isRTL = lang === 'ar';
   const [newNote, setNewNote] = useState({ title: '', description: '' });
   const [editingNote, setEditingNote] = useState(null);
   const [expandedNotes, setExpandedNotes] = useState(new Set());
@@ -316,6 +385,7 @@ function ImportantInfoSection({ info, onSave }) {
           value={newNote.title}
           onChange={(e) => setNewNote({ ...newNote, title: e.target.value })}
           className="input-base"
+          style={{ direction: isRTL ? 'rtl' : 'ltr' }}
         />
         <input
           type="text"
@@ -323,6 +393,7 @@ function ImportantInfoSection({ info, onSave }) {
           value={newNote.description}
           onChange={(e) => setNewNote({ ...newNote, description: e.target.value })}
           className="input-base"
+          style={{ direction: isRTL ? 'rtl' : 'ltr' }}
         />
         <button onClick={addNote} style={{ background: 'var(--azure)', color: '#fff', border: 'none', borderRadius: '8px', padding: '10px', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
           <PlusIcon /> {t("addNote")}
@@ -376,7 +447,8 @@ function ImportantInfoSection({ info, onSave }) {
 }
 
 function MemoriesSection({ memories, onSave }) {
-  const { t } = useLang()
+  const { t, lang } = useLang()
+  const isRTL = lang === 'ar';
   const [newMemory, setNewMemory] = useState({ title: '', description: '', date: '', media: null });
 
   const addMemory = () => {
@@ -403,19 +475,21 @@ function MemoriesSection({ memories, onSave }) {
           value={newMemory.title}
           onChange={(e) => setNewMemory({ ...newMemory, title: e.target.value })}
           className="input-base"
+          style={{ direction: isRTL ? 'rtl' : 'ltr' }}
         />
         <input
           type="date"
           value={newMemory.date}
           onChange={(e) => setNewMemory({ ...newMemory, date: e.target.value })}
           className="input-base"
+          style={{ direction: isRTL ? 'rtl' : 'ltr' }}
         />
         <textarea
           placeholder={t('description')}
           value={newMemory.description}
           onChange={(e) => setNewMemory({ ...newMemory, description: e.target.value })}
           className="input-base"
-          style={{ height: '60px', resize: 'vertical' }}
+          style={{ height: '60px', resize: 'vertical', direction: isRTL ? 'rtl' : 'ltr' }}
         />
         <PhotoUploader currentPhoto={newMemory.media} onPhotoChange={handleMediaChange} />
         <button onClick={addMemory} style={{ background: 'var(--azure)', color: '#fff', border: 'none', borderRadius: '8px', padding: '10px', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
@@ -455,7 +529,8 @@ function MemoriesSection({ memories, onSave }) {
 
 function EmergencyNumbersSection({ numbers, onSave }) {
   const [newNumber, setNewNumber] = useState({ name: '', number: '' });
-  const { t } = useLang()
+  const { t, lang } = useLang()
+  const isRTL = lang === 'ar';
   const addNumber = () => {
     if (newNumber.name && newNumber.number) {
       onSave([...numbers, { ...newNumber, id: Date.now() }]);
@@ -472,17 +547,17 @@ function EmergencyNumbersSection({ numbers, onSave }) {
       <div style={{ marginBottom: '16px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
         <input
           type="text"
-          placeholder="Name"
+          placeholder={t('name')}
           value={newNumber.name}
           onChange={(e) => setNewNumber({ ...newNumber, name: e.target.value })}
-          style={{ padding: '10px', borderRadius: '8px', border: '1px solid rgba(74,144,164,.3)', fontSize: '14px' }}
+          style={{ padding: '10px', borderRadius: '8px', border: '1px solid rgba(74,144,164,.3)', fontSize: '14px', direction: isRTL ? 'rtl' : 'ltr' }}
         />
         <input
           type="tel"
-          placeholder="Phone Number"
+          placeholder={t('phoneNumber')}
           value={newNumber.number}
           onChange={(e) => setNewNumber({ ...newNumber, number: e.target.value })}
-          style={{ padding: '10px', borderRadius: '8px', border: '1px solid rgba(74,144,164,.3)', fontSize: '14px' }}
+          style={{ padding: '10px', borderRadius: '8px', border: '1px solid rgba(74,144,164,.3)', fontSize: '14px', direction: isRTL ? 'rtl' : 'ltr' }}
         />
         <button onClick={addNumber} style={{ background: 'var(--azure)', color: '#fff', border: 'none', borderRadius: '8px', padding: '10px', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
           <PlusIcon /> {t("add")}

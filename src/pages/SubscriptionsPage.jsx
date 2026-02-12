@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useLang } from "../context/LanguageContext";
 import { useNavigate } from "react-router-dom";
+import { useResponsive } from "../hooks/useResponsive";
 import  SideNavbar  from "../components/SideNavbar"
-import { LangSwitch } from "../components/UI/LangSwitch";
 import LogoHeader from '../components/LogoHeader';
 /* ═══════════════════════════════════════════════════════════════
    GLOBAL STYLES
@@ -44,7 +44,9 @@ const GlobeIcon = () => (<svg width="20" height="20" viewBox="0 0 24 24" fill="n
 function PricingPage() {
   const navigate = useNavigate();
   const { t, lang } = useLang();
-  const [currentPlan] = useState('forall'); // Mock current plan
+  const { isMobile, isTablet } = useResponsive();
+  const isSmallScreen = isMobile || isTablet;
+  const [currentPlan] = useState('forall');
   const [view, setView] = useState("pricing");
   const [activeNav, setActiveNav] = useState('subscriptions');
   const isRTL = lang === 'ar';
@@ -59,9 +61,9 @@ function PricingPage() {
     return (
       <>
         <SideNavbar activeNav={activeNav} setView={setView} setActiveNav={setActiveNav} navigate={navigate} />
-        <div style={{ marginLeft: isRTL ? 0 : '250px', marginRight: isRTL ? '250px' : 0, padding: '40px 24px', minHeight: '100vh', background: 'var(--ice-blue)' }}>
+        <div style={{ marginLeft: isRTL ? 0 : (isSmallScreen ? 0 : '104px'), marginRight: isRTL ? (isSmallScreen ? 0 : '104px') : 0, marginBottom: isSmallScreen ? '64px' : 0, padding: isSmallScreen ? '20px 16px' : '40px 24px', minHeight: '100vh', background: 'var(--ice-blue)' }}>
           <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-            <h1 style={{ fontSize: '32px', fontWeight: '700', color: 'var(--ink)', marginBottom: '24px' }}>Services</h1>
+            <h1 style={{ fontSize: isSmallScreen ? '24px' : '32px', fontWeight: '700', color: 'var(--ink)', marginBottom: '24px' }}>Services</h1>
             <div style={{ background: 'var(--card-bg)', backdropFilter: 'blur(20px)', borderRadius: '16px', padding: '32px', boxShadow: 'var(--shadow)', border: '1px solid rgba(255,255,255,.6)' }}>
               <p style={{ fontSize: '16px', color: 'var(--ink-light)', lineHeight: '1.6' }}>
                 Our services include real-time location tracking, safe zone monitoring, emergency alerts, and comprehensive reporting features to ensure the safety and well-being of your dependents.
@@ -91,9 +93,9 @@ function PricingPage() {
     return (
       <>
         <SideNavbar activeNav={activeNav} setView={setView} setActiveNav={setActiveNav} navigate={navigate} />
-        <div style={{ marginLeft: isRTL ? 0 : '250px', marginRight: isRTL ? '250px' : 0, padding: '40px 24px', minHeight: '100vh', background: 'var(--ice-blue)' }}>
+        <div style={{ marginLeft: isRTL ? 0 : (isSmallScreen ? 0 : '104px'), marginRight: isRTL ? (isSmallScreen ? 0 : '104px') : 0, marginBottom: isSmallScreen ? '64px' : 0, padding: isSmallScreen ? '20px 16px' : '40px 24px', minHeight: '100vh', background: 'var(--ice-blue)' }}>
           <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-            <h1 style={{ fontSize: '32px', fontWeight: '700', color: 'var(--ink)', marginBottom: '24px' }}>Frequently Asked Questions</h1>
+            <h1 style={{ fontSize: isSmallScreen ? '24px' : '32px', fontWeight: '700', color: 'var(--ink)', marginBottom: '24px' }}>Frequently Asked Questions</h1>
             <div style={{ background: 'var(--card-bg)', backdropFilter: 'blur(20px)', borderRadius: '16px', padding: '32px', boxShadow: 'var(--shadow)', border: '1px solid rgba(255,255,255,.6)' }}>
               <div style={{ marginBottom: '24px' }}>
                 <h3 style={{ fontSize: '18px', fontWeight: '600', color: 'var(--azure)', marginBottom: '8px' }}>How does location tracking work?</h3>
@@ -196,21 +198,20 @@ function PricingPage() {
     <>
       <div style={{ display: 'flex' }}>
         <SideNavbar activeNav={activeNav} setView={setView} setActiveNav={setActiveNav} navigate={navigate} />
-        <div style={{ flex: 1, marginLeft: isRTL ? 0 : '250px', marginRight: isRTL ? '250px' : 0 }}>
-          <div style={{ minHeight: "100vh", position: "relative", padding: "40px 24px 60px" }}>
+        <div style={{ flex: 1, marginLeft: isRTL ? 0 : (isSmallScreen ? 0 : '104px'), marginRight: isRTL ? (isSmallScreen ? 0 : '104px') : 0, marginBottom: isSmallScreen ? '64px' : 0 }}>
+          <div style={{ minHeight: "100vh", position: "relative", padding: isSmallScreen ? "20px 16px 60px" : "40px 24px 60px" }}>
             <div className="mesh-bg" />
             <div className="texture-overlay" />
-            <LangSwitch />
             {/* Header */}
             <div style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto" }}>
-        <div className="fade-up" style={{ textAlign: "center", marginBottom: 48, marginTop: 60 }}>
+        <div className="fade-up" style={{ textAlign: "center", marginBottom: 48, marginTop: isSmallScreen ? 20 : 60 }}>
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
             <LogoHeader />
           </div>
-          <h2 style={{ fontSize: 28, fontWeight: 600, marginBottom: 8, fontFamily: "'Fraunces',serif" }}>
+          <h2 style={{ fontSize: isSmallScreen ? 22 : 28, fontWeight: 600, marginBottom: 8, fontFamily: "'Fraunces',serif" }}>
             {t('pricing')}
           </h2>
-          <p style={{ fontSize: 15, color: "var(--ink-muted)" }}>
+          <p style={{ fontSize: isSmallScreen ? 13 : 15, color: "var(--ink-muted)" }}>
             {t('pricingSubtitle')}
           </p>
         </div>
@@ -218,8 +219,8 @@ function PricingPage() {
         {/* Pricing Cards */}
         <div style={{ 
           display: "grid", 
-          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", 
-          gap: 24, 
+          gridTemplateColumns: isSmallScreen ? "1fr" : "repeat(auto-fit, minmax(300px, 1fr))", 
+          gap: isSmallScreen ? 16 : 24, 
           maxWidth: 1100,
           margin: "0 auto"
         }}>
@@ -228,7 +229,7 @@ function PricingPage() {
               key={plan.id}
               className={`fade-up fade-up-d${idx + 1}`}
               style={{ 
-                background: plan.popular ? "linear-gradient(135deg, rgba(212,167,106,.08), rgba(255,255,255,.85))" : "var(--card-bg)", 
+                background: plan.popular ? "linear-gradient(135deg, rgba(212,167,106,.15), rgba(255,255,255,.9))" : "var(--card-bg)", 
                 backdropFilter: "blur(20px)", 
                 borderRadius: 20, 
                 padding: 28, 
@@ -246,14 +247,14 @@ function PricingPage() {
                 e.currentTarget.style.boxShadow = plan.popular ? "0 8px 40px rgba(212,167,106,.2)" : "var(--shadow)";
               }}
             >
-              {plan.popular && (
+              {plan.popular && !isSmallScreen && (
                 <div style={{
                   position: 'absolute',
                   top: -12,
                   left: '50%',
                   transform: 'translateX(-50%)',
                   background: 'var(--gold)',
-                  color: '#3f3f3f',
+                  color: '#fff',
                   padding: '6px 20px',
                   borderRadius: 20,
                   fontSize: 12,
@@ -267,15 +268,31 @@ function PricingPage() {
 
               {/* Plan Header */}
               <div style={{ marginBottom: 24 }}>
-                <h3 style={{ 
-                  fontSize: 22, 
-                  fontWeight: 600, 
-                  marginBottom: 6,
-                  color: plan.color,
-                  fontFamily: "'Fraunces',serif"
-                }}>
-                  {plan.name}
-                </h3>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+                  <h3 style={{ 
+                    fontSize: 22, 
+                    fontWeight: 600,
+                    color: plan.color,
+                    fontFamily: "'Fraunces',serif"
+                  }}>
+                    {plan.name}
+                  </h3>
+                  {plan.popular && isSmallScreen && (
+                    <div style={{
+                      background: 'var(--gold)',
+                      color: '#fff',
+                      padding: '4px 12px',
+                      borderRadius: 20,
+                      fontSize: 11,
+                      fontWeight: 700,
+                      letterSpacing: '.5px',
+                      boxShadow: '0 4px 12px rgba(212,167,106,.4)',
+                      whiteSpace: 'nowrap'
+                    }}>
+                      ⭐ {t('popular')}
+                    </div>
+                  )}
+                </div>
                 <p style={{ fontSize: 13, color: "var(--ink-muted)", marginBottom: 20 }}>
                   {plan.tagline}
                 </p>
@@ -320,7 +337,7 @@ function PricingPage() {
                     }}>
                       <CheckIcon />
                     </div>
-                    <span style={{ color: 'var(--ink-light)' }}>{feature}</span>
+                    <span style={{ color: plan.popular ? '#3a3a3a' : 'var(--ink-light)' }}>{feature}</span>
                   </div>
                 ))}
               </div>

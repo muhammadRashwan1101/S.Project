@@ -1,7 +1,7 @@
 import { useLang } from '../context/LanguageContext';
 import { useNavigate } from 'react-router-dom';
+import { useResponsive } from '../hooks/useResponsive';
 import SideNavbar from '../components/SideNavbar';
-import { LangSwitch } from '../components/UI/LangSwitch';
 import LogoHeader from '../components/LogoHeader';
 
 const ShieldIcon = () => (<img src="/assets/logo.png" alt="Logo" style={{ width: 22, height: 22, objectFit: 'contain' }} />);
@@ -77,6 +77,8 @@ function ServiceCard({ icon: Icon, title, description, delay }) {
 export default function ServicesPage() {
   const { t, lang } = useLang();
   const navigate = useNavigate();
+  const { isMobile, isTablet } = useResponsive();
+  const isSmallScreen = isMobile || isTablet;
   const isRTL = lang === 'ar';
 
   const services = [
@@ -94,20 +96,18 @@ export default function ServicesPage() {
   return (
     <>
       <SideNavbar activeNav="services" navigate={navigate} />
-      <div style={{ marginLeft: isRTL ? 0 : '250px', marginRight: isRTL ? '250px' : 0 }}>
-        <div style={{ minHeight: "100vh", position: "relative", padding: "24px 24px 80px" }}>
+      <div style={{ marginLeft: isRTL ? 0 : (isSmallScreen ? 0 : '104px'), marginRight: isRTL ? (isSmallScreen ? 0 : '104px') : 0, marginBottom: isSmallScreen ? '64px' : 0 }}>
+        <div style={{ minHeight: "100vh", position: "relative", padding: isSmallScreen ? "20px 16px 80px" : "24px 24px 80px" }}>
           <div className="mesh-bg" />
           <div className="texture-overlay" />
-          <LangSwitch />
-          
           <div style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto" }}>
-        <div className="fade-up" style={{ textAlign: "center", marginBottom: 56, marginTop: 60 }}>
+        <div className="fade-up" style={{ textAlign: "center", marginBottom: isSmallScreen ? 40 : 56, marginTop: isSmallScreen ? 20 : 60 }}>
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 20 }}>
             <LogoHeader />
           </div>
           
           <h2 style={{ 
-            fontSize: 36, 
+            fontSize: isSmallScreen ? 28 : 36, 
             fontWeight: 600, 
             marginBottom: 12,
             fontFamily: "'Fraunces',serif",
@@ -117,7 +117,7 @@ export default function ServicesPage() {
           </h2>
           
           <p style={{ 
-            fontSize: 16, 
+            fontSize: isSmallScreen ? 14 : 16, 
             color: "var(--ink-muted)",
             maxWidth: 600,
             margin: '0 auto'
@@ -128,9 +128,9 @@ export default function ServicesPage() {
 
         <div style={{ 
           display: "grid", 
-          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", 
-          gap: 24,
-          marginTop: 48
+          gridTemplateColumns: isSmallScreen ? "1fr" : "repeat(auto-fit, minmax(300px, 1fr))", 
+          gap: isSmallScreen ? 16 : 24,
+          marginTop: isSmallScreen ? 32 : 48
         }}>
           {services.map((service, idx) => (
             <ServiceCard 

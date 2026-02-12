@@ -1,120 +1,60 @@
-export const UploadIcon = () => (
-  <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
-  </svg>
-);
+import { Upload, X, Shield, LogIn, Check, MapPin, Navigation, Edit, AlertTriangle, Plus, Trash2, Users, Camera, Home, Monitor, Package, BookOpen, ChevronRight, Calendar, Pill, CheckSquare, Users as UsersGroup, AlertCircle, Clock, Brain, Heart, Activity, Phone, Clipboard, Handshake, Search, Lock, Play, Pause, Eye, EyeOff, RotateCcw, User, Map, Mail, Key, Sparkles, Radio, Sun, Moon, Globe } from 'lucide-react';
+import { useTheme } from '../../context/ThemeContext';
 
-export const XIcon = () => (
-  <svg width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="18" y1="6" x2="6" y2="18"/>
-    <line x1="6" y1="6" x2="18" y2="18"/>
-  </svg>
-);
+const iconStyle = {
+  filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.1)) drop-shadow(0 2px 4px rgba(0,0,0,0.05))',
+  transition: 'all 0.2s ease'
+};
 
-export const ShieldIcon = () => (
-  <img src="/assets/logo.png" alt="Logo" style={{ width: 32, height: 32, objectFit: 'contain' }} />
-);
-
-export const LogInIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: "inline-block", verticalAlign: "middle" }}>
-    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/>
-  </svg>
-);
-
-export const CheckIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-    <polyline points="20 6 9 17 4 12"/>
-  </svg>
-);
-
-export const MapPinIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
-  </svg>
-);
-
-export const NavigationIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <polygon points="3 11 22 2 13 21 11 13 3 11"/>
-  </svg>
-);
-
-export const EditIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-  </svg>
-);
-
-export const AlertIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-    <line x1="12" y1="9" x2="12" y2="13"/>
-    <line x1="12" y1="17" x2="12.01" y2="17"/>
-  </svg>
-);
-
-export const PlusIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="12" y1="5" x2="12" y2="19"/>
-    <line x1="5" y1="12" x2="19" y2="12"/>
-  </svg>
-);
-
-export const TrashIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <polyline points="3 6 5 6 21 6"/>
-    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-  </svg>
-);
-
-export const UsersIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-    <circle cx="9" cy="7" r="4"/>
-    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-  </svg>
-);
-
-export const CameraIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-    <circle cx="12" cy="13" r="4"/>
-  </svg>
-);
-
-export const HomeIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-    <polyline points="9,22 9,12 15,12 15,22"/>
-  </svg>
-);
-
-export const SubscriptionIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-    <line x1="8" y1="21" x2="16" y2="21"/>
-    <line x1="12" y1="17" x2="12" y2="21"/>
-  </svg>
-);
-
-export const ProductIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-    <line x1="8" y1="21" x2="16" y2="21"/>
-    <line x1="12" y1="17" x2="12" y2="21"/>
-  </svg>
-);
-
-export const CareGuideIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-  </svg>
-);
-
-export const ChevronRightIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <polyline points="9 18 15 12 9 6"/>
-  </svg>
-);
+export const UploadIcon = () => <Upload size={28} style={iconStyle} strokeWidth={1.8} />;
+export const XIcon = () => <X size={36} style={iconStyle} strokeWidth={1.8} />;
+export const ShieldIcon = () => <Radio size={40} style={iconStyle} strokeWidth={1.8} />;
+export const LogInIcon = () => <LogIn size={24} style={iconStyle} strokeWidth={1.8} />;
+export const CheckIcon = () => <Check size={24} style={iconStyle} strokeWidth={3} />;
+export const MapPinIcon = () => <MapPin size={28} style={iconStyle} strokeWidth={1.8} />;
+export const NavigationIcon = () => <Navigation size={24} style={iconStyle} strokeWidth={1.8} />;
+export const EditIcon = () => {
+  const { theme } = useTheme();
+  return <Edit size={24} style={iconStyle} strokeWidth={1.8} color={theme === 'dark' ? 'white' : 'black'} />;
+};
+export const AlertIcon = () => <AlertTriangle size={24} style={iconStyle} strokeWidth={1.8} />;
+export const WarningIcon = () => <AlertTriangle size={48} style={iconStyle} strokeWidth={1.8} />;
+export const PlusIcon = () => <Plus size={28} style={iconStyle} strokeWidth={1.8} />;
+export const TrashIcon = () => <Trash2 size={20} style={iconStyle} strokeWidth={1.8} />;
+export const UsersIcon = () => <Users size={24} style={iconStyle} strokeWidth={1.8} />;
+export const CameraIcon = () => <Camera size={28} style={iconStyle} strokeWidth={1.8} />;
+export const HomeIcon = () => <Home size={24} style={iconStyle} strokeWidth={1.8} />;
+export const SubscriptionIcon = () => <Monitor size={24} style={iconStyle} strokeWidth={1.8} />;
+export const ProductIcon = () => <Package size={24} style={iconStyle} strokeWidth={1.8} />;
+export const CareGuideIcon = () => <BookOpen size={24} style={iconStyle} strokeWidth={1.8} />;
+export const ChevronRightIcon = () => <ChevronRight size={24} style={iconStyle} strokeWidth={1.8} />;
+export const CalendarIcon = () => <Calendar size={24} style={iconStyle} strokeWidth={1.8} />;
+export const PillIcon = () => <Pill size={24} style={iconStyle} strokeWidth={1.8} />;
+export const CheckSquareIcon = () => <CheckSquare size={24} style={iconStyle} strokeWidth={1.8} />;
+export const UsersGroupIcon = () => <UsersGroup size={24} style={iconStyle} strokeWidth={1.8} />;
+export const AlertCircleIcon = () => <AlertCircle size={24} style={iconStyle} strokeWidth={1.8} />;
+export const ClockIcon = () => {
+  const { theme } = useTheme();
+  return <Clock size={24} style={iconStyle} strokeWidth={1.8} color={theme === 'dark' ? 'white' : undefined} />;
+};
+export const BrainIcon = () => <Brain size={24} style={iconStyle} strokeWidth={1.8} />;
+export const HeartIcon = () => <Heart size={24} style={iconStyle} strokeWidth={1.8} />;
+export const ActivityIcon = () => <Activity size={24} style={iconStyle} strokeWidth={1.8} />;
+export const PhoneIcon = () => <Phone size={24} style={iconStyle} strokeWidth={1.8} />;
+export const ClipboardIcon = () => <Clipboard size={24} style={iconStyle} strokeWidth={1.8} />;
+export const HandshakeIcon = () => <Handshake size={24} style={iconStyle} strokeWidth={1.8} />;
+export const SearchIcon = () => <Search size={24} style={iconStyle} strokeWidth={1.8} />;
+export const LockIcon = () => <Lock size={24} style={iconStyle} strokeWidth={1.8} />;
+export const PlayIcon = () => <Play size={24} style={iconStyle} strokeWidth={1.8} />;
+export const PauseIcon = () => <Pause size={24} style={iconStyle} strokeWidth={1.8} />;
+export const EyeIcon = () => <Eye size={24} style={iconStyle} strokeWidth={1.8} />;
+export const EyeOffIcon = () => <EyeOff size={24} style={iconStyle} strokeWidth={1.8} />;
+export const RotateCcwIcon = () => <RotateCcw size={24} style={iconStyle} strokeWidth={1.8} />;
+export const UserIcon = () => <User size={24} style={iconStyle} strokeWidth={1.8} />;
+export const MapIcon = () => <Map size={24} style={iconStyle} strokeWidth={1.8} />;
+export const MailIcon = () => <Mail size={24} style={iconStyle} strokeWidth={1.8} />;
+export const KeyIcon = () => <Key size={24} style={iconStyle} strokeWidth={1.8} />;
+export const SparklesIcon = () => <Sparkles size={24} style={iconStyle} strokeWidth={1.8} />;
+export const SunIcon = () => <Sun size={24} style={iconStyle} strokeWidth={1.8} />;
+export const MoonIcon = () => <Moon size={24} style={iconStyle} strokeWidth={1.8} />;
+export const GlobeIcon = () => <Globe size={20} style={iconStyle} strokeWidth={1.8} />;

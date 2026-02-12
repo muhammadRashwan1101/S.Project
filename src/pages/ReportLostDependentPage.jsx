@@ -1,33 +1,31 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLang } from "../context/LanguageContext";
-import { LangSwitch } from "../components/UI/LangSwitch";
-import Navbar from "../components/Navbar";
-import { Toast } from "../components/UI/Toast";
+import { useResponsive } from "../hooks/useResponsive";
+import { SettingsSwitches } from "../components/UI/SettingsSwitches";
 import { UploadIcon, XIcon, CheckIcon } from "../components/UI/Icons";
 import { accountsDB, lostReportsDB, saveLostReportsDB, saveAccountsDB } from "../utils/dataStore";
 import { matchImage, getDeviceInfo } from "../utils/helpers";
-import Logo from "../components/Logo";
+import LandingLogo from "../components/LandingLogo";
 
 export function ReportLostDependentPage({ onBack }) {
   const navigate = useNavigate();
   const { t } = useLang();
+  const { isMobile } = useResponsive();
   const [uploadedImage, setUploadedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [location, setLocation] = useState(null);
   const [matchResult, setMatchResult] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const fileInputRef = useRef(null);
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        const base64 = reader.result;
-        setUploadedImage(base64);
-        setImagePreview(base64);
+        setUploadedImage(reader.result);
+        setImagePreview(reader.result);
       };
       reader.readAsDataURL(file);
     }
@@ -45,32 +43,18 @@ export function ReportLostDependentPage({ onBack }) {
       const pos = await new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject);
       });
-      const currentLocation = {
-        lat: pos.coords.latitude,
-        lng: pos.coords.longitude
-      };
+      const currentLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
       setLocation(currentLocation);
 
       let matchedAccount = null;
-      console.log('Checking for image match. Uploaded image length:', uploadedImage?.length);
-      console.log('Number of guardian accounts with photos:', accountsDB.filter(acc => acc.role === 'guardian' && (acc.dependent?.photo || acc.dependent?.photos)).length);
-      
       for (const acc of accountsDB) {
         if (acc.role === 'guardian') {
           const photosToCheck = acc.dependent?.photos || (acc.dependent?.photo ? [acc.dependent.photo] : null);
-          if (photosToCheck) {
-            console.log(`Checking guardian ${acc.email}, dependent has ${Array.isArray(photosToCheck) ? photosToCheck.length : 1} photo(s)`);
-            if (matchImage(uploadedImage, photosToCheck)) {
-              console.log('Match found with dependent:', acc.dependent.fullName);
-              matchedAccount = acc;
-              break;
-            }
+          if (photosToCheck && matchImage(uploadedImage, photosToCheck)) {
+            matchedAccount = acc;
+            break;
           }
         }
-      }
-      
-      if (!matchedAccount) {
-        console.log('No match found in database');
       }
 
       if (matchedAccount) {
@@ -93,8 +77,7 @@ export function ReportLostDependentPage({ onBack }) {
         const guardianIndex = accountsDB.findIndex(acc => acc.email === matchedAccount.email);
         if (guardianIndex !== -1) {
           accountsDB[guardianIndex].lostReports = accountsDB[guardianIndex].lostReports || [];
-          // Store metadata (without image) to save space
-          const reportMetadata = {
+          accountsDB[guardianIndex].lostReports.push({
             id: report.id,
             dependentName: report.dependentName,
             dependentId: report.dependentId,
@@ -103,8 +86,7 @@ export function ReportLostDependentPage({ onBack }) {
             deviceInfo: report.deviceInfo,
             status: report.status,
             retrievedAt: report.retrievedAt
-          };
-          accountsDB[guardianIndex].lostReports.push(reportMetadata);
+          });
           saveAccountsDB();
         }
 
@@ -114,7 +96,6 @@ export function ReportLostDependentPage({ onBack }) {
         setMatchResult('no-match');
       }
     } catch (error) {
-      console.error('Location error:', error);
       alert('Unable to get location. Please enable location services.');
     }
 
@@ -123,23 +104,16 @@ export function ReportLostDependentPage({ onBack }) {
 
   if (submitted && matchResult === 'match') {
     return (
-      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", padding: 24 }}>
+      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", padding: isMobile ? 16 : 24 }}>
         <div className="mesh-bg" /><div className="texture-overlay" />
-        <LangSwitch />
+        <SettingsSwitches />
         <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 480, textAlign: "center" }}>
-          <div style={{ textAlign: "center", marginBottom: 32 }}>
-            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 8 }}>
-              <Logo width={60} height={60} />
-            </div>
-            <h1 className="appName" style={{ fontFamily: "'Fraunces',serif", fontSize: 28, fontWeight: 700, color: "var(--ink)" }}>
-              {t('app')}
-            </h1>
-          </div>
-          <div className="fade-up" style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: 20, padding: 32, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)" }}>
+          <div style={{ textAlign: "center", marginBottom: 32 }}><LandingLogo /></div>
+          <div className="fade-up" style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: isMobile ? 16 : 20, padding: isMobile ? 24 : 32, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)" }}>
             <div style={{ width: 72, height: 72, borderRadius: 20, background: "linear-gradient(135deg,#4ade80,#22c55e)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px", boxShadow: "0 6px 28px rgba(76,175,80,.3)", color: "#fff" }}>
               <CheckIcon />
             </div>
-            <h2 style={{ fontSize: 24, marginBottom: 12, color: "#16a34a" }}>{t('reportSubmitted')}</h2>
+            <h2 style={{ fontSize: isMobile ? 20 : 24, marginBottom: 12, color: "#16a34a" }}>{t('reportSubmitted')}</h2>
             <p style={{ color: "var(--ink-muted)", marginBottom: 24 }}>{t('imageMatches')}</p>
             {location && (
               <div style={{ background: "rgba(74,144,164,.1)", borderRadius: 12, padding: 16, marginBottom: 24 }}>
@@ -149,9 +123,7 @@ export function ReportLostDependentPage({ onBack }) {
                 </p>
               </div>
             )}
-            <button className="btn-primary" onClick={() => navigate('/')}>
-              {t('back')}
-            </button>
+            <button className="btn-primary" onClick={() => navigate('/')}>{t('back')}</button>
           </div>
         </div>
       </div>
@@ -160,23 +132,16 @@ export function ReportLostDependentPage({ onBack }) {
 
   if (matchResult === 'no-match') {
     return (
-      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", padding: 24 }}>
+      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", padding: isMobile ? 16 : 24 }}>
         <div className="mesh-bg" /><div className="texture-overlay" />
-        <LangSwitch />
+        <SettingsSwitches />
         <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 480, textAlign: "center" }}>
-          <div style={{ textAlign: "center", marginBottom: 32 }}>
-            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 8 }}>
-              <Logo width={60} height={60} />
-            </div>
-            <h1 className="appName" style={{ fontFamily: "'Fraunces',serif", fontSize: 28, fontWeight: 700, color: "var(--ink)" }}>
-              {t('app')}
-            </h1>
-          </div>
-          <div className="fade-up" style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: 20, padding: 32, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)" }}>
+          <div style={{ textAlign: "center", marginBottom: 32 }}><LandingLogo /></div>
+          <div className="fade-up" style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: isMobile ? 16 : 20, padding: isMobile ? 24 : 32, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)" }}>
             <div style={{ width: 72, height: 72, borderRadius: 20, background: "linear-gradient(135deg,#d4756a,#c0635a)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px", boxShadow: "0 6px 28px rgba(212,117,106,.3)", color: "#fff" }}>
               <XIcon />
             </div>
-            <h2 style={{ fontSize: 24, marginBottom: 12, color: "var(--coral)" }}>{t('noMatch')}</h2>
+            <h2 style={{ fontSize: isMobile ? 20 : 24, marginBottom: 12, color: "var(--coral)" }}>{t('noMatch')}</h2>
             <p style={{ color: "var(--ink-muted)", marginBottom: 24 }}>{t('imageNoMatch')}</p>
             <button className="btn-primary" onClick={() => { setMatchResult(null); setUploadedImage(null); setImagePreview(null); }}>
               {t('back')}
@@ -188,57 +153,27 @@ export function ReportLostDependentPage({ onBack }) {
   }
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", padding: 24 }}>
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", padding: isMobile ? 16 : 24 }}>
       <div className="mesh-bg" /><div className="texture-overlay" />
-      <LangSwitch />
+      <SettingsSwitches />
       <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 480 }}>
-        <div style={{ textAlign: "center", marginBottom: 32 }}>
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 8 }}>
-            <Logo width={60} height={60} />
-          </div>
-          <h1 className="appName" style={{ fontFamily: "'Fraunces',serif", fontSize: 28, fontWeight: 700, color: "var(--ink)" }}>
-            {t('app')}
-          </h1>
-        </div>
-        <button onClick={() => navigate('/')} style={{ background: "rgba(255,255,255,.9)", border: "1px solid rgba(0,0,0,.1)", borderRadius: 12, padding: "10px 20px", marginBottom: 20, cursor: "pointer", fontSize: 14, fontWeight: 600, display: "flex", alignItems: "center", gap: 8 }}>
+        <div style={{ textAlign: "center", marginBottom: 32 }}><LandingLogo /></div>
+        <button onClick={() => navigate('/')} style={{ background: "transparent", border: "none", color: "var(--azure)", fontSize: isMobile ? 13 : 14, fontWeight: 600, cursor: "pointer", marginBottom: 20, display: "flex", alignItems: "center", gap: 6 }}>
           ← {t('back')}
         </button>
         
-        <div className="fade-up" style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: 20, padding: 32, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)" }}>
-          <h2 style={{ fontSize: 24, marginBottom: 8 }}>{t('reportLost')}</h2>
-          <p style={{ fontSize: 14, color: "var(--ink-muted)", marginBottom: 24 }}>{t('reportLostDesc')}</p>
+        <div className="fade-up" style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: isMobile ? 16 : 20, padding: isMobile ? 24 : 32, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)" }}>
+          <h2 style={{ fontSize: isMobile ? 20 : 24, marginBottom: 8 }}>{t('reportLost')}</h2>
+          <p style={{ fontSize: isMobile ? 13 : 14, color: "var(--ink-muted)", marginBottom: 24 }}>{t('reportLostDesc')}</p>
 
           <div style={{ marginBottom: 24 }}>
-            <label style={{ display: "block", fontSize: 14, fontWeight: 600, marginBottom: 8, color: "var(--ink)" }}>
+            <label style={{ display: "block", fontSize: isMobile ? 13 : 14, fontWeight: 600, marginBottom: 8, color: "var(--ink)" }}>
               {t('uploadImage')}
             </label>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              onChange={handleImageUpload}
-              style={{ display: 'none' }}
-            />
-            <button
-              className="btn-secondary"
-              onClick={() => fileInputRef.current?.click()}
-              style={{ 
-                marginBottom: 12, 
-                padding: "10px 16px", 
-                fontSize: 15, 
-                whiteSpace: "nowrap",
-                borderRadius: "8px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "8px",
-                cursor: "pointer",
-                border: "none",
-                overflow: "visible"
-              }}
-            >
-              📤 {t('uploadPhoto')}
-            </button>
+            <input type="file" accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} id="file-upload" />
+            <label htmlFor="file-upload" className="btn-secondary" style={{ marginBottom: 12, padding: "10px 16px", fontSize: isMobile ? 13 : 15, whiteSpace: "nowrap", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", cursor: "pointer", border: "none" }}>
+              <UploadIcon /> {t('uploadPhoto')}
+            </label>
 
             {imagePreview && (
               <div style={{ textAlign: 'center', marginTop: 16 }}>
@@ -247,12 +182,7 @@ export function ReportLostDependentPage({ onBack }) {
             )}
           </div>
 
-          <button
-            className="btn-primary"
-            onClick={handleSubmit}
-            disabled={!uploadedImage || isSubmitting}
-            style={{ opacity: (!uploadedImage || isSubmitting) ? 0.5 : 1 }}
-          >
+          <button className="btn-primary" onClick={handleSubmit} disabled={!uploadedImage || isSubmitting} style={{ opacity: (!uploadedImage || isSubmitting) ? 0.5 : 1 }}>
             {isSubmitting ? t('sharingLocation') : t('submitReport')}
           </button>
         </div>

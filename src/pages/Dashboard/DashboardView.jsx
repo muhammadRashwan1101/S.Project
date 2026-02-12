@@ -1,27 +1,30 @@
 import { useLang } from "../../context/LanguageContext";
+import { useTheme } from "../../context/ThemeContext";
 import { LangSwitch } from "../../components/UI/LangSwitch";
-import { EditIcon, AlertIcon, UsersIcon } from "../../components/UI/Icons";
+import { EditIcon, AlertIcon, UsersIcon, AlertCircleIcon, MapPinIcon, SearchIcon, UserIcon, CheckIcon, ClockIcon, MapIcon, ClipboardIcon, WarningIcon, GlobeIcon, SunIcon, MoonIcon } from "../../components/UI/Icons";
 import { ProfileModal } from "../../modals/ProfileModal";
 import { ManageDependentsModal } from "../../modals/ManageDependentsModal";
 import LogoHeader from "../../components/LogoHeader";
 
+const HourglassIcon = () => (<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6.5 2h11"/><path d="M6.5 22h11"/><path d="M6 6l6 6 6-6"/><path d="M6 18l6-6 6 6"/></svg>);
+
 function ActivityLog({ isOutside, hasDependent, t }) {
-  const activities = hasDependent 
+  const activities = hasDependent
     ? [
-        { icon: isOutside ? "⚠️" : "✓", msg: isOutside ? t('outsideMsg') : t('insideMsg'), time: t('now'), type: isOutside ? "alert" : "normal" },
-        { icon: "📍", msg: t('locUpdate'), time: `2 ${t('min')}`, type: "normal" },
-        { icon: "🔍", msg: t('sysCheck'), time: `15 ${t('min')}`, type: "normal" }
+        { icon: isOutside ? <AlertCircleIcon /> : <CheckIcon />, msg: isOutside ? t('outsideMsg') : t('insideMsg'), time: t('now'), type: isOutside ? "alert" : "normal" },
+        { icon: <MapPinIcon />, msg: t('locUpdate'), time: `2 ${t('min')}`, type: "normal" },
+        { icon: <SearchIcon />, msg: t('sysCheck'), time: `15 ${t('min')}`, type: "normal" }
       ]
     : [
-        { icon: "📍", msg: t('locUpdate'), time: `2 ${t('min')}`, type: "normal" },
-        { icon: "🔍", msg: t('sysCheck'), time: `15 ${t('min')}`, type: "normal" }
+        { icon: <MapPinIcon />, msg: t('locUpdate'), time: `2 ${t('min')}`, type: "normal" },
+        { icon: <SearchIcon />, msg: t('sysCheck'), time: `15 ${t('min')}`, type: "normal" }
       ];
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
       {activities.map((act, i) => (
         <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: 12, background: act.type === "alert" ? "rgba(212,117,106,.08)" : "rgba(74,144,164,.05)", borderRadius: 10, border: `1px solid ${act.type === "alert" ? "rgba(212,117,106,.2)" : "rgba(74,144,164,.15)"}` }}>
-          <span style={{ fontSize: 20 }}>{act.icon}</span>
+          <div style={{ fontSize: 20 }}>{act.icon}</div>
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 14, fontWeight: 500, color: act.type === "alert" ? "var(--coral)" : "var(--ink)" }}>{act.msg}</div>
             <div style={{ fontSize: 12, color: "var(--ink-muted)", marginTop: 2 }}>{act.time}</div>
@@ -38,18 +41,87 @@ export default function DashboardView({
   activeReportsCount, onViewReports, isDependentLocationHidden, showProfile, setShowProfile,
   showManageDependents, setShowManageDependents, updateGuardianData
 }) {
-  const { t } = useLang();
+  const { t, lang, setLang } = useLang();
+  const { theme, toggleTheme } = useTheme();
   const reportsCount = activeReportsCount !== undefined ? activeReportsCount : (guardianData.lostReports || []).filter(r => r.status === 'active').length;
   const effectiveOutside = isDependentLocationHidden || isOutsideSafeZone;
 
   return (
     <div style={{ minHeight: "100vh", background: "var(--ice-blue)", position: "relative", paddingBottom: 40 }}>
       <div className="mesh-bg" /><div className="texture-overlay" />
-      <LangSwitch />
       {showProfile && <ProfileModal guardianData={guardianData} onClose={() => setShowProfile(false)} onUpdate={updateGuardianData} />}
       {showManageDependents && <ManageDependentsModal guardianData={guardianData} onClose={() => setShowManageDependents(false)} onUpdate={updateGuardianData} />}
 
-      <div style={{ position: "relative", zIndex: 1, maxWidth: 900, margin: "0 auto", padding: "16px 16px 0" }}>
+      <div style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto", padding: "16px 24px 0" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
+          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+            <button 
+              onClick={() => setLang(lang === 'en' ? 'ar' : 'en')} 
+              style={{ 
+                width: 44,
+                height: 44,
+                padding: 0,
+                background: "var(--card-bg)", 
+                backdropFilter: "blur(20px)", 
+                border: "1.5px solid rgba(255,255,255,.6)", 
+                borderRadius: 10, 
+                cursor: "pointer", 
+                color: "var(--azure)", 
+                transition: "all .2s", 
+                boxShadow: "var(--shadow)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center"
+              }}
+            >
+              <GlobeIcon />
+            </button>
+            <button
+              onClick={toggleTheme}
+              style={{
+                width: 44,
+                height: 44,
+                padding: 0,
+                border: '1.5px solid rgba(255,255,255,.6)',
+                borderRadius: 10,
+                background: 'var(--card-bg)',
+                backdropFilter: 'blur(20px)',
+                color: 'var(--ink)',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: 'var(--shadow)'
+              }}
+            >
+              {theme === 'light' ? <MoonIcon /> : <SunIcon />}
+            </button>
+          </div>
+          <button
+            onClick={onLogout}
+            style={{
+              height: 44,
+              padding: '0 16px',
+              border: '1.5px solid rgba(212,117,106,.6)',
+              borderRadius: 10,
+              background: 'var(--card-bg)',
+              backdropFilter: 'blur(20px)',
+              color: 'var(--coral)',
+              cursor: 'pointer',
+              transition: 'all 0.2s',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: 'var(--shadow)',
+              fontSize: 14,
+              fontWeight: 500
+            }}
+          >
+            {t('logout')}
+          </button>
+        </div>
+
         <div style={{ display: "flex", flexDirection: window.innerWidth <= 640 ? "column" : "row", justifyContent: "space-between", alignItems: window.innerWidth <= 640 ? "flex-start" : "center", marginBottom: window.innerWidth <= 640 ? 24 : 32, gap: window.innerWidth <= 640 ? 16 : 0 }}>
           <div>
             <h1 style={{ fontFamily: "'Fraunces',serif", fontSize: window.innerWidth <= 480 ? 22 : 28, fontWeight: 600, marginBottom: 4 }}>{t('welcome')}, {guardianData.fullName.split(' ')[0]}</h1>
@@ -57,20 +129,17 @@ export default function DashboardView({
           </div>
           <div style={{ display: "flex", gap: window.innerWidth <= 480 ? 8 : 12, flexWrap: "wrap", width: window.innerWidth <= 640 ? "100%" : "auto" }}>
             <button onClick={onViewProfile} className="btn-primary btn-secondary" style={{ width: window.innerWidth <= 640 ? "auto" : "auto", padding: window.innerWidth <= 480 ? "8px 16px" : "10px 20px", fontSize: window.innerWidth <= 480 ? 13 : 14, flex: window.innerWidth <= 640 ? "1" : "none" }}>
-              👤
+              <UserIcon />
             </button>
             <button onClick={onManageDependents} className="btn-primary btn-secondary" style={{ width: window.innerWidth <= 640 ? "auto" : "auto", padding: window.innerWidth <= 480 ? "8px 14px" : "10px 18px", fontSize: window.innerWidth <= 480 ? 13 : 14, flex: window.innerWidth <= 640 ? "1" : "none", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
               <UsersIcon />
-            </button>
-            <button onClick={onLogout} className="btn-primary btn-coral" style={{ width: window.innerWidth <= 640 ? "auto" : "auto", padding: window.innerWidth <= 480 ? "8px 16px" : "10px 20px", fontSize: window.innerWidth <= 480 ? 13 : 14, flex: window.innerWidth <= 640 ? "1" : "none" }}>
-              {t('logout')}
             </button>
           </div>
         </div>
 
         {guardianData.dependent && (isOutsideSafeZone || isDependentLocationHidden) && (
           <div 
-            className="fade-up alert-pulse" 
+            className="alert-pulse" 
             style={{ 
               background: "linear-gradient(135deg, #dc2626, #b91c1c)", 
               color: "#fff", 
@@ -84,7 +153,7 @@ export default function DashboardView({
             onClick={onViewMap}
           >
             <div style={{ display: "flex", alignItems: "center", gap: window.innerWidth <= 480 ? 12 : 16 }}>
-              <div style={{ fontSize: window.innerWidth <= 480 ? 36 : 48 }}>🚨</div>
+              <div style={{ fontSize: window.innerWidth <= 480 ? 36 : 48, display: "flex", alignItems: "center" }}><WarningIcon /></div>
               <div style={{ flex: 1 }}>
                 <h3 style={{ fontSize: window.innerWidth <= 480 ? 16 : 20, fontWeight: 700, marginBottom: 6 }}>
                   {isDependentLocationHidden ? t('dependentUntrackable') : t('alertTitle')}
@@ -100,7 +169,7 @@ export default function DashboardView({
 
         {isUsingTestLocation && (
           <div style={{ background: "var(--azure-pale)", color: "var(--azure-dark)", padding: 16, borderRadius: 12, marginBottom: 24, fontSize: 14, textAlign: "center" }}>
-            ⚠️ {t('usingTestLoc')}
+            <AlertCircleIcon /> {t('usingTestLoc')}
           </div>
         )}
 
@@ -121,13 +190,13 @@ export default function DashboardView({
               </>
             ) : (
               <div style={{ textAlign: "center", padding: "20px 0", color: "var(--ink-muted)" }}>
-                <div style={{ fontSize: 32, marginBottom: 8 }}>⏳</div>
+                <div style={{ fontSize: 32, marginBottom: 8 }}><HourglassIcon /></div>
                 <div style={{ fontSize: 13 }}>{t('noDependentLinked')}</div>
               </div>
             )}
           </div>
           <div className="fade-up fade-up-d1" style={{ background: reportsCount > 0 ? "linear-gradient(135deg, rgba(235,111,111,.12), rgba(235,111,111,.06))" : "rgba(0,0,0,.02)", borderRadius: 16, padding: 24, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)" }}>
-            <div style={{ fontSize: 32, marginBottom: 8 }}>{reportsCount > 0 ? "🚨" : "📋"}</div>
+            <div style={{ fontSize: 32, marginBottom: 8 }}>{reportsCount > 0 ? <AlertIcon /> : <ClipboardIcon />}</div>
             <p style={{ fontSize: 13, color: "var(--ink-muted)", marginBottom: 4 }}>{t('lostReports')}</p>
             <h3 style={{ fontSize: 18, fontWeight: 600, color: reportsCount > 0 ? "var(--coral)" : "var(--ink)" }}>
               {reportsCount} {t('active')}
@@ -146,7 +215,7 @@ export default function DashboardView({
               </div>
             ) : (
               <div style={{ textAlign: "center", padding: "20px 0", color: "var(--ink-muted)" }}>
-                <div style={{ fontSize: 32, marginBottom: 8 }}>⏳</div>
+                <div style={{ fontSize: 32, marginBottom: 8 }}><HourglassIcon /></div>
                 <div style={{ fontSize: 13 }}>{t('noDependentLinked')}</div>
               </div>
             )}
@@ -157,13 +226,13 @@ export default function DashboardView({
           <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 16 }}>{t('quickAct')}</h3>
           <div style={{ display: "grid", gap: 12 }}>
             <button className="btn-primary" onClick={onViewMap} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
-              🗺️ {t('viewMap')}
+              <MapIcon /> {t('viewMap')}
             </button>
             <button className="btn-primary btn-secondary" onClick={onEditSafeZone} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
               <EditIcon /> {t('editSafeZone')}
             </button>
             <button className="btn-primary btn-secondary" onClick={onCopyToken} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
-              📋 {t('copyLink')}
+              <ClipboardIcon /> {t('copyLink')}
             </button>
             {(guardianData.lostReports || []).length > 0 && (
               <button className="btn-primary btn-danger" onClick={onViewReports}>

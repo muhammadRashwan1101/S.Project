@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useLang } from "../../context/LanguageContext";
 import { LangSwitch } from "../../components/UI/LangSwitch";
-import { EditIcon, NavigationIcon } from "../../components/UI/Icons";
+import { EditIcon, NavigationIcon, AlertIcon, MapPinIcon, PlayIcon, PauseIcon, EyeIcon, EyeOffIcon, RotateCcwIcon } from "../../components/UI/Icons";
 import { calculateDistance } from "../../utils/helpers";
 import { saveSession } from "../../utils/sessionManager";
 
@@ -128,7 +128,7 @@ export default function MapView({ guardianData, dependentLocation, safeZoneCente
         {isOutside && guardianData.dependent && (
           <div className="fade-up alert-pulse" style={{ background: "linear-gradient(135deg, #dc2626, #b91c1c)", color: "#fff", padding: window.innerWidth <= 480 ? 16 : 20, borderRadius: window.innerWidth <= 480 ? 12 : 16, marginBottom: 20, boxShadow: "0 8px 32px rgba(220, 38, 38, 0.4)", border: "2px solid #fca5a5" }}>
             <div style={{ display: "flex", alignItems: "center", gap: window.innerWidth <= 480 ? 12 : 16 }}>
-              <div style={{ fontSize: window.innerWidth <= 480 ? 32 : 40 }}>🚨</div>
+              <div style={{ fontSize: window.innerWidth <= 480 ? 32 : 40 }}><AlertIcon /></div>
               <div>
                 <h3 style={{ fontSize: window.innerWidth <= 480 ? 15 : 18, fontWeight: 700, marginBottom: 4 }}>{isDependentLocationHidden ? t('dependentUntrackable') : t('alertTitle')}</h3>
                 <p style={{ fontSize: window.innerWidth <= 480 ? 12 : 13, opacity: 0.95 }}>{guardianData.dependent.fullName} {isDependentLocationHidden ? t('dependentMissingAlert') : t('alertSub').toLowerCase()}</p>
@@ -139,7 +139,7 @@ export default function MapView({ guardianData, dependentLocation, safeZoneCente
 
         {isUsingTestLocation && (
           <div style={{ background: "var(--azure-pale)", color: "var(--azure-dark)", padding: window.innerWidth <= 480 ? 12 : 16, borderRadius: 12, marginBottom: 20, fontSize: window.innerWidth <= 480 ? 12 : 14, display: "flex", flexDirection: window.innerWidth <= 480 ? "column" : "row", alignItems: window.innerWidth <= 480 ? "stretch" : "center", justifyContent: "space-between", gap: window.innerWidth <= 480 ? 12 : 0 }}>
-            <span>⚠️ {t('usingTestLoc')}</span>
+            <AlertIcon /> {t('usingTestLoc')}
             <button className="btn-primary btn-coral" onClick={onResetTestLocation} style={{ width: window.innerWidth <= 480 ? "100%" : "auto", padding: "8px 16px", fontSize: 13 }}>{t('resetToActual')}</button>
           </div>
         )}
@@ -147,7 +147,7 @@ export default function MapView({ guardianData, dependentLocation, safeZoneCente
         {isTrackingPaused && (
           <div style={{ background: "#fef3c7", color: "#92400e", padding: window.innerWidth <= 480 ? 12 : 16, borderRadius: 12, marginBottom: 20, fontSize: window.innerWidth <= 480 ? 12 : 14, border: "2px solid #fbbf24" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-              <span style={{ fontSize: 18 }}>⏸️</span>
+              <PauseIcon />
               <strong>{t('demoMode')}</strong>
             </div>
             <p style={{ fontSize: window.innerWidth <= 480 ? 11 : 12, opacity: 0.9 }}>{t('trackingPausedNote')}</p>
@@ -180,11 +180,11 @@ export default function MapView({ guardianData, dependentLocation, safeZoneCente
               <button className="btn-primary" onClick={onEditSafeZone} style={{ marginBottom: 12, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontSize: window.innerWidth <= 480 ? 13 : 14 }}>
                 <EditIcon /> {t('editSafeZone')}
               </button>
-              <button className="btn-primary btn-secondary" onClick={onSetTestLocation} style={{ marginBottom: 12, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontSize: window.innerWidth <= 480 ? 13 : 14 }}>📍 {t('setTestLoc')}</button>
-              {isUsingTestLocation && (<button className="btn-primary btn-coral" onClick={onResetTestLocation} style={{ marginBottom: 12, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontSize: window.innerWidth <= 480 ? 13 : 14 }}>↩️ {t('resetToActual')}</button>)}
+              <button className="btn-primary btn-secondary" onClick={onSetTestLocation} style={{ marginBottom: 12, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontSize: window.innerWidth <= 480 ? 13 : 14 }}><MapPinIcon /> {t('setTestLoc')}</button>
+              {isUsingTestLocation && (<button className="btn-primary btn-coral" onClick={onResetTestLocation} style={{ marginBottom: 12, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontSize: window.innerWidth <= 480 ? 13 : 14 }}><RotateCcwIcon /> {t('resetToActual')}</button>)}
               <div style={{ borderTop: "1px solid rgba(74,144,164,.15)", paddingTop: 12, marginTop: 4, marginBottom: 12 }}>
-                <button className={`btn-primary ${isTrackingPaused ? 'btn-secondary' : 'btn-coral'}`} onClick={onToggleTracking} style={{ marginBottom: 12, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontSize: window.innerWidth <= 480 ? 13 : 14 }}>{isTrackingPaused ? '▶️' : '⏸️'} {isTrackingPaused ? t('resumeTracking') : t('pauseTracking')}</button>
-                <button className={`btn-primary ${isDependentLocationHidden ? 'btn-secondary' : 'btn-coral'}`} onClick={onToggleDependentLocation} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontSize: window.innerWidth <= 480 ? 13 : 14 }}>{isDependentLocationHidden ? '👁️' : '🙈'} {isDependentLocationHidden ? t('showDependentLocation') : t('clearDependentLocation')}</button>
+                <button className={`btn-primary ${isTrackingPaused ? 'btn-secondary' : 'btn-coral'}`} onClick={onToggleTracking} style={{ marginBottom: 12, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontSize: window.innerWidth <= 480 ? 13 : 14 }}>{isTrackingPaused ? <PlayIcon /> : <PauseIcon />} {isTrackingPaused ? t('resumeTracking') : t('pauseTracking')}</button>
+                <button className={`btn-primary ${isDependentLocationHidden ? 'btn-secondary' : 'btn-coral'}`} onClick={onToggleDependentLocation} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontSize: window.innerWidth <= 480 ? 13 : 14 }}>{isDependentLocationHidden ? <EyeIcon /> : <EyeOffIcon />} {isDependentLocationHidden ? t('showDependentLocation') : t('clearDependentLocation')}</button>
               </div>
             </div>
 

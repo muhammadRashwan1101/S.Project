@@ -5,10 +5,15 @@ import { accountsDB, saveAccountsDB } from "../utils/dataStore";
 import { saveSession } from "../utils/sessionManager";
 import { useState, useEffect, useRef } from "react";
 
+const CopyIcon = () => (<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>);
+const CheckIcon = () => (<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>);
+const UploadIcon = () => (<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>);
+
 export function ProfileModal({ guardianData, onClose, onUpdate }) {
   const { t } = useLang();
   const [showToast, setShowToast] = useState(false);
   const [toastMsg, setToastMsg] = useState('');
+  const [copySuccess, setCopySuccess] = useState(false);
   const fileInputRef = useRef(null);
   const [dependentPhotos, setDependentPhotos] = useState(
     Array.isArray(guardianData.dependent?.photos)
@@ -107,6 +112,13 @@ export function ProfileModal({ guardianData, onClose, onUpdate }) {
     setToastMsg(t('photoUpdated'));
     setShowToast(true);
   };
+
+  const handleCopyToken = () => {
+    navigator.clipboard.writeText(guardianData.token).then(() => {
+      setCopySuccess(true);
+      setTimeout(() => setCopySuccess(false), 2000);
+    });
+  };
   
   return (
     <div className="modal-backdrop" onClick={(e) => e.target === e.currentTarget && onClose()}>
@@ -141,9 +153,31 @@ export function ProfileModal({ guardianData, onClose, onUpdate }) {
                 <span style={{ fontWeight: 600 }}>{t('addr')}:</span>
                 <span>{guardianData.address}</span>
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "140px 1fr", gap: 8 }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                 <span style={{ fontWeight: 600 }}>{t('guardToken')}:</span>
-                <span style={{ fontFamily: "monospace", background: "#fff", padding: "4px 8px", borderRadius: 4 }}>{guardianData.token}</span>
+                <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                  <span style={{ fontFamily: "monospace", background: "#fff", padding: "8px 12px", borderRadius: 6, flex: 1, fontSize: 13, wordBreak: "break-all", color: "#1f2937" }}>{guardianData.token}</span>
+                  <button
+                    onClick={handleCopyToken}
+                    style={{
+                      padding: "8px 12px",
+                      background: copySuccess ? "var(--green)" : "var(--azure)",
+                      color: "#fff",
+                      border: "none",
+                      borderRadius: 6,
+                      cursor: "pointer",
+                      fontSize: 12,
+                      fontWeight: 600,
+                      whiteSpace: "nowrap",
+                      transition: "all 0.2s",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 4
+                    }}
+                  >
+                    {copySuccess ? <CheckIcon /> : <CopyIcon />}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -181,7 +215,7 @@ export function ProfileModal({ guardianData, onClose, onUpdate }) {
                       marginBottom: 12
                     }}
                   >
-                    <span style={{ fontSize: 16, lineHeight: 1 }}>📷</span>
+                    <UploadIcon />
                     {t('uploadPhoto')}
                   </button>
                 )}
@@ -213,19 +247,21 @@ export function ProfileModal({ guardianData, onClose, onUpdate }) {
                               position: 'absolute',
                               top: '-8px',
                               right: '-8px',
-                              backgroundColor: '#ff4444',
+                              backgroundColor: 'var(--coral)',
                               color: 'white',
                               border: 'none',
                               borderRadius: '50%',
-                              width: '24px',
-                              height: '24px',
+                              width: '28px',
+                              height: '28px',
                               padding: 0,
                               display: 'flex',
                               alignItems: 'center',
                               justifyContent: 'center',
                               cursor: 'pointer',
-                              fontSize: '14px',
-                              fontWeight: 'bold'
+                              fontSize: '16px',
+                              fontWeight: 'bold',
+                              boxShadow: '0 2px 8px rgba(212,117,106,0.4)',
+                              transition: 'all 0.2s ease'
                             }}
                           >
                             ✕
@@ -289,10 +325,12 @@ export function ProfileModal({ guardianData, onClose, onUpdate }) {
               </div>
             </div>
           ) : (
-            <div style={{ background: "rgba(212,117,106,.1)", padding: 20, borderRadius: 12, textAlign: "center" }}>
-              <div style={{ fontSize: 40, marginBottom: 12 }}>⏳</div>
-              <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: "var(--coral)" }}>{t('noDependentLinked')}</h3>
-              <p style={{ fontSize: 13, color: "var(--ink-muted)" }}>{t('waitingForDependent')}</p>
+            <div style={{ background: "rgba(212,117,106,.1)", padding: 20, borderRadius: 12, textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", gap: 12 }}>
+              <div style={{ fontSize: 32 }}>⏳</div>
+              <div style={{ textAlign: "left" }}>
+                <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 4, color: "var(--coral)" }}>{t('noDependentLinked')}</h3>
+                <p style={{ fontSize: 13, color: "var(--ink-muted)" }}>{t('waitingForDependent')}</p>
+              </div>
             </div>
           )}
 

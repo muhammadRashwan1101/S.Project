@@ -1,18 +1,20 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLang } from "../../context/LanguageContext";
-import { LangSwitch } from "../../components/UI/LangSwitch";
+import { useResponsive } from "../../hooks/useResponsive";
+import { SettingsSwitches } from "../../components/UI/SettingsSwitches";
 import RoleSelectionPage from "./RoleSelectionPage";
 import LocationPicker from "../../components/LocationPicker";
-import { MapPinIcon } from "../../components/UI/Icons";
+import { MapPinIcon, CameraIcon, CheckIcon } from "../../components/UI/Icons";
 import PhotoUploader from "../../components/PhotoUploader";
 import { accountsDB, saveAccountsDB } from "../../utils/dataStore";
 import { saveSession } from "../../utils/sessionManager";
-import Logo from "../../components/Logo";
+import LandingLogo from "../../components/LandingLogo";
 
 export function SignUpPage() {
   const navigate = useNavigate();
   const { t } = useLang();
+  const { isMobile } = useResponsive();
 
   const handleBack = () => navigate('/');
   const handleSwitchToLogin = () => navigate('/login');
@@ -236,9 +238,9 @@ export function SignUpPage() {
 
   return (
     <>
-      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", padding: window.innerWidth <= 480 ? 16 : 24, paddingTop: window.innerWidth <= 480 ? 140 : 160, paddingBottom: window.innerWidth <= 480 ? 60 : 80 }}>
+      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", padding: isMobile ? 16 : 24, paddingTop: isMobile ? 140 : 160, paddingBottom: isMobile ? 60 : 80 }}>
         <div className="mesh-bg" /><div className="texture-overlay" />
-        <LangSwitch />
+        <SettingsSwitches />
 
       {showLocationPicker && (
         <LocationPicker
@@ -254,24 +256,19 @@ export function SignUpPage() {
 
       <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 480 }}>
         <div style={{ textAlign: "center", marginBottom: 32 }}>
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 8 }}>
-            <Logo width={60} height={60} />
-          </div>
-          <h1 className="appName" style={{ fontFamily: "'Fraunces',serif", fontSize: 28, fontWeight: 700, color: "var(--ink)" }}>
-            {t('app')}
-          </h1>
+          <LandingLogo />
         </div>
-        <button onClick={() => setShowRoleSelection(true)} style={{ background: "transparent", border: "none", color: "var(--azure)", fontSize: window.innerWidth <= 480 ? 13 : 14, fontWeight: 600, cursor: "pointer", marginBottom: 20, display: "flex", alignItems: "center", gap: 6 }}>
+        <button onClick={() => setShowRoleSelection(true)} style={{ background: "transparent", border: "none", color: "var(--azure)", fontSize: isMobile ? 13 : 14, fontWeight: 600, cursor: "pointer", marginBottom: 20, display: "flex", alignItems: "center", gap: 6 }}>
           ← {t('back')}
         </button>
 
-        <div className="fade-up" style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: window.innerWidth <= 480 ? 16 : 20, padding: window.innerWidth <= 480 ? 24 : 32, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)" }}>
-          <h2 style={{ fontFamily: "'Fraunces',serif", fontSize: window.innerWidth <= 480 ? 20 : 24, fontWeight: 600, marginBottom: 8 }}>
+        <div className="fade-up" style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", borderRadius: isMobile ? 16 : 20, padding: isMobile ? 24 : 32, boxShadow: "var(--shadow)", border: "1px solid rgba(255,255,255,.6)" }}>
+          <h2 style={{ fontFamily: "'Fraunces',serif", fontSize: isMobile ? 20 : 24, fontWeight: 600, marginBottom: 8 }}>
             {role === "guardian" ? `${t('create')} - ${t('guard')}` : `${t('create')} - ${t('pat')}`}
           </h2>
-          <p style={{ fontSize: window.innerWidth <= 480 ? 13 : 14, color: "var(--ink-muted)", marginBottom: 24 }}>{t('join')}</p>
+          <p style={{ fontSize: isMobile ? 13 : 14, color: "var(--ink-muted)", marginBottom: 24 }}>{t('join')}</p>
 
-          {err && <div style={{ background: "rgba(212,117,106,.1)", color: "var(--coral)", padding: 12, borderRadius: 10, fontSize: window.innerWidth <= 480 ? 12 : 13, marginBottom: 16 }}>{err}</div>}
+          {err && <div style={{ background: "rgba(212,117,106,.1)", color: "var(--coral)", padding: 12, borderRadius: 10, fontSize: isMobile ? 12 : 13, marginBottom: 16 }}>{err}</div>}
 
           <form onSubmit={handleSubmit}>
             {role === "guardian" && (
@@ -288,14 +285,14 @@ export function SignUpPage() {
                     type="button"
                     className="btn-primary btn-secondary" 
                     onClick={() => setShowLocationPicker(true)}
-                    style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontSize: window.innerWidth <= 480 ? 13 : 14 }}
+                    style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontSize: isMobile ? 13 : 14 }}
                   >
                     <MapPinIcon />
                     {selectedLocation ? t('editSafeZone') : t('chooseLocation')}
                   </button>
                   {selectedLocation && (
-                    <div style={{ marginTop: 8, fontSize: window.innerWidth <= 480 ? 11 : 12, color: "var(--ink-muted)", background: "var(--azure-pale)", padding: 8, borderRadius: 6, wordBreak: "break-all" }}>
-                      📍 {locationAddress || `${selectedLocation.lat.toFixed(4)}, ${selectedLocation.lng.toFixed(4)}`}
+                    <div style={{ marginTop: 8, fontSize: isMobile ? 11 : 12, color: "var(--ink-muted)", background: "var(--azure-pale)", padding: 8, borderRadius: 6, wordBreak: "break-all", display: "flex", alignItems: "center", gap: 6 }}>
+                      <MapPinIcon /> {locationAddress || `${selectedLocation.lat.toFixed(4)}, ${selectedLocation.lng.toFixed(4)}`}
                     </div>
                   )}
                 </div>
@@ -334,8 +331,9 @@ export function SignUpPage() {
                 ) : isExistingDependent ? (
                   <>
                     <div style={{ background: 'var(--azure-pale)', padding: 16, borderRadius: 12, marginBottom: 16, fontSize: 14 }}>
-                      <p style={{ marginBottom: 8 }}>
-                        <strong>✓ Account Found!</strong>
+                      <p style={{ marginBottom: 8, display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <CheckIcon />
+                        <strong>Account Found!</strong>
                       </p>
                       <p style={{ fontSize: 13, color: 'var(--ink-muted)', marginBottom: 8 }}>
                         {existingDependentData?.fullName}
@@ -406,7 +404,7 @@ export function SignUpPage() {
                           cursor: "pointer"
                         }}
                       >
-                        <span style={{ fontSize: 16, lineHeight: 1 }}>📷</span>
+                        <CameraIcon />
                         {t('uploadPhoto')} ({dependentPhotos.length}/5)
                       </button>
                       {photoPreviews.length > 0 && (
@@ -454,7 +452,7 @@ export function SignUpPage() {
             )}
           </form>
 
-          <p style={{ textAlign: "center", fontSize: window.innerWidth <= 480 ? 12 : 13, color: "var(--ink-muted)", marginTop: 20 }}>
+          <p style={{ textAlign: "center", fontSize: isMobile ? 12 : 13, color: "var(--ink-muted)", marginTop: 20 }}>
             {t('already')} <span onClick={handleSwitchToLogin} style={{ color: "var(--azure)", cursor: "pointer", fontWeight: 600 }}>{t('logIn')}</span>
           </p>
         </div>

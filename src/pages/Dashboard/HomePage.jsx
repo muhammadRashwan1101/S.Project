@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useLang } from "../../context/LanguageContext";
-import { Toast } from "../../components/UI/Toast";
-import { calculateDistance } from "../../utils/helpers";
+import { useResponsive } from "../../hooks/useResponsive";
+import { SettingsSwitches } from "../../components/UI/SettingsSwitches";
+import { Toast } from "../../components/UI/Toast";import { calculateDistance } from "../../utils/helpers";
 import LostReportsViewer from "../../modals/LostReportsViewer";
 import LocationPicker from "../../components/LocationPicker";
 import DashboardView from "./DashboardView";
@@ -13,7 +14,10 @@ import SideNavbar from "../../components/SideNavbar";
 
 export default function HomePage({ guardianData: initialGuardianData }) {
   const navigate = useNavigate();
-  const { t } = useLang();
+  const { t, lang } = useLang();
+  const { isMobile, isTablet } = useResponsive();
+  const isSmallScreen = isMobile || isTablet;
+  const isRTL = lang === 'ar';
   const [view, setView] = useState("dashboard");
   const [showToast, setShowToast] = useState(false);
   const [toastMsg, setToastMsg] = useState("");
@@ -235,9 +239,9 @@ export default function HomePage({ guardianData: initialGuardianData }) {
     return (
       <>
         <SideNavbar activeNav={activeNav} setView={setView} setActiveNav={setActiveNav} navigate={navigate} homeRoute={'/home'} />
-        <div style={{ marginLeft: '220px', padding: '40px 24px', minHeight: '100vh', background: 'var(--ice-blue)' }}>
+        <div style={{ marginLeft: isRTL ? 0 : (isSmallScreen ? 0 : '104px'), marginRight: isRTL ? (isSmallScreen ? 0 : '104px') : 0, marginBottom: isSmallScreen ? '64px' : 0, padding: isSmallScreen ? '20px 16px' : '40px 24px', minHeight: '100vh', background: 'var(--ice-blue)' }}>
           <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-            <h1 style={{ fontSize: '32px', fontWeight: '700', color: 'var(--ink)', marginBottom: '24px' }}>Services</h1>
+            <h1 style={{ fontSize: isSmallScreen ? '24px' : '32px', fontWeight: '700', color: 'var(--ink)', marginBottom: '24px' }}>Services</h1>
             <div style={{ background: 'var(--card-bg)', backdropFilter: 'blur(20px)', borderRadius: '16px', padding: '32px', boxShadow: 'var(--shadow)', border: '1px solid rgba(255,255,255,.6)' }}>
               <p style={{ fontSize: '16px', color: 'var(--ink-light)', lineHeight: '1.6' }}>
                 Our services include real-time location tracking, safe zone monitoring, emergency alerts, and comprehensive reporting features to ensure the safety and well-being of your dependents.
@@ -267,9 +271,9 @@ export default function HomePage({ guardianData: initialGuardianData }) {
     return (
       <>
         <SideNavbar activeNav={activeNav} setView={setView} setActiveNav={setActiveNav} navigate={navigate} homeRoute={'/home'} />
-        <div style={{ marginLeft: '220px', padding: '40px 24px', minHeight: '100vh', background: 'var(--ice-blue)' }}>
+        <div style={{ marginLeft: isRTL ? 0 : (isSmallScreen ? 0 : '104px'), marginRight: isRTL ? (isSmallScreen ? 0 : '104px') : 0, marginBottom: isSmallScreen ? '64px' : 0, padding: isSmallScreen ? '20px 16px' : '40px 24px', minHeight: '100vh', background: 'var(--ice-blue)' }}>
           <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-            <h1 style={{ fontSize: '32px', fontWeight: '700', color: 'var(--ink)', marginBottom: '24px' }}>Frequently Asked Questions</h1>
+            <h1 style={{ fontSize: isSmallScreen ? '24px' : '32px', fontWeight: '700', color: 'var(--ink)', marginBottom: '24px' }}>Frequently Asked Questions</h1>
             <div style={{ background: 'var(--card-bg)', backdropFilter: 'blur(20px)', borderRadius: '16px', padding: '32px', boxShadow: 'var(--shadow)', border: '1px solid rgba(255,255,255,.6)' }}>
               <div style={{ marginBottom: '24px' }}>
                 <h3 style={{ fontSize: '18px', fontWeight: '600', color: 'var(--azure)', marginBottom: '8px' }}>How does location tracking work?</h3>
@@ -369,7 +373,7 @@ export default function HomePage({ guardianData: initialGuardianData }) {
       )}
       <div style={{display:'flex'}}>
         <SideNavbar activeNav={activeNav} setView={setView} setActiveNav={setActiveNav} navigate={navigate} homeRoute={'/home'} />
-        <div style={{flex:1, marginLeft:'250px'}}>
+        <div style={{flex:1, marginLeft: isRTL ? 0 : (isSmallScreen ? 0 : '104px'), marginRight: isRTL ? (isSmallScreen ? 0 : '104px') : 0, marginBottom: isSmallScreen ? '64px' : 0}}>
           <DashboardView
             guardianData={guardianData}
             dependentLocation={currentDependentLocation}

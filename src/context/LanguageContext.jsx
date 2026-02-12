@@ -4,7 +4,7 @@ import { TR } from "../constants/translations";
 const LanguageContext = createContext();
 
 export function LanguageProvider({ children }) {
-  const [lang, setLang] = useState(() => localStorage.getItem('sanad-lang') || 'en');
+  const [lang, setLang] = useState(() => localStorage.getItem('sanad-lang') || 'ar');
   
   useEffect(() => { 
     localStorage.setItem('sanad-lang', lang); 

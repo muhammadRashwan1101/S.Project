@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useLang } from "../../context/LanguageContext";
-import { LangSwitch } from "../../components/UI/LangSwitch";
+import { SettingsSwitches } from "../../components/UI/SettingsSwitches";
 import { useNavigate } from "react-router-dom";
+import { ShieldIcon, UserIcon } from "../../components/UI/Icons";
+import LandingLogo from "../../components/LandingLogo";
 
 
 export default function RoleSelectionPage({ onRoleSelected, onBack }) {
@@ -13,9 +15,11 @@ export default function RoleSelectionPage({ onRoleSelected, onBack }) {
   return (
     <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", padding: 24 }}>
       <div className="mesh-bg" /><div className="texture-overlay" />
-      <LangSwitch />
-      
+      <SettingsSwitches />
       <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 480 }}>
+      <div style={{ textAlign: "center", marginBottom: 32 }}>
+          <LandingLogo />
+      </div>
         <button onClick={handleBack} style={{ background: "transparent", border: "none", color: "var(--azure)", fontSize: 14, fontWeight: 600, cursor: "pointer", marginBottom: 20, display: "flex", alignItems: "center", gap: 6 }}>
           ← {t('back')}
         </button>
@@ -25,20 +29,20 @@ export default function RoleSelectionPage({ onRoleSelected, onBack }) {
           <p style={{ fontSize: 14, color: "var(--ink-muted)", textAlign: "center", marginBottom: 32 }}>{t('selectRoleMsg')}</p>
 
           <div style={{ display: "grid", gap: 16, marginBottom: 24 }}>
-            <div 
+            <div
               className={`role-card ${selectedRole === 'guardian' ? 'selected' : ''}`}
               onClick={() => setSelectedRole('guardian')}
             >
-              <div style={{ fontSize: 40, marginBottom: 12 }}>👨‍⚕️</div>
+              <div style={{ fontSize: 40, marginBottom: 12, display: 'flex', justifyContent: 'center' }}><ShieldIcon /></div>
               <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 6 }}>{t('guardianRole')}</h3>
               <p style={{ fontSize: 13, color: "var(--ink-muted)" }}>{t('guardianDesc')}</p>
             </div>
 
-            <div 
+            <div
               className={`role-card ${selectedRole === 'dependent' ? 'selected' : ''}`}
               onClick={() => setSelectedRole('dependent')}
             >
-              <div style={{ fontSize: 40, marginBottom: 12 }}>🧑‍🦳</div>
+              <div style={{ fontSize: 40, marginBottom: 12, display: 'flex', justifyContent: 'center' }}><UserIcon /></div>
               <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 6 }}>{t('dependentRole')}</h3>
               <p style={{ fontSize: 13, color: "var(--ink-muted)" }}>{t('dependentDesc')}</p>
             </div>

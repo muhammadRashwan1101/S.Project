@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { useLang } from "../context/LanguageContext";
+import { useResponsive } from "../hooks/useResponsive";
 
 export default function Navbar() {
   const navigate = useNavigate();
   const { t } = useLang();
+  const { isMobile } = useResponsive();
 
   return (
     <nav style={{
@@ -16,27 +18,28 @@ export default function Navbar() {
       backdropFilter: "blur(20px)",
       borderBottom: "1px solid rgba(255,255,255,.6)",
       boxShadow: "var(--shadow)",
-      padding: "12px 20px",
+      padding: isMobile ? "10px 12px" : "12px 20px",
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between"
     }}>
-      <div style={{ fontFamily: "'Fraunces',serif", fontSize: 18, fontWeight: 700, color: "var(--ink)", cursor: "pointer" }} onClick={() => navigate('/')}>
+      <div style={{ fontFamily: "'Fraunces',serif", fontSize: isMobile ? 16 : 18, fontWeight: 700, color: "var(--ink)", cursor: "pointer" }} onClick={() => navigate('/')}>
         {t('app')}
       </div>
-      <div style={{ display: "flex", gap: 12 }}>
+      <div style={{ display: "flex", gap: isMobile ? 6 : 12 }}>
         <button
           onClick={() => navigate('/login')}
           style={{
             background: "transparent",
             border: "none",
             color: "var(--azure)",
-            fontSize: 14,
+            fontSize: isMobile ? 12 : 14,
             fontWeight: 600,
             cursor: "pointer",
-            padding: "8px 12px",
+            padding: isMobile ? "6px 8px" : "8px 12px",
             borderRadius: 8,
-            transition: "background 0.3s ease"
+            transition: "background 0.3s ease",
+            minHeight: "44px"
           }}
           onMouseEnter={(e) => e.target.style.background = "var(--azure-pale)"}
           onMouseLeave={(e) => e.target.style.background = "transparent"}
@@ -49,17 +52,18 @@ export default function Navbar() {
             background: "transparent",
             border: "none",
             color: "var(--coral)",
-            fontSize: 14,
+            fontSize: isMobile ? 12 : 14,
             fontWeight: 600,
             cursor: "pointer",
-            padding: "8px 12px",
+            padding: isMobile ? "6px 8px" : "8px 12px",
             borderRadius: 8,
-            transition: "background 0.3s ease"
+            transition: "background 0.3s ease",
+            minHeight: "44px"
           }}
           onMouseEnter={(e) => e.target.style.background = "rgba(212,117,106,.1)"}
           onMouseLeave={(e) => e.target.style.background = "transparent"}
         >
-          {t('reportLost')}
+          {isMobile ? t('report') || 'Report' : t('reportLost')}
         </button>
         <button
           onClick={() => navigate('/signup')}
@@ -67,14 +71,15 @@ export default function Navbar() {
             background: "var(--azure)",
             border: "none",
             color: "white",
-            fontSize: 14,
+            fontSize: isMobile ? 12 : 14,
             fontWeight: 600,
             cursor: "pointer",
-            padding: "8px 12px",
+            padding: isMobile ? "6px 10px" : "8px 12px",
             borderRadius: 8,
             transition: "all 0.3s ease",
             transform: "translateY(0)",
-            boxShadow: "0 2px 8px rgba(74,144,164,.3)"
+            boxShadow: "0 2px 8px rgba(74,144,164,.3)",
+            minHeight: "44px"
           }}
           onMouseEnter={(e) => {
             e.target.style.transform = "translateY(-1px)";

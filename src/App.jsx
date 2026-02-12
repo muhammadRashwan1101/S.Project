@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { LanguageProvider } from './context/LanguageContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { GlobalStyle } from './constants/styles';
 import LandingPage from './pages/LandingPage';
 import {SignUpPage} from './pages/Auth/SignUpPage';
@@ -11,8 +12,8 @@ import DependentHomePage from './pages/Dashboard/DependentHomePage';
 import HomePage from './pages/Dashboard/HomePage';
 import SubscriptionsPage from './pages/SubscriptionsPage';
 import ServicesPage from './pages/Services';
-import ProductsPage from './pages/Product';
-import CareGuidePage from './pages/careGuide';
+import ProductsPage from './pages/ProductsPage';
+import CareGuidePage from './pages/CareGuidePage';
 import MapViewPage from './pages/MapViewPage';
 import { initializeSessionId, getSession } from './utils/sessionManager';
 import { initializeAccounts, accountsDB } from './utils/dataStore';
@@ -106,8 +107,10 @@ function AppContent() {
 
 export default function App() {
   return (
-    <LanguageProvider>
-      <AppContent />
-    </LanguageProvider>
+    <ThemeProvider>
+      <LanguageProvider>
+        <AppContent />
+      </LanguageProvider>
+    </ThemeProvider>
   );
 }

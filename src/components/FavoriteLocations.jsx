@@ -1,9 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { useLang } from '../context/LanguageContext';
+import { useTheme } from '../context/ThemeContext';
 import { PlusIcon, TrashIcon, EditIcon, NavigationIcon } from './UI/Icons';
 
 export default function FavoriteLocations() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
+  const { theme } = useTheme();
+  const isRTL = lang === 'ar';
   const mapRef = useRef(null);
   const clickMarkerRef = useRef(null);
   const [locations, setLocations] = useState([]);
@@ -231,7 +234,10 @@ export default function FavoriteLocations() {
                 border: '1px solid rgba(74,144,164,.3)', 
                 fontSize: '14px',
                 outline: 'none',
-                transition: 'all 0.2s'
+                transition: 'all 0.2s',
+                direction: isRTL ? 'rtl' : 'ltr',
+                background: 'var(--card-bg)',
+                color: 'var(--ink)'
               }}
               onFocus={(e) => e.target.style.borderColor = 'var(--azure)'}
               onBlur={(e) => e.target.style.borderColor = 'rgba(74,144,164,.3)'}
@@ -275,7 +281,10 @@ export default function FavoriteLocations() {
               border: '1px solid rgba(74,144,164,.3)', 
               fontSize: '14px',
               outline: 'none',
-              transition: 'all 0.2s'
+              transition: 'all 0.2s',
+              direction: isRTL ? 'rtl' : 'ltr',
+              background: 'var(--card-bg)',
+              color: 'var(--ink)'
             }}
             onFocus={(e) => e.target.style.borderColor = 'var(--azure)'}
             onBlur={(e) => e.target.style.borderColor = 'rgba(74,144,164,.3)'}
@@ -325,7 +334,7 @@ export default function FavoriteLocations() {
 
       <div style={{ maxHeight: '300px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '10px' }}>
         {locations.map(loc => (
-          <div key={loc.id} style={{ background: selectedLocation?.id === loc.id ? 'rgba(74,144,164,.12)' : '#fff', borderRadius: '12px', boxShadow: '0 2px 12px rgba(0,0,0,.06)', transition: 'all 0.2s', border: selectedLocation?.id === loc.id ? '2px solid var(--azure)' : 'none', overflow: 'hidden' }}>
+          <div key={loc.id} style={{ background: selectedLocation?.id === loc.id ? 'rgba(74,144,164,.12)' : 'var(--card-bg)', borderRadius: '12px', boxShadow: '0 2px 12px rgba(0,0,0,.06)', transition: 'all 0.2s', border: selectedLocation?.id === loc.id ? '2px solid var(--azure)' : '1px solid rgba(74,144,164,.2)', overflow: 'hidden' }}>
             <div onClick={() => toggleExpand(loc.id)} style={{ padding: '14px', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <h4 style={{ margin: 0, color: 'var(--ink)', fontSize: '15px', fontWeight: '600' }}>📍 {loc.name}</h4>
               <span style={{ color: 'var(--azure)', fontSize: '18px' }}>{expandedLocation === loc.id ? '▲' : '▼'}</span>
@@ -333,16 +342,102 @@ export default function FavoriteLocations() {
             {expandedLocation === loc.id && (
               <div style={{ padding: '0 14px 14px 14px', borderTop: '1px solid rgba(74,144,164,.1)' }}>
                 <div style={{ display: 'flex', gap: '6px', marginTop: '10px' }}>
-                  <button onClick={() => showLocationOnMap(loc)} style={{ flex: 1, background: 'var(--azure)', color: '#fff', border: 'none', borderRadius: '8px', padding: '10px', fontSize: '13px', fontWeight: '600', cursor: 'pointer', boxShadow: '0 2px 6px rgba(74,144,164,.2)' }}>
+                  <button 
+                    onClick={() => showLocationOnMap(loc)} 
+                    style={{ 
+                      flex: 1, 
+                      background: 'var(--azure)', 
+                      color: '#fff', 
+                      border: 'none', 
+                      borderRadius: '8px', 
+                      padding: '10px', 
+                      fontSize: '13px', 
+                      fontWeight: '600', 
+                      cursor: 'pointer', 
+                      boxShadow: '0 2px 6px rgba(74,144,164,.2)',
+                      transition: 'all 0.2s'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.transform = 'translateY(-2px)';
+                      e.target.style.boxShadow = '0 4px 12px rgba(74,144,164,.4)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.transform = 'translateY(0)';
+                      e.target.style.boxShadow = '0 2px 6px rgba(74,144,164,.2)';
+                    }}
+                  >
                     {t('showOnMap')}
                   </button>
-                  <button onClick={() => startDirections(loc)} style={{ flex: 1, background: 'var(--sage)', color: 'rgb(72 72 72)', border: 'none', borderRadius: '8px', padding: '10px', fontSize: '13px', fontWeight: '600', cursor: 'pointer', boxShadow: '0 2px 6px rgba(107,159,127,.2)' }}>
+                  <button 
+                    onClick={() => startDirections(loc)} 
+                    style={{ 
+                      flex: 1, 
+                      background: 'var(--sage)', 
+                      color: '#fff', 
+                      border: 'none', 
+                      borderRadius: '8px', 
+                      padding: '10px', 
+                      fontSize: '13px', 
+                      fontWeight: '600', 
+                      cursor: 'pointer', 
+                      boxShadow: '0 2px 6px rgba(107,159,127,.2)',
+                      transition: 'all 0.2s'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.transform = 'translateY(-2px)';
+                      e.target.style.boxShadow = '0 4px 12px rgba(107,159,127,.4)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.transform = 'translateY(0)';
+                      e.target.style.boxShadow = '0 2px 6px rgba(107,159,127,.2)';
+                    }}
+                  >
                     🧭 {t('getDirections')}
                   </button>
-                  <button onClick={() => startEditLocation(loc)} style={{ background: 'var(--sage)', color: '#fff', border: 'none', borderRadius: '8px', padding: '10px', cursor: 'pointer', boxShadow: '0 2px 6px rgba(107,159,127,.2)' }}>
+                  <button 
+                    onClick={() => startEditLocation(loc)} 
+                    style={{ 
+                      background: 'var(--sage)', 
+                      color: '#fff', 
+                      border: 'none', 
+                      borderRadius: '8px', 
+                      padding: '10px', 
+                      cursor: 'pointer', 
+                      boxShadow: '0 2px 6px rgba(107,159,127,.2)',
+                      transition: 'all 0.2s'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.transform = 'translateY(-2px)';
+                      e.target.style.boxShadow = '0 4px 12px rgba(107,159,127,.4)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.transform = 'translateY(0)';
+                      e.target.style.boxShadow = '0 2px 6px rgba(107,159,127,.2)';
+                    }}
+                  >
                     <EditIcon />
                   </button>
-                  <button onClick={() => deleteLocation(loc.id)} style={{ background: 'var(--coral)', color: '#fff', border: 'none', borderRadius: '8px', padding: '10px', cursor: 'pointer', boxShadow: '0 2px 6px rgba(212,117,106,.2)' }}>
+                  <button 
+                    onClick={() => deleteLocation(loc.id)} 
+                    style={{ 
+                      background: 'var(--coral)', 
+                      color: '#fff', 
+                      border: 'none', 
+                      borderRadius: '8px', 
+                      padding: '10px', 
+                      cursor: 'pointer', 
+                      boxShadow: '0 2px 6px rgba(212,117,106,.2)',
+                      transition: 'all 0.2s'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.transform = 'translateY(-2px)';
+                      e.target.style.boxShadow = '0 4px 12px rgba(212,117,106,.4)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.transform = 'translateY(0)';
+                      e.target.style.boxShadow = '0 2px 6px rgba(212,117,106,.2)';
+                    }}
+                  >
                     <TrashIcon />
                   </button>
                 </div>
