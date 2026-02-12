@@ -123,33 +123,33 @@ export function ProfileModal({ guardianData, onClose, onUpdate }) {
   return (
     <div className="modal-backdrop" onClick={(e) => e.target === e.currentTarget && onClose()}>
       {showToast && <Toast msg={toastMsg} onClose={() => setShowToast(false)} />}
-      <div className="modal-card" style={{ maxWidth: 600 }}>
-        <div style={{ padding: 32 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
-            <h2 style={{ fontFamily: "'Fraunces',serif", fontSize: 24, fontWeight: 600 }}>{t('myProfile')}</h2>
+      <div className="modal-card" style={{ maxWidth: 600, margin: '0 8px' }}>
+        <div style={{ padding: window.innerWidth <= 480 ? 16 : 32 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: window.innerWidth <= 480 ? 16 : 24 }}>
+            <h2 style={{ fontFamily: "'Fraunces',serif", fontSize: window.innerWidth <= 480 ? 18 : 24, fontWeight: 600 }}>{t('myProfile')}</h2>
             <button onClick={onClose} style={{ background: "transparent", border: "none", fontSize: 24, cursor: "pointer", color: "var(--ink-muted)" }}>×</button>
           </div>
 
-          <div style={{ background: "var(--azure-pale)", padding: 20, borderRadius: 12, marginBottom: 20 }}>
-            <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 16, color: "var(--azure)" }}>{t('guardianInfo')}</h3>
-            <div style={{ display: "grid", gap: 12, fontSize: 14 }}>
-              <div style={{ display: "grid", gridTemplateColumns: "140px 1fr", gap: 8 }}>
+          <div style={{ background: "var(--azure-pale)", padding: window.innerWidth <= 480 ? 12 : 20, borderRadius: 12, marginBottom: window.innerWidth <= 480 ? 12 : 20 }}>
+            <h3 style={{ fontSize: window.innerWidth <= 480 ? 15 : 18, fontWeight: 600, marginBottom: window.innerWidth <= 480 ? 12 : 16, color: "var(--azure)" }}>{t('guardianInfo')}</h3>
+            <div style={{ display: "grid", gap: window.innerWidth <= 480 ? 8 : 12, fontSize: window.innerWidth <= 480 ? 13 : 14 }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                 <span style={{ fontWeight: 600 }}>{t('name')}:</span>
                 <span>{guardianData.fullName}</span>
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "140px 1fr", gap: 8 }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                 <span style={{ fontWeight: 600 }}>{t('email')}:</span>
                 <span>{guardianData.email}</span>
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "140px 1fr", gap: 8 }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                 <span style={{ fontWeight: 600 }}>{t('natId')}:</span>
                 <span>{guardianData.nationalId}</span>
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "140px 1fr", gap: 8 }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                 <span style={{ fontWeight: 600 }}>{t('phone')}:</span>
                 <span>{guardianData.phone}</span>
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "140px 1fr", gap: 8 }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                 <span style={{ fontWeight: 600 }}>{t('addr')}:</span>
                 <span>{guardianData.address}</span>
               </div>
@@ -183,11 +183,11 @@ export function ProfileModal({ guardianData, onClose, onUpdate }) {
           </div>
 
           {guardianData.dependent ? (
-            <div style={{ background: "var(--cyan-pale)", padding: 20, borderRadius: 12 }}>
-              <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 16, color: "var(--cyan)" }}>{t('dependentLinked')}</h3>
+            <div style={{ background: "var(--cyan-pale)", padding: window.innerWidth <= 480 ? 12 : 20, borderRadius: 12 }}>
+              <h3 style={{ fontSize: window.innerWidth <= 480 ? 15 : 18, fontWeight: 600, marginBottom: window.innerWidth <= 480 ? 12 : 16, color: "var(--cyan)" }}>{t('dependentLinked')}</h3>
               
-              <div style={{ marginBottom: 20 }}>
-                <h4 style={{ fontSize: 14, fontWeight: 600, marginBottom: 12, color: "var(--cyan)" }}>{t('patPhoto')} ({photoPreviews.length}/5)</h4>
+              <div style={{ marginBottom: window.innerWidth <= 480 ? 12 : 20 }}>
+                <h4 style={{ fontSize: window.innerWidth <= 480 ? 13 : 14, fontWeight: 600, marginBottom: 12, color: "var(--cyan)" }}>{t('patPhoto')} ({photoPreviews.length}/5)</h4>
                 <input
                   type="file"
                   multiple
@@ -223,7 +223,7 @@ export function ProfileModal({ guardianData, onClose, onUpdate }) {
                   <div>
                     <div style={{
                       display: 'grid',
-                      gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))',
+                      gridTemplateColumns: window.innerWidth <= 480 ? 'repeat(auto-fill, minmax(80px, 1fr))' : 'repeat(auto-fill, minmax(100px, 1fr))',
                       gap: '8px',
                       marginBottom: 12
                     }}>
@@ -234,7 +234,7 @@ export function ProfileModal({ guardianData, onClose, onUpdate }) {
                             alt={`Dependent ${index + 1}`}
                             style={{
                               width: '100%',
-                              height: 100,
+                              height: window.innerWidth <= 480 ? 80 : 100,
                               borderRadius: 8,
                               objectFit: 'cover',
                               border: '2px solid var(--cyan)'
@@ -275,7 +275,7 @@ export function ProfileModal({ guardianData, onClose, onUpdate }) {
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            height: 100,
+                            height: window.innerWidth <= 480 ? 80 : 100,
                             borderRadius: 8,
                             border: '2px dashed var(--ink-muted)',
                             color: 'var(--ink-muted)',
@@ -305,36 +305,34 @@ export function ProfileModal({ guardianData, onClose, onUpdate }) {
                 )}
               </div>
 
-              <div style={{ display: "grid", gap: 12, fontSize: 14 }}>
-                <div style={{ display: "grid", gridTemplateColumns: "140px 1fr", gap: 8 }}>
-                  <span style={{ fontWeight: 600 }}>{t('name')}:</span>
-                  <span>{guardianData.dependent.fullName}</span>
-                </div>
-                <div style={{ display: "grid", gridTemplateColumns: "140px 1fr", gap: 8 }}>
-                  <span style={{ fontWeight: 600 }}>{t('email')}:</span>
-                  <span>{guardianData.dependent.email}</span>
-                </div>
-                <div style={{ display: "grid", gridTemplateColumns: "140px 1fr", gap: 8 }}>
-                  <span style={{ fontWeight: 600 }}>{t('natId')}:</span>
-                  <span>{guardianData.dependent.nationalId}</span>
-                </div>
-                <div style={{ display: "grid", gridTemplateColumns: "140px 1fr", gap: 8 }}>
-                  <span style={{ fontWeight: 600 }}>{t('phone')}:</span>
-                  <span>{guardianData.dependent.phone}</span>
-                </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                <span style={{ fontWeight: 600 }}>{t('name')}:</span>
+                <span>{guardianData.dependent.fullName}</span>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                <span style={{ fontWeight: 600 }}>{t('email')}:</span>
+                <span>{guardianData.dependent.email}</span>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                <span style={{ fontWeight: 600 }}>{t('natId')}:</span>
+                <span>{guardianData.dependent.nationalId}</span>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                <span style={{ fontWeight: 600 }}>{t('phone')}:</span>
+                <span>{guardianData.dependent.phone}</span>
               </div>
             </div>
           ) : (
-            <div style={{ background: "rgba(212,117,106,.1)", padding: 20, borderRadius: 12, textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", gap: 12 }}>
-              <div style={{ fontSize: 32 }}>⏳</div>
-              <div style={{ textAlign: "left" }}>
-                <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 4, color: "var(--coral)" }}>{t('noDependentLinked')}</h3>
-                <p style={{ fontSize: 13, color: "var(--ink-muted)" }}>{t('waitingForDependent')}</p>
+            <div style={{ background: "rgba(212,117,106,.1)", padding: window.innerWidth <= 480 ? 12 : 20, borderRadius: 12, textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", gap: window.innerWidth <= 480 ? 8 : 12, flexDirection: window.innerWidth <= 480 ? "column" : "row" }}>
+              <div style={{ fontSize: window.innerWidth <= 480 ? 28 : 32 }}>⏳</div>
+              <div style={{ textAlign: window.innerWidth <= 480 ? "center" : "left" }}>
+                <h3 style={{ fontSize: window.innerWidth <= 480 ? 14 : 16, fontWeight: 600, marginBottom: 4, color: "var(--coral)" }}>{t('noDependentLinked')}</h3>
+                <p style={{ fontSize: window.innerWidth <= 480 ? 12 : 13, color: "var(--ink-muted)" }}>{t('waitingForDependent')}</p>
               </div>
             </div>
           )}
 
-          <button className="btn-primary" onClick={onClose} style={{ marginTop: 24 }}>
+          <button className="btn-primary" onClick={onClose} style={{ marginTop: window.innerWidth <= 480 ? 16 : 24, width: '100%' }}>
             {t('closeProfile')}
           </button>
         </div>

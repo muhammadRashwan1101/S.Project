@@ -83,10 +83,10 @@ export function ManageDependentsModal({ guardianData, onClose, onUpdate }) {
     <div className="modal-backdrop" onClick={(e) => e.target === e.currentTarget && onClose()}>
       {showToast && <Toast msg={toastMsg} onClose={() => setShowToast(false)} />}
       
-      <div className="modal-card" style={{ maxWidth: 600, maxHeight: '90vh', overflow: 'auto' }}>
-        <div style={{ padding: 32 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
-            <h2 style={{ fontFamily: "'Fraunces',serif", fontSize: 22, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 8 }}>
+      <div className="modal-card" style={{ maxWidth: 600, maxHeight: '90vh', overflow: 'auto', margin: '0 8px' }}>
+        <div style={{ padding: window.innerWidth <= 480 ? 16 : 32 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: window.innerWidth <= 480 ? 16 : 24 }}>
+            <h2 style={{ fontFamily: "'Fraunces',serif", fontSize: window.innerWidth <= 480 ? 18 : 22, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 8 }}>
               <UsersIcon /> {t('manageDependents')}
             </h2>
             <button onClick={onClose} style={{
@@ -105,7 +105,7 @@ export function ManageDependentsModal({ guardianData, onClose, onUpdate }) {
             <button
               onClick={() => setShowAddForm(true)}
               className="btn-primary"
-              style={{ marginBottom: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}
+              style={{ marginBottom: window.innerWidth <= 480 ? 12 : 20, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, width: '100%' }}
             >
               <PlusIcon /> {t('addDependent')}
             </button>
@@ -115,10 +115,10 @@ export function ManageDependentsModal({ guardianData, onClose, onUpdate }) {
             <div style={{
               background: 'var(--ice-blue)',
               borderRadius: 12,
-              padding: 20,
-              marginBottom: 20
+              padding: window.innerWidth <= 480 ? 12 : 20,
+              marginBottom: window.innerWidth <= 480 ? 12 : 20
             }}>
-              <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 16 }}>{t('patInfo')}</h3>
+              <h3 style={{ fontSize: window.innerWidth <= 480 ? 14 : 16, fontWeight: 600, marginBottom: window.innerWidth <= 480 ? 12 : 16 }}>{t('patInfo')}</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                 <input
                   className="input-base"
@@ -155,7 +155,7 @@ export function ManageDependentsModal({ guardianData, onClose, onUpdate }) {
                   onChange={(e) => setNewDependent({ ...newDependent, address: e.target.value })}
                   rows={3}
                 />
-                <div style={{ display: 'flex', gap: 10 }}>
+                <div style={{ display: 'flex', gap: 10, flexDirection: window.innerWidth <= 480 ? 'column' : 'row' }}>
                   <button onClick={handleAddDependent} className="btn-primary" style={{ flex: 1 }}>
                     {t('create')}
                   </button>
@@ -168,7 +168,7 @@ export function ManageDependentsModal({ guardianData, onClose, onUpdate }) {
           )}
 
           <div>
-            <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 16 }}>{t('dependentsList')}</h3>
+            <h3 style={{ fontSize: window.innerWidth <= 480 ? 14 : 16, fontWeight: 600, marginBottom: window.innerWidth <= 480 ? 12 : 16 }}>{t('dependentsList')}</h3>
             {!guardianData.dependent && !pendingDependent ? (
               <p style={{ color: 'var(--ink-muted)', textAlign: 'center', padding: 20, fontSize: 14 }}>
                 {t('noDependents')}
@@ -177,14 +177,14 @@ export function ManageDependentsModal({ guardianData, onClose, onUpdate }) {
               <div style={{
                 background: 'var(--ice-blue)',
                 borderRadius: 12,
-                padding: 16
+                padding: window.innerWidth <= 480 ? 12 : 16
               }}>
-                <p style={{ fontWeight: 600, marginBottom: 4, fontSize: 15 }}>{pendingDependent.fullName}</p>
-                <p style={{ fontSize: 13, color: 'var(--ink-muted)', marginBottom: 8 }}>{pendingDependent.email}</p>
+                <p style={{ fontWeight: 600, marginBottom: 4, fontSize: window.innerWidth <= 480 ? 14 : 15 }}>{pendingDependent.fullName}</p>
+                <p style={{ fontSize: window.innerWidth <= 480 ? 12 : 13, color: 'var(--ink-muted)', marginBottom: 8 }}>{pendingDependent.email}</p>
                 <div style={{ background: 'rgba(74, 144, 164, 0.1)', padding: 10, borderRadius: 8 }}>
-                  <p style={{ fontSize: 12, color: 'var(--ink-muted)', marginBottom: 4 }}>{t('dependentToken')}:</p>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <code style={{ fontFamily: 'monospace', fontSize: 13, fontWeight: 600, color: 'var(--azure)', flex: 1 }}>
+                  <p style={{ fontSize: window.innerWidth <= 480 ? 11 : 12, color: 'var(--ink-muted)', marginBottom: 4 }}>{t('dependentToken')}:</p>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                    <code style={{ fontFamily: 'monospace', fontSize: window.innerWidth <= 480 ? 11 : 13, fontWeight: 600, color: 'var(--azure)', flex: 1, minWidth: 0, wordBreak: 'break-all' }}>
                       {pendingDependent.token}
                     </code>
                     <button
@@ -219,12 +219,12 @@ export function ManageDependentsModal({ guardianData, onClose, onUpdate }) {
               <div style={{
                 background: 'var(--ice-blue)',
                 borderRadius: 12,
-                padding: 16
+                padding: window.innerWidth <= 480 ? 12 : 16
               }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12, flexDirection: window.innerWidth <= 480 ? 'column' : 'row', gap: window.innerWidth <= 480 ? 12 : 0 }}>
                   <div>
-                    <p style={{ fontWeight: 600, marginBottom: 4, fontSize: 15 }}>{guardianData.dependent.fullName}</p>
-                    <p style={{ fontSize: 13, color: 'var(--ink-muted)', marginBottom: 8 }}>{guardianData.dependent.email}</p>
+                    <p style={{ fontWeight: 600, marginBottom: 4, fontSize: window.innerWidth <= 480 ? 14 : 15 }}>{guardianData.dependent.fullName}</p>
+                    <p style={{ fontSize: window.innerWidth <= 480 ? 12 : 13, color: 'var(--ink-muted)', marginBottom: 8 }}>{guardianData.dependent.email}</p>
                   </div>
                   <button
                     onClick={handleDeleteDependent}
@@ -233,25 +233,25 @@ export function ManageDependentsModal({ guardianData, onClose, onUpdate }) {
                       color: '#fff',
                       border: 'none',
                       borderRadius: 8,
-                      padding: '8px 14px',
+                      padding: '8px',
                       cursor: 'pointer',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: 6,
-                      fontSize: 13,
-                      fontWeight: 600,
-                      marginLeft: 12,
-                      flexShrink: 0
+                      justifyContent: 'center',
+                      marginLeft: window.innerWidth <= 480 ? 0 : 12,
+                      flexShrink: 0,
+                      width: window.innerWidth <= 480 ? '100%' : '36px',
+                      height: '36px'
                     }}
                   >
-                    <TrashIcon /> {t('deleteDependent')}
+                    <TrashIcon />
                   </button>
                 </div>
                 {guardianData.dependent.token && (
                   <div style={{ background: 'rgba(74, 144, 164, 0.1)', padding: 10, borderRadius: 8 }}>
-                    <p style={{ fontSize: 12, color: 'var(--ink-muted)', marginBottom: 4 }}>{t('dependentToken')}:</p>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                      <code style={{ fontFamily: 'monospace', fontSize: 13, fontWeight: 600, color: 'var(--azure)', flex: 1 }}>
+                    <p style={{ fontSize: window.innerWidth <= 480 ? 11 : 12, color: 'var(--ink-muted)', marginBottom: 4 }}>{t('dependentToken')}:</p>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                      <code style={{ fontFamily: 'monospace', fontSize: window.innerWidth <= 480 ? 11 : 13, fontWeight: 600, color: 'var(--azure)', flex: 1, minWidth: 0, wordBreak: 'break-all' }}>
                         {guardianData.dependent.token}
                       </code>
                       <button

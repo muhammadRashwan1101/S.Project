@@ -118,7 +118,6 @@ export default function MapView({ guardianData, dependentLocation, safeZoneCente
   return (
     <div style={{ minHeight: "100vh", background: "var(--ice-blue)", position: "relative" }}>
       <div className="mesh-bg" /><div className="texture-overlay" />
-      <LangSwitch />
 
       <div style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto", padding: window.innerWidth <= 768 ? 16 : 24 }}>
         <button onClick={onBack} style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)", border: "1.5px solid rgba(255,255,255,.6)", borderRadius: 10, padding: window.innerWidth <= 480 ? "8px 16px" : "10px 20px", fontSize: window.innerWidth <= 480 ? 13 : 14, fontWeight: 600, color: "var(--azure)", cursor: "pointer", marginBottom: 20, boxShadow: "var(--shadow)" }}>

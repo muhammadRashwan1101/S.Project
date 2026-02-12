@@ -13,23 +13,23 @@ export function SettingsSwitches({ onLogout, showLogout = false }) {
   return (
     <div style={{ 
       position: "absolute", 
-      top: 20, 
-      right: isRTL ? 'auto' : 20,
-      left: isRTL ? 20 : 'auto',
+      top: window.innerWidth <= 480 ? 12 : 20, 
+      right: isRTL ? 'auto' : (window.innerWidth <= 480 ? 12 : 20),
+      left: isRTL ? (window.innerWidth <= 480 ? 12 : 20) : 'auto',
       zIndex: 10, 
       display: "flex", 
       alignItems: "center",
       flexDirection: isRTL ? "row" : "row-reverse"
     }}>
-      <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+      <div style={{ display: "flex", gap: window.innerWidth <= 480 ? 6 : 8, alignItems: "center" }}>
         <button
           onClick={toggleTheme}
           style={{
-            width: 44,
-            height: 44,
+            width: window.innerWidth <= 480 ? 36 : 44,
+            height: window.innerWidth <= 480 ? 36 : 44,
             padding: 0,
             border: '1.5px solid rgba(255,255,255,.6)',
-            borderRadius: 10,
+            borderRadius: window.innerWidth <= 480 ? 8 : 10,
             background: 'var(--card-bg)',
             backdropFilter: 'blur(20px)',
             color: 'var(--ink)',
@@ -46,12 +46,12 @@ export function SettingsSwitches({ onLogout, showLogout = false }) {
         <button 
           onClick={() => setLang(lang === 'en' ? 'ar' : 'en')} 
           style={{ 
-            width: isSmallScreen ? 44 : 'auto',
-            height: 44,
+            width: isSmallScreen ? (window.innerWidth <= 480 ? 36 : 44) : 'auto',
+            height: window.innerWidth <= 480 ? 36 : 44,
             background: "var(--card-bg)", 
             backdropFilter: "blur(20px)", 
             border: "1.5px solid rgba(255,255,255,.6)", 
-            borderRadius: 10, 
+            borderRadius: window.innerWidth <= 480 ? 8 : 10, 
             cursor: "pointer", 
             color: "var(--azure)", 
             transition: "all .2s", 
@@ -61,7 +61,7 @@ export function SettingsSwitches({ onLogout, showLogout = false }) {
             justifyContent: "center",
             gap: isSmallScreen ? 0 : 8,
             padding: isSmallScreen ? 0 : '0 16px',
-            fontSize: 14,
+            fontSize: window.innerWidth <= 480 ? 12 : 14,
             fontWeight: 500
           }}
         >
@@ -72,10 +72,10 @@ export function SettingsSwitches({ onLogout, showLogout = false }) {
         <button
           onClick={onLogout}
           style={{
-            height: 44,
-            padding: '0 16px',
+            height: window.innerWidth <= 480 ? 36 : 44,
+            padding: window.innerWidth <= 480 ? '0 12px' : '0 16px',
             border: '1.5px solid rgba(212,117,106,.6)',
-            borderRadius: 10,
+            borderRadius: window.innerWidth <= 480 ? 8 : 10,
             background: 'var(--card-bg)',
             backdropFilter: 'blur(20px)',
             color: 'var(--coral)',
@@ -85,10 +85,10 @@ export function SettingsSwitches({ onLogout, showLogout = false }) {
             alignItems: 'center',
             justifyContent: 'center',
             boxShadow: 'var(--shadow)',
-            fontSize: 14,
+            fontSize: window.innerWidth <= 480 ? 12 : 14,
             fontWeight: 500,
-            marginLeft: isRTL ? 0 : 16,
-            marginRight: isRTL ? 16 : 0
+            marginLeft: isRTL ? 0 : (window.innerWidth <= 480 ? 12 : 16),
+            marginRight: isRTL ? (window.innerWidth <= 480 ? 12 : 16) : 0
           }}
         >
           {t('logout')}
